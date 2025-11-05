@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
+import { Header } from "@/widgets/header";
+import { Footer } from "@/widgets/footer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -46,9 +48,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko">
+    <html
+      lang="ko"
+      className="bg-white scheme-light dark:bg-gray-950 dark:scheme-dark"
+    >
       <body className={`${inter.variable} ${pretendard.variable} antialiased`}>
+        <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
