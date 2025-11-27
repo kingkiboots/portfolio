@@ -1,8 +1,11 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-primary: var(--color-cyan-600);
+  --color-secondary: var(--color-emerald-500);
+
+  --color-background: #ffffff;
+  --color-foreground: #171717;
 
   /* Text colors */
   --text-primary: #171717;
@@ -27,9 +30,12 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  @theme {
+    /* --color-primary: var(--color-cyan-600);
+    --color-secondary: var(--color-emerald); */
+
+    --color-background: #0a0a0a;
+    --color-foreground: #ededed;
     --text-primary: #ededed;
     --text-secondary: #a3a3a3;
     --text-tertiary: #737373;
@@ -71,8 +77,8 @@ html {
 body {
   font-family: var(--font-inter), var(--font-pretendard), sans-serif;
   /* overflow-x: hidden; */
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--color-background);
+  color: var(--color-foreground);
 
   font-weight: 400;
   line-height: 1;
