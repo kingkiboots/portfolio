@@ -9,7 +9,13 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 export const Button = memo<ButtonProps>(
-  ({ variant = "primary", size = "md", children, className = "", ...props }) => {
+  ({
+    variant = "primary",
+    size = "md",
+    children,
+    className = "",
+    ...props
+  }) => {
     const baseStyles =
       "inline-flex items-center justify-center font-medium transition-all duration-normal focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
 
@@ -38,8 +44,7 @@ export const Button = memo<ButtonProps>(
         {children}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";
-

@@ -39,8 +39,7 @@ export const Card = memo<CardProps>(
         {children}
       </div>
     );
-  }
+  },
 );
 
 Card.displayName = "Card";
-

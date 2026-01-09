@@ -47,35 +47,22 @@ const careerItems: CareerItem[] = [
 
 const CareerCard = memo<{ item: CareerItem; isLast: boolean }>(
   ({ item, isLast }) => (
-    <div className="relative pl-8 pb-8 group">
+    <div className="group relative pb-8 pl-8">
       {/* Timeline line */}
       {!isLast && (
-        <div className="absolute left-[11px] top-6 bottom-0 w-px bg-border group-hover:bg-primary/30 transition-colors duration-normal" />
+        <div className="bg-border group-hover:bg-primary/30 duration-normal absolute top-6 bottom-0 left-[11px] w-px transition-colors" />
       )}
 
       {/* Timeline dot */}
       <div
-        className={`
-        absolute left-0 top-1.5
-        w-6 h-6
-        rounded-full
-        border-2
-        flex items-center justify-center
-        transition-all duration-normal
-        ${
+        className={`duration-normal absolute top-1.5 left-0 flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all ${
           item.type === "work"
             ? "border-primary bg-primary/10 group-hover:bg-primary group-hover:border-primary"
             : "border-secondary bg-secondary/10 group-hover:bg-secondary group-hover:border-secondary"
-        }
-      `}
+        } `}
       >
         <div
-          className={`
-          w-2 h-2 rounded-full
-          ${item.type === "work" ? "bg-primary" : "bg-secondary"}
-          group-hover:bg-white
-          transition-colors duration-normal
-        `}
+          className={`h-2 w-2 rounded-full ${item.type === "work" ? "bg-primary" : "bg-secondary"} duration-normal transition-colors group-hover:bg-white`}
         />
       </div>
 
@@ -83,34 +70,29 @@ const CareerCard = memo<{ item: CareerItem; isLast: boolean }>(
       <Card
         variant="default"
         padding="lg"
-        className="hover:shadow-md hover:border-primary/30 transition-all duration-normal"
+        className="hover:border-primary/30 duration-normal transition-all hover:shadow-md"
       >
         {/* Header */}
-        <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
+        <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
           <div>
-            <h3 className="text-lg font-semibold text-foreground">
+            <h3 className="text-foreground text-lg font-semibold">
               {item.title}
             </h3>
-            <p className="text-sm text-secondary">{item.organization}</p>
+            <p className="text-secondary text-sm">{item.organization}</p>
           </div>
           <span
-            className={`
-            px-3 py-1
-            text-xs font-medium
-            rounded-sm
-            ${
+            className={`rounded-sm px-3 py-1 text-xs font-medium ${
               item.type === "work"
                 ? "bg-primary/10 text-primary"
                 : "bg-secondary/10 text-secondary"
-            }
-          `}
+            } `}
           >
             {item.period}
           </span>
         </div>
 
         {/* Description */}
-        <p className="text-sm text-secondary leading-relaxed mb-4">
+        <p className="text-secondary mb-4 text-sm leading-relaxed">
           {item.description}
         </p>
 
@@ -126,7 +108,7 @@ const CareerCard = memo<{ item: CareerItem; isLast: boolean }>(
         )}
       </Card>
     </div>
-  )
+  ),
 );
 
 CareerCard.displayName = "CareerCard";
@@ -135,10 +117,7 @@ export const CareerSection = memo(() => {
   return (
     <section id="career" className="section bg-surface-elevated/50">
       <div className="container mx-auto px-6">
-        <SectionTitle
-          title="Career"
-          subtitle="저의 경력과 학력 사항입니다."
-        />
+        <SectionTitle title="Career" subtitle="저의 경력과 학력 사항입니다." />
 
         <div className="max-w-3xl">
           {careerItems.map((item, index) => (

@@ -6,7 +6,7 @@ import {
   SkillsSection,
   ProjectsSection,
   CareerSection,
-} from "@/features";
+} from "@/widgets";
 
 export default function HomePage() {
   return (

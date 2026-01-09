@@ -77,7 +77,7 @@ export const ProjectsSection = memo(() => {
   return (
     <section id="projects" className="section">
       <div className="container mx-auto px-6">
-        <div className="flex items-end justify-between mb-12">
+        <div className="mb-12 flex items-end justify-between">
           <SectionTitle
             title="My Best Projects"
             subtitle="직접 기획하고 개발한 프로젝트들입니다."
@@ -85,26 +85,19 @@ export const ProjectsSection = memo(() => {
           />
 
           {/* Slider navigation */}
-          <div className="hidden sm:flex items-center gap-2">
+          <div className="hidden items-center gap-2 sm:flex">
             <button
               onClick={() => scroll("left")}
               disabled={!canScrollLeft}
-              className={`
-                w-10 h-10
-                flex items-center justify-center
-                border border-border
-                rounded-md
-                transition-all duration-fast
-                ${
-                  canScrollLeft
-                    ? "text-foreground hover:bg-surface-elevated hover:border-primary"
-                    : "text-muted cursor-not-allowed"
-                }
-              `}
+              className={`border-border duration-fast flex h-10 w-10 items-center justify-center rounded-md border transition-all ${
+                canScrollLeft
+                  ? "text-foreground hover:bg-surface-elevated hover:border-primary"
+                  : "text-muted cursor-not-allowed"
+              } `}
               aria-label="Previous projects"
             >
               <svg
-                className="w-5 h-5"
+                className="h-5 w-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -120,22 +113,15 @@ export const ProjectsSection = memo(() => {
             <button
               onClick={() => scroll("right")}
               disabled={!canScrollRight}
-              className={`
-                w-10 h-10
-                flex items-center justify-center
-                border border-border
-                rounded-md
-                transition-all duration-fast
-                ${
-                  canScrollRight
-                    ? "text-foreground hover:bg-surface-elevated hover:border-primary"
-                    : "text-muted cursor-not-allowed"
-                }
-              `}
+              className={`border-border duration-fast flex h-10 w-10 items-center justify-center rounded-md border transition-all ${
+                canScrollRight
+                  ? "text-foreground hover:bg-surface-elevated hover:border-primary"
+                  : "text-muted cursor-not-allowed"
+              } `}
               aria-label="Next projects"
             >
               <svg
-                className="w-5 h-5"
+                className="h-5 w-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -155,14 +141,7 @@ export const ProjectsSection = memo(() => {
         <div
           ref={scrollContainerRef}
           onScroll={updateScrollButtons}
-          className="
-            flex gap-6
-            overflow-x-auto
-            scrollbar-hide
-            -mx-6 px-6
-            pb-4
-            snap-x snap-mandatory
-          "
+          className="scrollbar-hide -mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
@@ -171,7 +150,7 @@ export const ProjectsSection = memo(() => {
           {projects.map((project) => (
             <div
               key={project.id}
-              className="flex-shrink-0 w-[320px] sm:w-[360px] snap-start"
+              className="w-[320px] flex-shrink-0 snap-start sm:w-[360px]"
             >
               <ProjectCard project={project} />
             </div>
@@ -182,17 +161,11 @@ export const ProjectsSection = memo(() => {
         <div className="mt-8 text-center">
           <a
             href="#"
-            className="
-              inline-flex items-center gap-2
-              text-sm font-medium
-              text-primary
-              hover:text-primary-dark
-              transition-colors duration-fast
-            "
+            className="text-primary hover:text-primary-dark duration-fast inline-flex items-center gap-2 text-sm font-medium transition-colors"
           >
             모든 프로젝트 보기
             <svg
-              className="w-4 h-4"
+              className="h-4 w-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"

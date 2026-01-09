@@ -19,26 +19,18 @@ export const ImagePlaceholder = memo<ImagePlaceholderProps>(
       wide: "aspect-[2/1]",
     };
 
-    const sizeStyles = width || height 
-      ? `${width ? `w-[${width}]` : ""} ${height ? `h-[${height}]` : ""}`.trim()
-      : "w-full";
+    const sizeStyles =
+      width || height
+        ? `${width ? `w-[${width}]` : ""} ${height ? `h-[${height}]` : ""}`.trim()
+        : "w-full";
 
     return (
       <div
-        className={`
-          ${sizeStyles}
-          ${aspectRatios[aspectRatio]}
-          bg-surface-elevated 
-          border border-border 
-          rounded-md 
-          flex items-center justify-center
-          overflow-hidden
-          ${className}
-        `}
+        className={` ${sizeStyles} ${aspectRatios[aspectRatio]} bg-surface-elevated border-border flex items-center justify-center overflow-hidden rounded-md border ${className} `}
       >
-        <div className="flex flex-col items-center gap-2 text-tertiary">
+        <div className="text-tertiary flex flex-col items-center gap-2">
           <svg
-            className="w-8 h-8 opacity-40"
+            className="h-8 w-8 opacity-40"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -54,8 +46,7 @@ export const ImagePlaceholder = memo<ImagePlaceholderProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 ImagePlaceholder.displayName = "ImagePlaceholder";
-

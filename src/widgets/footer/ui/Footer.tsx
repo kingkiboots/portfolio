@@ -7,11 +7,11 @@ export const Footer = memo(() => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer id="contact" className="bg-surface-elevated border-t border-border">
+    <footer id="contact" className="bg-surface-elevated border-border border-t">
       {/* Contact Section */}
       <div className="container mx-auto px-6 py-16 sm:py-20">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-2xl sm:text-3xl font-semibold text-foreground mb-4">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-foreground mb-4 text-2xl font-semibold sm:text-3xl">
             Get in Touch
           </h2>
           <p className="text-secondary mb-8 leading-relaxed">
@@ -23,21 +23,10 @@ export const Footer = memo(() => {
           {/* Email CTA */}
           <a
             href="mailto:example@email.com"
-            className="
-              inline-flex items-center justify-center gap-2
-              h-12 px-8
-              text-base font-medium
-              bg-primary text-white
-              hover:bg-primary-dark
-              rounded-md
-              transition-all duration-fast
-              shadow-md hover:shadow-lg
-              active:scale-[0.98]
-              mb-8
-            "
+            className="bg-primary hover:bg-primary-dark duration-fast mb-8 inline-flex h-12 items-center justify-center gap-2 rounded-md px-8 text-base font-medium text-white shadow-md transition-all hover:shadow-lg active:scale-[0.98]"
           >
             <svg
-              className="w-5 h-5"
+              className="h-5 w-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -62,32 +51,28 @@ export const Footer = memo(() => {
       </div>
 
       {/* Divider */}
-      <div className="border-t border-border" />
+      <div className="border-border border-t" />
 
       {/* Bottom */}
       <div className="container mx-auto px-6 py-8">
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           {/* Logo */}
-          <div className="text-lg font-semibold tracking-tight text-foreground">
+          <div className="text-foreground text-lg font-semibold tracking-tight">
             GH.Kim
           </div>
 
           {/* Credits */}
-          <p className="text-sm text-tertiary text-center leading-relaxed">
-            Designed in{" "}
-            <span className="text-secondary">Freeform</span> and coded in{" "}
-            <span className="text-secondary">Cursor</span>.
+          <p className="text-tertiary text-center text-sm leading-relaxed">
+            Designed in <span className="text-secondary">Freeform</span> and
+            coded in <span className="text-secondary">Cursor</span>.
             <br className="sm:hidden" />
             <span className="hidden sm:inline"> </span>
-            Built with{" "}
-            <span className="text-secondary">Next.js</span> and{" "}
+            Built with <span className="text-secondary">Next.js</span> and{" "}
             <span className="text-secondary">Tailwind CSS</span>.
           </p>
 
           {/* Copyright */}
-          <p className="text-sm text-tertiary">
-            © {currentYear} GH.Kim
-          </p>
+          <p className="text-tertiary text-sm">© {currentYear} GH.Kim</p>
         </div>
       </div>
     </footer>

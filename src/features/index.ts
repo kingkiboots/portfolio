@@ -1,6 +1,6 @@
-// Features exports
-export { HeroSection } from "./hero";
-export { SkillsSection } from "./skills";
-export { ProjectsSection } from "./projects";
-export { CareerSection } from "./career";
-
+// Features exports - 비즈니스 로직이 있는 기능들
+// 현재는 비어있음. 나중에 다음과 같은 기능들이 추가될 수 있음:
+// - 프로젝트 필터링/검색
+// - 컨택트 폼 제출
+// - 다크모드 토글
+// - 언어 변경

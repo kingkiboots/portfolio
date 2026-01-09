@@ -29,7 +29,7 @@ const skillCategories: SkillCategory[] = [
 
 const SkillCard = memo<{ category: SkillCategory }>(({ category }) => (
   <Card variant="elevated" padding="lg" className="h-full hover:shadow-xl">
-    <h3 className="text-lg font-semibold text-foreground mb-4">
+    <h3 className="text-foreground mb-4 text-lg font-semibold">
       {category.title}
     </h3>
     <div className="flex flex-wrap gap-2">
@@ -53,7 +53,7 @@ export const SkillsSection = memo(() => {
           subtitle="주로 사용하는 기술 스택입니다. 새로운 기술을 배우는 것을 즐깁니다."
         />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {skillCategories.map((category) => (
             <SkillCard key={category.title} category={category} />
           ))}
@@ -62,11 +62,11 @@ export const SkillsSection = memo(() => {
         {/* Additional info with liquid glass effect */}
         <div className="mt-12">
           <div className="liquid-glass rounded-lg p-6 sm:p-8">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
               <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-md bg-primary/10 flex items-center justify-center">
+                <div className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-md">
                   <svg
-                    className="w-6 h-6 text-primary"
+                    className="text-primary h-6 w-6"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -81,12 +81,12 @@ export const SkillsSection = memo(() => {
                 </div>
               </div>
               <div>
-                <h4 className="text-base font-semibold text-foreground mb-1">
+                <h4 className="text-foreground mb-1 text-base font-semibold">
                   계속 성장하고 있습니다
                 </h4>
-                <p className="text-sm text-secondary leading-relaxed">
-                  현재 Next.js App Router, 서버 컴포넌트, 그리고 웹 성능 최적화에
-                  대해 깊이 공부하고 있습니다.
+                <p className="text-secondary text-sm leading-relaxed">
+                  현재 Next.js App Router, 서버 컴포넌트, 그리고 웹 성능
+                  최적화에 대해 깊이 공부하고 있습니다.
                 </p>
               </div>
             </div>

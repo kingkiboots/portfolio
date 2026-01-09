@@ -18,18 +18,15 @@ export const SectionTitle = memo<SectionTitleProps>(
 
     return (
       <div className={`mb-12 ${alignStyles[align]} ${className}`}>
-        <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight text-foreground">
+        <h2 className="text-foreground text-2xl font-semibold tracking-tight sm:text-3xl">
           {title}
         </h2>
         {subtitle && (
-          <p className="mt-3 text-base text-secondary max-w-2xl">
-            {subtitle}
-          </p>
+          <p className="text-secondary mt-3 max-w-2xl text-base">{subtitle}</p>
         )}
       </div>
     );
-  }
+  },
 );
 
 SectionTitle.displayName = "SectionTitle";
-

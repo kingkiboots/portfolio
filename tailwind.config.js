@@ -1,10 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
 module.exports = {
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./app/**/*.{js,ts,jsx,tsx,mdx}", "./src/**/*.{js,ts,jsx,tsx,mdx}"],
   theme: {
     extend: {
       colors: {
@@ -53,7 +50,13 @@ module.exports = {
         "2xl": "var(--shadow-2xl)",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "var(--font-pretendard)", "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: [
+          "var(--font-inter)",
+          "var(--font-pretendard)",
+          "ui-sans-serif",
+          "system-ui",
+          "sans-serif",
+        ],
       },
       spacing: {
         section: "var(--spacing-section)",
