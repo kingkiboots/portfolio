@@ -1,8 +1,11 @@
-// Widgets exports - UI 블록, 섹션들
+// Widgets exports
 export { Header } from "./header";
 export { Footer } from "./footer";
-export { HeroSection } from "./hero";
-export { SkillsSection } from "./skills";
-export { ProjectsSection } from "./projects";
-export { CareerSection } from "./career";
 
+// Home page widgets
+export {
+  HeroSection,
+  SkillsSection,
+  ProjectsSection,
+  CareerSection,
+} from "./home";
