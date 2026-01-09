@@ -1,4 +1,4 @@
-import HomePage from "@/pages/home";
+import HomePage from "@/views/home";
 import React from "react";
 
 const Page = () => {
