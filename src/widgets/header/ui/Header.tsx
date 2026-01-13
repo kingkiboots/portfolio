@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo, useState, useEffect } from "react";
+import React, { memo, useState, useEffect, useCallback } from "react";
 import Link from "next/link";
 
 const navItems = [
@@ -22,6 +22,14 @@ export const Header = memo(() => {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const handleMobileMenuClick = () => {
+    setIsMobileMenuOpen((prev) => !prev);
+  };
+
+  const handleMobileMenuClose = useCallback(() => {
+    setIsMobileMenuOpen(false);
   }, []);
 
   return (
@@ -65,7 +73,7 @@ export const Header = memo(() => {
 
         {/* Mobile Menu Button */}
         <button
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          onClick={handleMobileMenuClick}
           className="text-foreground hover:bg-surface-elevated duration-fast flex h-10 w-10 items-center justify-center rounded-md transition-colors md:hidden"
           aria-label="Toggle menu"
         >
@@ -104,7 +112,7 @@ export const Header = memo(() => {
               <li key={item.href}>
                 <a
                   href={item.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={handleMobileMenuClose}
                   className="text-secondary hover:text-foreground hover:bg-surface-elevated duration-fast block rounded-md px-4 py-3 text-sm font-medium transition-colors"
                 >
                   {item.label}
@@ -114,7 +122,7 @@ export const Header = memo(() => {
           </ul>
           <a
             href="#contact"
-            onClick={() => setIsMobileMenuOpen(false)}
+            onClick={handleMobileMenuClose}
             className="bg-primary hover:bg-primary-dark duration-fast mt-4 flex h-10 w-full items-center justify-center rounded-md text-sm font-medium text-white transition-all"
           >
             Contact
