@@ -22,7 +22,7 @@ export const Footer = memo(() => {
 
           {/* Email CTA */}
           <a
-            href="mailto:example@email.com"
+            href={`mailto:${ENV.EMAIL}`}
             className="bg-primary hover:bg-primary-dark duration-fast mb-8 inline-flex h-12 items-center justify-center gap-2 rounded-md px-8 text-base font-medium text-white shadow-md transition-all hover:shadow-lg active:scale-[0.98]"
           >
             <svg
@@ -43,9 +43,9 @@ export const Footer = memo(() => {
 
           {/* Social Links */}
           <div className="flex items-center justify-center gap-2">
-            <SocialIcon type="github" href="https://github.com" />
-            <SocialIcon type="linkedin" href="https://linkedin.com" />
-            <SocialIcon type="blog" href="https://tistory.com" />
+            <SocialIcon type="github" href={ENV.URL_GITHUB} />
+            <SocialIcon type="linkedin" href={ENV.URL_LINKEDIN} />
+            <SocialIcon type="blog" href={ENV.URL_BLOG} />
           </div>
         </div>
       </div>

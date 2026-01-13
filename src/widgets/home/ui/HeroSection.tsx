@@ -2,6 +2,7 @@
 
 import React, { memo } from "react";
 import { ImagePlaceholder, SocialIcon } from "@/shared/ui";
+import { ENV } from "@/shared/env";
 
 export const HeroSection = memo(() => {
   return (
@@ -74,10 +75,10 @@ export const HeroSection = memo(() => {
 
             {/* Social Links */}
             <div className="flex items-center gap-1">
-              <SocialIcon type="github" href="https://github.com" />
-              <SocialIcon type="linkedin" href="https://linkedin.com" />
-              <SocialIcon type="blog" href="https://tistory.com" />
-              <SocialIcon type="email" href="mailto:example@email.com" />
+              <SocialIcon type="github" href={ENV.URL_GITHUB} />
+              <SocialIcon type="linkedin" href={ENV.URL_LINKEDIN} />
+              <SocialIcon type="blog" href={ENV.URL_BLOG} />
+              <SocialIcon type="email" href={`mailto:${ENV.EMAIL}`} />
             </div>
           </div>
 
@@ -123,4 +124,3 @@ export const HeroSection = memo(() => {
 });
 
 HeroSection.displayName = "HeroSection";
-
