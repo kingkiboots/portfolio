@@ -38,7 +38,7 @@ export const Header = memo(() => {
           href="/"
           className="text-foreground hover:text-primary duration-fast text-lg font-semibold tracking-tight transition-colors"
         >
-          GH.Kim
+          Portfolio
         </Link>
 
         {/* Desktop Navigation */}

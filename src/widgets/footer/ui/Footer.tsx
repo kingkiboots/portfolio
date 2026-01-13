@@ -1,7 +1,8 @@
 "use client";
 
 import React, { memo } from "react";
-import { SocialIcon, Card } from "@/shared/ui";
+import { SocialIcon } from "@/shared/ui";
+import { ENV } from "@/shared/env";
 
 export const Footer = memo(() => {
   const currentYear = new Date().getFullYear();
@@ -58,7 +59,7 @@ export const Footer = memo(() => {
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           {/* Logo */}
           <div className="text-foreground text-lg font-semibold tracking-tight">
-            GH.Kim
+            Kihyeon Kim
           </div>
 
           {/* Credits */}
@@ -72,7 +73,7 @@ export const Footer = memo(() => {
           </p>
 
           {/* Copyright */}
-          <p className="text-tertiary text-sm">© {currentYear} GH.Kim</p>
+          <p className="text-tertiary text-sm">© {currentYear} Kihyeon Kim</p>
         </div>
       </div>
     </footer>
