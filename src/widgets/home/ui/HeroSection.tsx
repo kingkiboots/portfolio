@@ -21,18 +21,17 @@ export const HeroSection = memo(() => {
           {/* Text Content */}
           <div className="order-2 lg:order-1">
             {/* Greeting */}
-            <p className="text-primary mb-4 text-sm font-medium tracking-wide">
+            {/* <p className="text-primary mb-4 text-sm font-medium tracking-wide">
               안녕하세요, 저는
-            </p>
+            </p> */}
 
             {/* Name */}
             <h1 className="text-foreground mb-4 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
               김기현
-              <span className="text-primary">.</span>
+              {/* <span className="text-primary">.</span> */}
             </h1>
-
             {/* Title */}
-            <h2 className="text-secondary mb-6 text-xl font-medium sm:text-2xl">
+            <h2 className="text-primary mb-6 text-xl font-medium sm:text-2xl">
               Web Frontend Developer
             </h2>
 
@@ -99,13 +98,14 @@ export const HeroSection = memo(() => {
                   />
                 </div>
 
+                {/* 구직중이라는 소리인데 뭔가 없어 보임 */}
                 {/* Status badge */}
-                <div className="liquid-glass-primary text-primary absolute -right-3 -bottom-3 rounded-md px-4 py-2 text-sm font-medium">
+                {/* <div className="liquid-glass-primary text-primary absolute -right-3 -bottom-3 rounded-md px-4 py-2 text-sm font-medium">
                   <span className="flex items-center gap-2">
                     <span className="bg-secondary h-2 w-2 animate-pulse rounded-full" />
-                    Open to work
+                    Open to Opportunities
                   </span>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>
@@ -115,7 +115,14 @@ export const HeroSection = memo(() => {
         <div className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 lg:block">
           <div className="text-tertiary flex flex-col items-center gap-2">
             <span className="text-xs tracking-wider">SCROLL</span>
-            <div className="from-border h-12 w-px bg-linear-to-b to-transparent" />
+            <div className="relative h-12 w-5">
+              {/* Track line */}
+              <div className="from-border absolute left-1/2 h-full w-px -translate-x-1/2 bg-linear-to-b to-transparent" />
+              {/* Animated drop */}
+              <div className="scroll-drop absolute top-0 left-1/2 -translate-x-1/2">
+                <div className="liquid-glass h-3 w-3 rounded-full" />
+              </div>
+            </div>
           </div>
         </div>
       </div>

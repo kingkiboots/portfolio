@@ -227,6 +227,28 @@ img {
   transition: opacity var(--transition-normal);
 }
 
+/* Scroll indicator drop animation */
+@keyframes scroll-drop {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(48px);
+    opacity: 0;
+  }
+}
+
+.scroll-drop {
+  animation: scroll-drop 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
 /* ============================================
    TYPOGRAPHY UTILITIES
    ============================================ */
