@@ -19,14 +19,14 @@ export const HeroSection = memo(() => {
       <div className="container mx-auto px-6">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Text Content */}
-          <div className="order-2 lg:order-1">
+          <div className="order-2 flex h-full flex-col lg:order-1">
             {/* Greeting */}
             {/* <p className="text-primary mb-4 text-sm font-medium tracking-wide">
               안녕하세요, 저는
             </p> */}
 
             {/* Name */}
-            <h1 className="text-foreground mb-4 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="text-foreground mt-auto mb-4 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
               김기현
               {/* <span className="text-primary">.</span> */}
             </h1>
