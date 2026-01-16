@@ -1,4 +1,4 @@
-export const ENV: Record<string, string> = {
+export const ENV = {
   EMAIL: process.env.EMAIL ?? "",
   URL_GITHUB: process.env.URL_GITHUB ?? "",
   URL_LINKEDIN: process.env.URL_LINKEDIN ?? "",
