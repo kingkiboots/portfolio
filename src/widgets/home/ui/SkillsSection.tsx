@@ -10,20 +10,46 @@ interface SkillCategory {
 
 const skillCategories: SkillCategory[] = [
   {
-    title: "Frontend",
-    skills: ["React", "Next.js", "TypeScript", "JavaScript", "HTML/CSS"],
+    title: "Languages",
+    skills: ["Typescript", "Javascript", "Java"],
   },
   {
-    title: "Styling",
-    skills: ["Tailwind CSS", "Styled Components", "SCSS", "CSS Modules"],
+    title: "Frontend",
+    skills: ["React", "Next.js", "Tailwind CSS", "MUI", "HTML/CSS"],
   },
   {
     title: "State Management",
-    skills: ["Redux", "Zustand", "React Query", "Context API"],
+    skills: ["Zustand", "React Query", "Recoil", "Context API"],
+  },
+  {
+    title: "Build & CI/CD",
+    skills: [
+      "Vite",
+      "Turborepo",
+      "Webpack",
+      "Docker",
+      "Gitlab CI/CD",
+      "Github Actions",
+    ],
+  },
+  {
+    title: "Testing & Analysis",
+    skills: ["Playwright", "Vitest", "Puppeteer", "Google Analytics"],
+  },
+  {
+    title: "Backend",
+    skills: [
+      "Spring Boot",
+      "JPA",
+      "MyBatis",
+      "JDBC",
+      "OracleSQL",
+      "PostgreSQL",
+    ],
   },
   {
     title: "Tools & Others",
-    skills: ["Git", "Figma", "Vercel", "REST API", "Agile/Scrum"],
+    skills: ["Git", "Figma"],
   },
 ];
 
@@ -85,8 +111,8 @@ export const SkillsSection = memo(() => {
                   계속 성장하고 있습니다
                 </h4>
                 <p className="text-secondary text-sm leading-relaxed">
-                  현재 Next.js App Router, 서버 컴포넌트, 그리고 웹 성능
-                  최적화에 대해 깊이 공부하고 있습니다.
+                  현재 Next.js App Router, 서버 컴포넌트, 그리고 모노레포와
+                  테스팅에 대해 깊이 공부하고 있습니다.
                 </p>
               </div>
             </div>
@@ -98,4 +124,3 @@ export const SkillsSection = memo(() => {
 });
 
 SkillsSection.displayName = "SkillsSection";
-
