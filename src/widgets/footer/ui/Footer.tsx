@@ -1,6 +1,7 @@
 "use client";
 
 import React, { memo } from "react";
+import * as Separator from "@radix-ui/react-separator";
 import { SocialIcon } from "@/shared/ui";
 import { ENV } from "@/shared/env";
 
@@ -8,11 +9,19 @@ export const Footer = memo(() => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer id="contact" className="bg-surface-elevated border-border border-t">
+    <footer
+      id="contact"
+      className="bg-surface-elevated border-border border-t"
+      role="contentinfo"
+      aria-label="연락처 및 사이트 정보"
+    >
       {/* Contact Section */}
-      <div className="container mx-auto px-6 py-16 sm:py-20">
+      <section className="container mx-auto px-6 py-16 sm:py-20" aria-labelledby="contact-heading">
         <div className="mx-auto max-w-2xl text-center">
-          <h2 className="text-foreground mb-4 text-2xl font-semibold sm:text-3xl">
+          <h2
+            id="contact-heading"
+            className="text-foreground mb-4 text-2xl font-semibold sm:text-3xl"
+          >
             Get in Touch
           </h2>
           <p className="text-secondary mb-8 leading-relaxed">
@@ -24,13 +33,15 @@ export const Footer = memo(() => {
           {/* Email CTA */}
           <a
             href={`mailto:${ENV.EMAIL}`}
-            className="bg-primary hover:bg-primary-dark duration-fast mb-8 inline-flex h-12 items-center justify-center gap-2 rounded-md px-8 text-base font-medium text-white shadow-md transition-all hover:shadow-lg active:scale-[0.98]"
+            className="bg-primary hover:bg-primary-dark duration-fast mb-8 inline-flex h-12 items-center justify-center gap-2 rounded-md px-8 text-base font-medium text-white shadow-md transition-all hover:shadow-lg active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            aria-label="이메일 보내기"
           >
             <svg
               className="h-5 w-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
@@ -43,16 +54,28 @@ export const Footer = memo(() => {
           </a>
 
           {/* Social Links */}
-          <div className="flex items-center justify-center gap-2">
-            <SocialIcon type="github" href={ENV.URL_GITHUB} />
-            <SocialIcon type="linkedin" href={ENV.URL_LINKEDIN} />
-            <SocialIcon type="blog" href={ENV.URL_BLOG} />
-          </div>
+          <nav aria-label="소셜 미디어 링크">
+            <ul className="flex items-center justify-center gap-2" role="list">
+              <li>
+                <SocialIcon type="github" href={ENV.URL_GITHUB} />
+              </li>
+              <li>
+                <SocialIcon type="linkedin" href={ENV.URL_LINKEDIN} />
+              </li>
+              <li>
+                <SocialIcon type="blog" href={ENV.URL_BLOG} />
+              </li>
+            </ul>
+          </nav>
         </div>
-      </div>
+      </section>
 
-      {/* Divider */}
-      <div className="border-border border-t" />
+      {/* Divider - Radix Separator */}
+      <Separator.Root
+        className="bg-border h-px w-full"
+        decorative
+        orientation="horizontal"
+      />
 
       {/* Bottom */}
       <div className="container mx-auto px-6 py-8">
@@ -64,8 +87,8 @@ export const Footer = memo(() => {
 
           {/* Credits */}
           <p className="text-tertiary text-center text-sm leading-relaxed">
-            Designed in <span className="text-secondary">Freeform</span> and
-            coded in <span className="text-secondary">Cursor</span>.
+            Roughly designed in <span className="text-secondary">Freeform</span>{" "}
+            and coded in <span className="text-secondary">Cursor</span>.
             <br className="sm:hidden" />
             <span className="hidden sm:inline"> </span>
             Built with <span className="text-secondary">Next.js</span> and{" "}
@@ -73,7 +96,9 @@ export const Footer = memo(() => {
           </p>
 
           {/* Copyright */}
-          <p className="text-tertiary text-sm">© {currentYear} Kihyeon Kim</p>
+          <p className="text-tertiary text-sm">
+            <small>© {currentYear} Kihyeon Kim</small>
+          </p>
         </div>
       </div>
     </footer>

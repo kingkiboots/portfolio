@@ -47,10 +47,16 @@ const careerItems: CareerItem[] = [
 
 const CareerCard = memo<{ item: CareerItem; isLast: boolean }>(
   ({ item, isLast }) => (
-    <div className="group relative pb-8 pl-8">
+    <article
+      className="group relative pb-8 pl-8"
+      aria-labelledby={`career-${item.id}-title`}
+    >
       {/* Timeline line */}
       {!isLast && (
-        <div className="bg-border group-hover:bg-primary/30 duration-normal absolute top-6 bottom-0 left-[11px] w-px transition-colors" />
+        <div
+          className="bg-border group-hover:bg-primary/30 duration-normal absolute top-6 bottom-0 left-[11px] w-px transition-colors"
+          aria-hidden="true"
+        />
       )}
 
       {/* Timeline dot */}
@@ -60,6 +66,7 @@ const CareerCard = memo<{ item: CareerItem; isLast: boolean }>(
             ? "border-primary bg-primary/10 group-hover:bg-primary group-hover:border-primary"
             : "border-secondary bg-secondary/10 group-hover:bg-secondary group-hover:border-secondary"
         } `}
+        aria-hidden="true"
       >
         <div
           className={`h-2 w-2 rounded-full ${item.type === "work" ? "bg-primary" : "bg-secondary"} duration-normal transition-colors group-hover:bg-white`}
@@ -73,23 +80,27 @@ const CareerCard = memo<{ item: CareerItem; isLast: boolean }>(
         className="hover:border-primary/30 duration-normal transition-all hover:shadow-md"
       >
         {/* Header */}
-        <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
+        <header className="mb-3 flex flex-wrap items-start justify-between gap-2">
           <div>
-            <h3 className="text-foreground text-lg font-semibold">
+            <h3
+              id={`career-${item.id}-title`}
+              className="text-foreground text-lg font-semibold"
+            >
               {item.title}
             </h3>
             <p className="text-secondary text-sm">{item.organization}</p>
           </div>
-          <span
+          <time
             className={`rounded-sm px-3 py-1 text-xs font-medium ${
               item.type === "work"
                 ? "bg-primary/10 text-primary"
                 : "bg-secondary/10 text-secondary"
             } `}
+            dateTime={item.period}
           >
             {item.period}
-          </span>
-        </div>
+          </time>
+        </header>
 
         {/* Description */}
         <p className="text-secondary mb-4 text-sm leading-relaxed">
@@ -98,28 +109,42 @@ const CareerCard = memo<{ item: CareerItem; isLast: boolean }>(
 
         {/* Skills */}
         {item.skills && item.skills.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
+          <ul
+            className="flex flex-wrap gap-1.5"
+            role="list"
+            aria-label={`${item.title}에서 사용한 기술`}
+          >
             {item.skills.map((skill) => (
-              <Tag key={skill} variant="default" size="sm">
-                {skill}
-              </Tag>
+              <li key={skill}>
+                <Tag variant="default" size="sm">
+                  {skill}
+                </Tag>
+              </li>
             ))}
-          </div>
+          </ul>
         )}
       </Card>
-    </div>
-  ),
+    </article>
+  )
 );
 
 CareerCard.displayName = "CareerCard";
 
 export const CareerSection = memo(() => {
   return (
-    <section id="career" className="section bg-surface-elevated/50">
+    <section
+      id="career"
+      className="section bg-surface-elevated/50"
+      aria-labelledby="career-heading"
+    >
       <div className="container mx-auto px-6">
         <SectionTitle title="Career" subtitle="저의 경력과 학력 사항입니다." />
 
-        <div className="max-w-3xl">
+        <div
+          className="max-w-3xl"
+          role="feed"
+          aria-label="경력 및 학력 타임라인"
+        >
           {careerItems.map((item, index) => (
             <CareerCard
               key={item.id}
@@ -134,4 +159,5 @@ export const CareerSection = memo(() => {
 });
 
 CareerSection.displayName = "CareerSection";
+
 

@@ -1,0 +1,11 @@
+chore: Radix UI 패키지 설치
+
+Why: 웹 접근성(a11y) 개선을 위해 Radix UI 도입
+What: 다음 Radix UI 패키지들을 설치
+  - @radix-ui/react-navigation-menu: 키보드 네비게이션 지원 메뉴
+  - @radix-ui/react-dialog: 모달/시트용 다이얼로그 (포커스 트랩, ESC 닫기)
+  - @radix-ui/react-tooltip: 접근성 있는 툴팁 (스크린리더 지원)
+  - @radix-ui/react-slot: asChild 패턴으로 시맨틱 HTML 유지
+  - @radix-ui/react-visually-hidden: 스크린리더 전용 숨김 텍스트
+How: pnpm add로 최신 버전 설치
+

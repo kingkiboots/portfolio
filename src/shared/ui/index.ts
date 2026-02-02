@@ -1,5 +1,5 @@
 // Shared UI Components
-export { Button } from "./Button";
+export { Button, getButtonClassName } from "./Button";
 export { Card } from "./Card";
 export { SectionTitle } from "./SectionTitle";
 export { Tag } from "./Tag";

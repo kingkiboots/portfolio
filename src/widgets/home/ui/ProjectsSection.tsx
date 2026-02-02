@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo, useRef, useState } from "react";
+import React, { memo, useRef, useState, useCallback } from "react";
 import { SectionTitle } from "@/shared/ui";
 import { ProjectCard, Project } from "./ProjectCard";
 
@@ -55,16 +55,16 @@ export const ProjectsSection = memo(() => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
-  const updateScrollButtons = () => {
+  const updateScrollButtons = useCallback(() => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } =
         scrollContainerRef.current;
       setCanScrollLeft(scrollLeft > 0);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
     }
-  };
+  }, []);
 
-  const scroll = (direction: "left" | "right") => {
+  const scroll = useCallback((direction: "left" | "right") => {
     if (scrollContainerRef.current) {
       const scrollAmount = 400;
       scrollContainerRef.current.scrollBy({
@@ -72,10 +72,10 @@ export const ProjectsSection = memo(() => {
         behavior: "smooth",
       });
     }
-  };
+  }, []);
 
   return (
-    <section id="projects" className="section">
+    <section id="projects" className="section" aria-labelledby="projects-heading">
       <div className="container mx-auto px-6">
         <div className="mb-12 flex items-end justify-between">
           <SectionTitle
@@ -85,22 +85,27 @@ export const ProjectsSection = memo(() => {
           />
 
           {/* Slider navigation */}
-          <div className="hidden items-center gap-2 sm:flex">
+          <div
+            className="hidden items-center gap-2 sm:flex"
+            role="group"
+            aria-label="프로젝트 슬라이더 네비게이션"
+          >
             <button
               onClick={() => scroll("left")}
               disabled={!canScrollLeft}
-              className={`border-border duration-fast flex h-10 w-10 items-center justify-center rounded-md border transition-all ${
+              className={`border-border duration-fast flex h-10 w-10 items-center justify-center rounded-md border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                 canScrollLeft
                   ? "text-foreground hover:bg-surface-elevated hover:border-primary"
                   : "text-muted cursor-not-allowed"
               } `}
-              aria-label="Previous projects"
+              aria-label="이전 프로젝트"
             >
               <svg
                 className="h-5 w-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -113,18 +118,19 @@ export const ProjectsSection = memo(() => {
             <button
               onClick={() => scroll("right")}
               disabled={!canScrollRight}
-              className={`border-border duration-fast flex h-10 w-10 items-center justify-center rounded-md border transition-all ${
+              className={`border-border duration-fast flex h-10 w-10 items-center justify-center rounded-md border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
                 canScrollRight
                   ? "text-foreground hover:bg-surface-elevated hover:border-primary"
                   : "text-muted cursor-not-allowed"
               } `}
-              aria-label="Next projects"
+              aria-label="다음 프로젝트"
             >
               <svg
                 className="h-5 w-5"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
+                aria-hidden="true"
               >
                 <path
                   strokeLinecap="round"
@@ -146,14 +152,18 @@ export const ProjectsSection = memo(() => {
             scrollbarWidth: "none",
             msOverflowStyle: "none",
           }}
+          role="region"
+          aria-label="프로젝트 목록"
+          tabIndex={0}
         >
-          {projects.map((project) => (
-            <div
+          {projects.map((project, index) => (
+            <article
               key={project.id}
-              className="w-[320px] flex-shrink-0 snap-start sm:w-[360px]"
+              className="w-[320px] shrink-0 snap-start sm:w-[360px]"
+              aria-label={`프로젝트 ${index + 1}: ${project.title}`}
             >
               <ProjectCard project={project} />
-            </div>
+            </article>
           ))}
         </div>
 
@@ -161,7 +171,7 @@ export const ProjectsSection = memo(() => {
         <div className="mt-8 text-center">
           <a
             href="#"
-            className="text-primary hover:text-primary-dark duration-fast inline-flex items-center gap-2 text-sm font-medium transition-colors"
+            className="text-primary hover:text-primary-dark duration-fast inline-flex items-center gap-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
           >
             모든 프로젝트 보기
             <svg
@@ -169,6 +179,7 @@ export const ProjectsSection = memo(() => {
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
+              aria-hidden="true"
             >
               <path
                 strokeLinecap="round"
@@ -185,4 +196,3 @@ export const ProjectsSection = memo(() => {
 });
 
 ProjectsSection.displayName = "ProjectsSection";
-

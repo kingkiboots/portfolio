@@ -50,3 +50,4 @@ export const ImagePlaceholder = memo<ImagePlaceholderProps>(
 );
 
 ImagePlaceholder.displayName = "ImagePlaceholder";
+
