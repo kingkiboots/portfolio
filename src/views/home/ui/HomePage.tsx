@@ -10,7 +10,7 @@ import {
 
 export default function HomePage() {
   return (
-    <main className="min-h-screen">
+    <main id="main-content" className="min-h-screen" tabIndex={-1}>
       {/* Hero / About Section */}
       <HeroSection />
 

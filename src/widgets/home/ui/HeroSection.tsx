@@ -12,13 +12,6 @@ export const HeroSection = memo(() => {
       className="relative flex min-h-screen items-center pt-16"
       aria-labelledby="hero-heading"
     >
-      {/* Skip to main content link for keyboard users */}
-      <VisuallyHidden.Root>
-        <a href="#skills" className="skip-link">
-          다음 섹션으로 건너뛰기
-        </a>
-      </VisuallyHidden.Root>
-
       {/* Background decoration - subtle gradient */}
       <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
         <div className="bg-primary/5 absolute top-1/4 -right-1/4 h-[600px] w-[600px] rounded-full blur-3xl" />

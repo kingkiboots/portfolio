@@ -4,6 +4,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { Header } from "@/widgets/header";
 import { Footer } from "@/widgets/footer";
+import { SkipLink } from "@/shared/ui";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -53,6 +54,7 @@ export default function RootLayout({
       className="bg-white scheme-light dark:bg-gray-950 dark:scheme-dark"
     >
       <body className={`${inter.variable} ${pretendard.variable} antialiased`}>
+        <SkipLink />
         <Header />
         {children}
         <Footer />
