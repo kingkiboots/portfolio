@@ -19,7 +19,7 @@ const skillCategories: SkillCategory[] = [
   },
   {
     title: "State Management",
-    skills: ["Zustand", "React Query", "Recoil", "Context API"],
+    skills: ["Zustand", "Tanstack Query", "Recoil", "Context API"],
   },
   {
     title: "Build & CI/CD",
@@ -34,7 +34,13 @@ const skillCategories: SkillCategory[] = [
   },
   {
     title: "Testing & Analysis",
-    skills: ["Playwright", "Vitest", "Puppeteer", "Google Analytics"],
+    skills: [
+      "Storybook",
+      "Playwright",
+      "Vitest",
+      "Puppeteer",
+      "Google Analytics",
+    ],
   },
   {
     title: "Cooperation & Base",
@@ -67,7 +73,11 @@ const SkillCard = memo<{ category: SkillCategory }>(({ category }) => (
     >
       {category.title}
     </h3>
-    <ul className="flex flex-wrap gap-2" role="list" aria-label={`${category.title} 기술 목록`}>
+    <ul
+      className="flex flex-wrap gap-2"
+      role="list"
+      aria-label={`${category.title} 기술 목록`}
+    >
       {category.skills.map((skill) => (
         <li key={skill}>
           <Tag variant="default" size="md">
@@ -83,7 +93,11 @@ SkillCard.displayName = "SkillCard";
 
 export const SkillsSection = memo(() => {
   return (
-    <section id="skills" className="section bg-surface-elevated/50" aria-labelledby="skills-heading">
+    <section
+      id="skills"
+      className="section bg-surface-elevated/50"
+      aria-labelledby="skills-heading"
+    >
       <div className="container mx-auto px-6">
         <SectionTitle
           title="Skills"
