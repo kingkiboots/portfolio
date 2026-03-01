@@ -17,31 +17,33 @@ const careerItems: CareerItem[] = [
   {
     id: "1",
     type: "work",
-    title: "Frontend Developer",
-    organization: "회사명",
-    period: "2024.01 - Present",
+    title: "Frontend Core Developer",
+    organization: "(주)이포넷",
+    period: "2022.10 - Present",
     description:
-      "웹 프론트엔드 개발을 담당하고 있습니다. React와 TypeScript를 사용하여 사용자 친화적인 인터페이스를 구현합니다.",
-    skills: ["React", "TypeScript", "Next.js"],
+      "프론트엔드 아키텍처 설계와 빌드 환경 구축을 담당하고 있으며, 공통 컴포넌트와 라이브러리를 개발하고 있습니다.",
+    skills: [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Turborepo",
+      "Zustand",
+      "Tanstack Query",
+      "Storybook",
+      "Vitest",
+      "HTML/CSS",
+      "MUI",
+      "Git",
+      "Figma",
+    ],
   },
   {
     id: "2",
-    type: "work",
-    title: "Web Developer Intern",
-    organization: "회사명",
-    period: "2023.06 - 2023.12",
-    description:
-      "웹 개발 인턴으로 근무하며 실무 경험을 쌓았습니다. 기존 레거시 코드 리팩토링 및 새로운 기능 개발에 참여했습니다.",
-    skills: ["JavaScript", "Vue.js", "Git"],
-  },
-  {
-    id: "3",
     type: "education",
-    title: "컴퓨터공학과",
-    organization: "대학교",
-    period: "2019.03 - 2024.02",
-    description:
-      "컴퓨터공학을 전공하며 프로그래밍 기초와 소프트웨어 개발 방법론을 학습했습니다.",
+    title: "영미어문학과",
+    organization: "가천대학교",
+    period: "2014.03 - 2022.02",
+    description: "",
   },
 ];
 
@@ -125,7 +127,7 @@ const CareerCard = memo<{ item: CareerItem; isLast: boolean }>(
         )}
       </Card>
     </article>
-  )
+  ),
 );
 
 CareerCard.displayName = "CareerCard";
@@ -159,5 +161,3 @@ export const CareerSection = memo(() => {
 });
 
 CareerSection.displayName = "CareerSection";
-
-
