@@ -202,6 +202,12 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
             </li>
           ))}
         </ul>
+
+        {project.period ? (
+          <p className="text-tertiary mt-4 border-t border-border pt-3 text-xs">
+            {project.period}
+          </p>
+        ) : null}
       </div>
     </Card>
   );

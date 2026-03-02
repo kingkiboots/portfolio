@@ -11,6 +11,7 @@ const projects: Project[] = [
     id: "1",
     title: "케이뱅크 서비스 관리자포털 구축",
     description: "케이뱅크의 SPA 관리자 페이지를 구축하고 있습니다.",
+    period: "2025.12 - 현재",
     tags: [
       "React",
       "Typescript",
@@ -34,6 +35,7 @@ const projects: Project[] = [
     title: "롯데호텔 채널시스템 리뉴얼",
     description:
       "글로벌 호텔 이용객을 대상으로 한 롯데호텔 홈페이지를 리뉴얼하였습니다. 다국어 지원, 호텔 예약 시스템, 호텔 정보 제공 등 다양한 기능을 제공합니다.",
+    period: "2024.04 - 2025.05",
     thumbnail:
       "https://img.lottehotel.com/cms/asset/2025/04/16/26521/link_img.webp",
     tags: [
@@ -60,6 +62,7 @@ const projects: Project[] = [
     title: "이포넷 홈페이지 리뉴얼",
     description:
       "회사 홈페이지를 리뉴얼하는 프로젝트입니다. 다국어를 지원합니다.",
+    period: "2023.10 - 2023.11",
     tags: [
       "React",
       "Typescript",
