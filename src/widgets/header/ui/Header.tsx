@@ -5,6 +5,7 @@ import Link from "next/link";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
+import { useResume } from "@/features/resume";
 
 const navItems = [
   { label: "About", href: "#about" },
@@ -15,6 +16,7 @@ const navItems = [
 ];
 
 export const Header = memo(() => {
+  const { resumeUrl, hasResume } = useResume();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -71,27 +73,30 @@ export const Header = memo(() => {
 
         {/* CTA Buttons - Desktop */}
         <div className="hidden items-center gap-2 md:flex">
-          <button
-            type="button"
-            className="border-border text-foreground hover:bg-surface-elevated hover:border-primary duration-fast inline-flex h-9 items-center justify-center gap-1.5 rounded-md border px-4 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
-            aria-label="이력서 보기"
-          >
-            <svg
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
+          {hasResume ? (
+            <a
+              href={resumeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="border-border text-foreground hover:bg-surface-elevated hover:border-primary duration-fast inline-flex h-9 items-center justify-center gap-1.5 rounded-md border px-4 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-              />
-            </svg>
-            Resume
-          </button>
+              <svg
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              Resume
+            </a>
+          ) : null}
           <a
             href="#contact"
             className="bg-primary hover:bg-primary-dark duration-fast inline-flex h-9 items-center justify-center rounded-md px-4 text-sm font-medium text-white shadow-sm transition-all hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
@@ -183,28 +188,31 @@ export const Header = memo(() => {
                   ))}
                 </ul>
                 <div className="mt-6 flex flex-col gap-2">
-                  <button
-                    type="button"
-                    onClick={handleMobileMenuClose}
-                    className="border-border text-foreground hover:bg-surface-elevated hover:border-primary duration-fast flex h-10 w-full items-center justify-center gap-1.5 rounded-md border text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                    aria-label="이력서 보기"
-                  >
-                    <svg
-                      className="h-4 w-4"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      aria-hidden="true"
+                  {hasResume ? (
+                    <a
+                      href={resumeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={handleMobileMenuClose}
+                      className="border-border text-foreground hover:bg-surface-elevated hover:border-primary duration-fast flex h-10 w-full items-center justify-center gap-1.5 rounded-md border text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                      />
-                    </svg>
-                    Resume
-                  </button>
+                      <svg
+                        className="h-4 w-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        aria-hidden="true"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                        />
+                      </svg>
+                      Resume
+                    </a>
+                  ) : null}
                   <a
                     href="#contact"
                     onClick={handleMobileMenuClose}

@@ -3,9 +3,11 @@
 import React, { memo } from "react";
 import * as Separator from "@radix-ui/react-separator";
 import { SocialIcon } from "@/shared/ui";
+import { useResume } from "@/features/resume";
 import { ENV } from "@/shared/env";
 
 export const Footer = memo(() => {
+  const { resumeUrl, hasResume } = useResume();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -57,29 +59,32 @@ export const Footer = memo(() => {
           </a>
 
           {/* Resume Link */}
-          <div className="mb-8">
-            <button
-              type="button"
-              className="text-secondary hover:text-primary duration-fast group focus-visible:ring-primary focus-visible:ring-offset-background inline-flex items-center gap-1.5 rounded-sm text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
-              aria-label="이력서 보기"
-            >
-              이력서 보기
-              <svg
-                className="duration-fast h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
+          {hasResume ? (
+            <div className="mb-8">
+              <a
+                href={resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-secondary hover:text-primary duration-fast group focus-visible:ring-primary focus-visible:ring-offset-background inline-flex items-center gap-1.5 rounded-sm text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-          </div>
+                이력서 보기
+                <svg
+                  className="duration-fast h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </a>
+            </div>
+          ) : null}
 
           {/* Social Links */}
           <nav aria-label="소셜 미디어 링크">
