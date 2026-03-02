@@ -141,7 +141,7 @@ export const ProjectsSection = memo(() => {
               disabled={!canScrollLeft}
               className={`border-border duration-fast focus-visible:ring-primary focus-visible:ring-offset-background flex h-10 w-10 items-center justify-center rounded-md border transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
                 canScrollLeft
-                  ? "text-foreground hover:bg-surface-elevated hover:border-primary"
+                  ? "text-foreground hover:bg-surface-elevated hover:border-primary cursor-pointer"
                   : "text-muted cursor-not-allowed"
               } `}
               aria-label="이전 프로젝트"
@@ -166,7 +166,7 @@ export const ProjectsSection = memo(() => {
               disabled={!canScrollRight}
               className={`border-border duration-fast focus-visible:ring-primary focus-visible:ring-offset-background flex h-10 w-10 items-center justify-center rounded-md border transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
                 canScrollRight
-                  ? "text-foreground hover:bg-surface-elevated hover:border-primary"
+                  ? "text-foreground hover:bg-surface-elevated hover:border-primary cursor-pointer"
                   : "text-muted cursor-not-allowed"
               } `}
               aria-label="다음 프로젝트"
