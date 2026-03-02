@@ -10,16 +10,19 @@ Next.js 기반 개인 포트폴리오 사이트입니다.
 | Language | TypeScript 5 |
 | UI | React 19, Radix UI |
 | Styling | Tailwind CSS 4 |
+| Linter | ESLint 10 + eslint-plugin-boundaries (FSD 레이어 규칙 강제) |
 | Formatter | Prettier + prettier-plugin-tailwindcss |
+| Package Manager | pnpm |
 | Deploy | GitHub Pages (GitHub Actions) |
 
 ## 시작하기
 
 ```bash
-npm install
-npm run dev        # 개발 서버 (Turbopack)
-npm run build      # 정적 빌드 (out/)
-npm run preview    # 빌드 결과 미리보기
+pnpm install
+pnpm dev           # 개발 서버 (Turbopack)
+pnpm build         # 정적 빌드 (out/)
+pnpm preview       # 빌드 결과 미리보기
+pnpm lint          # ESLint (FSD 레이어 규칙 포함)
 ```
 
 ## 아키텍처
@@ -43,6 +46,7 @@ app → views → widgets → features → entities → shared
 ```
 
 상위 레이어는 하위 레이어만 import할 수 있습니다. 같은 레이어 간 import는 금지입니다.
+이 규칙은 `eslint-plugin-boundaries`로 강제되며, 위반 시 lint 에러가 발생합니다.
 
 ### 슬라이스 구조
 
@@ -77,8 +81,12 @@ features/project-card/          # 슬라이스
 // O — 슬라이스 Public API를 통해 import
 import { useOgImage } from "@/features/project-card";
 
-// X — 내부 세그먼트 직접 import 금지
+// X — 내부 세그먼트 직접 import 금지 (lint error: boundaries/entry-point)
 import { useOgImage } from "@/features/project-card/lib/use-og-image";
+
+// X — 하위에서 상위 레이어 import 금지 (lint error: boundaries/element-types)
+// features에서 widgets를 import하면 에러
+import { ProjectCard } from "@/widgets/home";
 ```
 
 ## 파일 네이밍 컨벤션

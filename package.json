@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev --turbo",
     "build": "next build",
-    "preview": "npx serve out",
-    "lint": "next lint"
+    "preview": "pnpm dlx serve out",
+    "lint": "eslint src/"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.15",
@@ -20,13 +20,18 @@
     "react-dom": "19.1.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@next/eslint-plugin-next": "^16.1.6",
     "@tailwindcss/postcss": "^4.1.14",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "eslint": "^10.0.2",
+    "eslint-plugin-boundaries": "^5.4.0",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.7.1",
     "tailwindcss": "^4.1.16",
-    "typescript": "^5"
+    "typescript": "^5",
+    "typescript-eslint": "^8.56.1"
   }
 }
