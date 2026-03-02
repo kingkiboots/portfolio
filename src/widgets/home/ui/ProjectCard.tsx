@@ -29,10 +29,10 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
     <Card
       variant="elevated"
       padding="none"
-      className="group duration-normal overflow-hidden transition-all hover:shadow-xl"
+      className="group flex h-full flex-col duration-normal overflow-hidden transition-all hover:shadow-xl"
     >
       {/* Project Image */}
-      <div className="relative overflow-hidden">
+      <div className="relative shrink-0 overflow-hidden">
         {thumbnailSrc ? (
           <div className="aspect-video w-full overflow-hidden">
             <img
@@ -167,7 +167,7 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
       </div>
 
       {/* Project Info */}
-      <div className="p-6">
+      <div className="flex flex-1 flex-col p-6">
         <h3 className="text-foreground group-hover:text-primary duration-fast mb-2 text-lg font-semibold transition-colors">
           {project.title}
         </h3>
@@ -180,7 +180,7 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
         {isClamped || expanded ? (
           <button
             onClick={toggleExpanded}
-            className="text-primary hover:text-primary-dark duration-fast mt-1 mb-4 cursor-pointer text-xs font-medium transition-colors"
+            className="text-primary hover:text-primary-dark duration-fast mt-1 mb-4 cursor-pointer self-start text-xs font-medium transition-colors"
           >
             {expanded ? "접기" : "더보기"}
           </button>
@@ -190,7 +190,7 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
 
         {/* Tags */}
         <ul
-          className="flex flex-wrap gap-1.5"
+          className="mt-auto flex flex-wrap gap-1.5"
           role="list"
           aria-label="사용 기술"
         >

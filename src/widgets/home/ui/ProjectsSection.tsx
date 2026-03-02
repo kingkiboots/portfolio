@@ -226,7 +226,7 @@ export const ProjectsSection = memo(() => {
         <div
           ref={scrollContainerRef}
           onScroll={updateScrollButtons}
-          className="scrollbar-hide -mx-6 flex snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4"
+          className="scrollbar-hide -mx-6 flex items-stretch snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",
