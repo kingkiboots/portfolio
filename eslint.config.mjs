@@ -37,7 +37,7 @@ export default tseslint.config(
         {
           default: "disallow",
           rules: [
-            { from: "app", allow: ["views", "widgets", "features", "entities", "shared"] },
+            { from: "app", allow: ["app", "views", "widgets", "features", "entities", "shared"] },
             { from: "views", allow: ["widgets", "features", "entities", "shared"] },
             { from: "widgets", allow: ["features", "entities", "shared"] },
             { from: "features", allow: ["entities", "shared"] },
