@@ -50,6 +50,7 @@ const projects: Project[] = [
       "react-helmet",
       "Puppeteer",
       "Google Analytics",
+      "SVN",
     ],
 
     links: {
@@ -61,7 +62,7 @@ const projects: Project[] = [
     id: "3",
     title: "이포넷 홈페이지 리뉴얼",
     description:
-      "회사 홈페이지를 리뉴얼하는 프로젝트입니다. 다국어를 지원합니다.",
+      "회사 홈페이지를 리뉴얼하는 프로젝트입니다. 다국어와 백엔드 통합 빌드를 지원합니다.",
     period: "2023.10 - 2023.11",
     tags: [
       "React",
@@ -72,7 +73,7 @@ const projects: Project[] = [
       "react-helmet",
       "Spring Boot",
       "Maven",
-      "HTML/CSS",
+      "Git",
       "Gitlab CI/CD",
     ],
     thumbnail: "https://www.e4net.net/assets/img/custom/E4NET-CI.png",
@@ -82,12 +83,40 @@ const projects: Project[] = [
   },
   {
     id: "4",
-    title: "프로젝트 4",
+    title: "관리자 페이지 Typescript 마이그레이션",
     description:
-      "프로젝트에 대한 간단한 설명입니다. 어떤 문제를 해결했는지, 어떤 기술을 사용했는지 작성해주세요.",
-    tags: ["React Native", "Expo", "TypeScript"],
+      "프로젝트마다 사용되는 관리자 페이지를 TypeScript로 마이그레이션하여 코드 품질과 유지보수성을 향상시키며 성능최적화를 진행했습니다.",
+    tags: [
+      "React",
+      "TypeScript",
+      "Recoil",
+      "Bootstrap",
+      "Styled-Component",
+      "Git",
+    ],
+    links: {},
+  },
+  {
+    id: "5",
+    title: "섹타나인 pay2.0 시스템 개발",
+    description:
+      "해피포인트 머니/카드의 대고객 웹뷰와 관리자 페이지를 개발했습니다.",
+    thumbnail:
+      "https://front.happypointcard.com/ha/resources/api/images_renewal/event/event-share-default.png",
+    tags: [
+      "React",
+      "Javascript",
+      "Recoil",
+      "Webpack",
+      "Gulp",
+      "Bootstrap",
+      "Styled-Component",
+      "Git",
+      "Figma",
+    ],
     links: {
-      github: "#",
+      website:
+        "https://napi.happypointcard.com/page/gate/happypay-money.spc?returl=%252Fgateway.html%253Fview%253Dmain.html",
     },
   },
 ];
