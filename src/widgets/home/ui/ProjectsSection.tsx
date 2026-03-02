@@ -12,6 +12,8 @@ const projects: Project[] = [
     title: "케이뱅크 서비스 관리자포털 구축",
     description: "케이뱅크의 SPA 관리자 페이지를 구축하고 있습니다.",
     period: "2025.12 - 현재",
+    thumbnail:
+      "https://www.kbanknow.com/resource/img/bim/adm_kbank_og_default_2025.png",
     tags: [
       "React",
       "Typescript",
@@ -84,6 +86,7 @@ const projects: Project[] = [
   {
     id: "4",
     title: "관리자 페이지 Typescript 마이그레이션",
+    period: "2023.10 - 2023.10",
     description:
       "프로젝트마다 사용되는 관리자 페이지를 TypeScript로 마이그레이션하여 코드 품질과 유지보수성을 향상시키며 성능최적화를 진행했습니다.",
     tags: [
@@ -101,6 +104,7 @@ const projects: Project[] = [
     title: "섹타나인 pay2.0 시스템 개발",
     description:
       "해피포인트 머니/카드의 대고객 웹뷰와 관리자 페이지를 개발했습니다.",
+    period: "2023.01 - 2023.07",
     thumbnail:
       "https://front.happypointcard.com/ha/resources/api/images_renewal/event/event-share-default.png",
     tags: [
