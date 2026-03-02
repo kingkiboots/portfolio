@@ -13,7 +13,10 @@ export const HeroSection = memo(() => {
       aria-labelledby="hero-heading"
     >
       {/* Background decoration - subtle gradient */}
-      <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden="true">
+      <div
+        className="absolute inset-0 -z-10 overflow-hidden"
+        aria-hidden="true"
+      >
         <div className="bg-primary/5 absolute top-1/4 -right-1/4 h-[600px] w-[600px] rounded-full blur-3xl" />
         <div className="bg-secondary/5 absolute -bottom-1/4 -left-1/4 h-[400px] w-[400px] rounded-full blur-3xl" />
       </div>
@@ -30,7 +33,10 @@ export const HeroSection = memo(() => {
               김기현
             </h1>
             {/* Title */}
-            <p className="text-primary mb-6 text-xl font-medium sm:text-2xl" role="doc-subtitle">
+            <p
+              className="text-primary mb-6 text-xl font-medium sm:text-2xl"
+              role="doc-subtitle"
+            >
               Web Frontend Developer
             </p>
 
@@ -43,10 +49,14 @@ export const HeroSection = memo(() => {
             </p>
 
             {/* CTA Buttons */}
-            <div className="mb-8 flex flex-wrap gap-4" role="group" aria-label="주요 링크">
+            <div
+              className="mb-8 flex flex-wrap gap-4"
+              role="group"
+              aria-label="주요 링크"
+            >
               <a
                 href="#projects"
-                className="bg-primary hover:bg-primary-dark duration-fast inline-flex h-12 items-center justify-center rounded-md px-6 text-sm font-medium text-white shadow-md transition-all hover:shadow-lg active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="bg-primary hover:bg-primary-dark duration-fast focus-visible:ring-primary focus-visible:ring-offset-background inline-flex h-12 items-center justify-center rounded-md px-6 text-sm font-medium text-white shadow-md transition-all hover:shadow-lg focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.98]"
               >
                 프로젝트 보기
                 <svg
@@ -64,12 +74,33 @@ export const HeroSection = memo(() => {
                   />
                 </svg>
               </a>
-              <a
+              <button
+                type="button"
+                className="border-border text-foreground hover:bg-surface-elevated hover:border-primary duration-fast focus-visible:ring-primary focus-visible:ring-offset-background inline-flex h-12 items-center justify-center gap-2 rounded-md border px-6 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.98]"
+                aria-label="이력서 보기"
+              >
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                  />
+                </svg>
+                이력서 보기
+              </button>
+              {/* <a
                 href="#contact"
-                className="border-border text-foreground hover:bg-surface-elevated hover:border-primary duration-fast inline-flex h-12 items-center justify-center rounded-md border px-6 text-sm font-medium transition-all active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                className="text-foreground hover:text-primary hover:bg-surface-elevated duration-fast focus-visible:ring-primary focus-visible:ring-offset-background inline-flex h-12 items-center justify-center rounded-md px-5 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.98]"
               >
                 연락하기
-              </a>
+              </a> */}
             </div>
 
             {/* Social Links */}

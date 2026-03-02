@@ -69,13 +69,36 @@ export const Header = memo(() => {
           </NavigationMenu.List>
         </NavigationMenu.Root>
 
-        {/* Contact Button - Desktop */}
-        <a
-          href="#contact"
-          className="bg-primary hover:bg-primary-dark duration-fast hidden h-9 items-center justify-center rounded-md px-4 text-sm font-medium text-white shadow-sm transition-all hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background md:inline-flex"
-        >
-          Contact
-        </a>
+        {/* CTA Buttons - Desktop */}
+        <div className="hidden items-center gap-2 md:flex">
+          <button
+            type="button"
+            className="border-border text-foreground hover:bg-surface-elevated hover:border-primary duration-fast inline-flex h-9 items-center justify-center gap-1.5 rounded-md border px-4 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            aria-label="이력서 보기"
+          >
+            <svg
+              className="h-4 w-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+              />
+            </svg>
+            Resume
+          </button>
+          <a
+            href="#contact"
+            className="bg-primary hover:bg-primary-dark duration-fast inline-flex h-9 items-center justify-center rounded-md px-4 text-sm font-medium text-white shadow-sm transition-all hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            Contact
+          </a>
+        </div>
 
         {/* Mobile Menu - Radix Dialog */}
         <Dialog.Root open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
@@ -159,13 +182,37 @@ export const Header = memo(() => {
                     </li>
                   ))}
                 </ul>
-                <a
-                  href="#contact"
-                  onClick={handleMobileMenuClose}
-                  className="bg-primary hover:bg-primary-dark duration-fast mt-6 flex h-10 w-full items-center justify-center rounded-md text-sm font-medium text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
-                >
-                  Contact
-                </a>
+                <div className="mt-6 flex flex-col gap-2">
+                  <button
+                    type="button"
+                    onClick={handleMobileMenuClose}
+                    className="border-border text-foreground hover:bg-surface-elevated hover:border-primary duration-fast flex h-10 w-full items-center justify-center gap-1.5 rounded-md border text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    aria-label="이력서 보기"
+                  >
+                    <svg
+                      className="h-4 w-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                      />
+                    </svg>
+                    Resume
+                  </button>
+                  <a
+                    href="#contact"
+                    onClick={handleMobileMenuClose}
+                    className="bg-primary hover:bg-primary-dark duration-fast flex h-10 w-full items-center justify-center rounded-md text-sm font-medium text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                  >
+                    Contact
+                  </a>
+                </div>
               </nav>
             </Dialog.Content>
           </Dialog.Portal>

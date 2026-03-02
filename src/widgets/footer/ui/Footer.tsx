@@ -16,7 +16,10 @@ export const Footer = memo(() => {
       aria-label="연락처 및 사이트 정보"
     >
       {/* Contact Section */}
-      <section className="container mx-auto px-6 py-16 sm:py-20" aria-labelledby="contact-heading">
+      <section
+        className="container mx-auto px-6 py-16 sm:py-20"
+        aria-labelledby="contact-heading"
+      >
         <div className="mx-auto max-w-2xl text-center">
           <h2
             id="contact-heading"
@@ -33,7 +36,7 @@ export const Footer = memo(() => {
           {/* Email CTA */}
           <a
             href={`mailto:${ENV.EMAIL}`}
-            className="bg-primary hover:bg-primary-dark duration-fast mb-8 inline-flex h-12 items-center justify-center gap-2 rounded-md px-8 text-base font-medium text-white shadow-md transition-all hover:shadow-lg active:scale-[0.98] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="bg-primary hover:bg-primary-dark duration-fast focus-visible:ring-primary focus-visible:ring-offset-background mb-8 inline-flex h-12 items-center justify-center gap-2 rounded-md px-8 text-base font-medium text-white shadow-md transition-all hover:shadow-lg focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.98]"
             aria-label="이메일 보내기"
           >
             <svg
@@ -52,6 +55,31 @@ export const Footer = memo(() => {
             </svg>
             이메일 보내기
           </a>
+
+          {/* Resume Link */}
+          <div className="mb-8">
+            <button
+              type="button"
+              className="text-secondary hover:text-primary duration-fast group focus-visible:ring-primary focus-visible:ring-offset-background inline-flex items-center gap-1.5 rounded-sm text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+              aria-label="이력서 보기"
+            >
+              이력서 보기
+              <svg
+                className="duration-fast h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
 
           {/* Social Links */}
           <nav aria-label="소셜 미디어 링크">
