@@ -2,40 +2,79 @@
 
 import React, { memo, useRef, useState, useCallback } from "react";
 import { SectionTitle } from "@/shared/ui";
-import { ProjectCard, Project } from "./ProjectCard";
+import type { Project } from "@/features/project-card";
+import { ProjectCard } from "./ProjectCard";
 
 // 샘플 프로젝트 데이터 - 나중에 실제 데이터로 교체
 const projects: Project[] = [
   {
     id: "1",
-    title: "포트폴리오 웹사이트",
-    description:
-      "Next.js 14와 Tailwind CSS를 활용한 개인 포트폴리오 사이트입니다. 미니멀한 디자인과 다크모드를 지원합니다.",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS"],
-    links: {
-      demo: "#",
-      github: "#",
-    },
+    title: "케이뱅크 서비스 관리자포털 구축",
+    description: "케이뱅크의 SPA 관리자 페이지를 구축하고 있습니다.",
+    tags: [
+      "React",
+      "Typescript",
+      "Vite",
+      "Turborepo",
+      "TanStack-Query",
+      "Zustand",
+      "MUI",
+      "Storybook",
+      "Plop",
+      "Vitest",
+      "Gitlab CI/CD",
+      "Docker",
+      "Git",
+      "Figma",
+    ],
+    links: {},
   },
   {
     id: "2",
-    title: "프로젝트 2",
+    title: "롯데호텔 채널시스템 리뉴얼",
     description:
-      "프로젝트에 대한 간단한 설명입니다. 어떤 문제를 해결했는지, 어떤 기술을 사용했는지 작성해주세요.",
-    tags: ["React", "Redux", "Node.js"],
+      "글로벌 호텔 이용객을 대상으로 한 롯데호텔 홈페이지를 리뉴얼하였습니다. 다국어 지원, 호텔 예약 시스템, 호텔 정보 제공 등 다양한 기능을 제공합니다.",
+    thumbnail:
+      "https://img.lottehotel.com/cms/asset/2025/04/16/26521/link_img.webp",
+    tags: [
+      "React",
+      "Typescript",
+      "Vite",
+      "FSD",
+      "TanStack-Query",
+      "Zustand",
+      "Storybook",
+      "i18n",
+      "react-helmet",
+      "Puppeteer",
+      "Google Analytics",
+    ],
+
     links: {
-      demo: "#",
-      github: "#",
+      website: "https://www.lottehotel.com",
+      // github: "#",
     },
   },
   {
     id: "3",
-    title: "프로젝트 3",
+    title: "이포넷 홈페이지 리뉴얼",
     description:
-      "프로젝트에 대한 간단한 설명입니다. 어떤 문제를 해결했는지, 어떤 기술을 사용했는지 작성해주세요.",
-    tags: ["Vue.js", "Vuex", "Firebase"],
+      "회사 홈페이지를 리뉴얼하는 프로젝트입니다. 다국어를 지원합니다.",
+    tags: [
+      "React",
+      "Typescript",
+      "Vite",
+      "Context API",
+      "i18n",
+      "react-helmet",
+      "Spring Boot",
+      "Maven",
+      "HTML/CSS",
+      "Gitlab CI/CD",
+    ],
+    thumbnail: "https://www.e4net.net/assets/img/custom/E4NET-CI.png",
     links: {
-      demo: "#",
+      website: "https://www.e4net.net",
     },
   },
   {
@@ -75,12 +114,16 @@ export const ProjectsSection = memo(() => {
   }, []);
 
   return (
-    <section id="projects" className="section" aria-labelledby="projects-heading">
+    <section
+      id="projects"
+      className="section"
+      aria-labelledby="projects-heading"
+    >
       <div className="container mx-auto px-6">
         <div className="mb-12 flex items-end justify-between">
           <SectionTitle
-            title="My Best Projects"
-            subtitle="직접 기획하고 개발한 프로젝트들입니다."
+            title="Projects"
+            subtitle="직접 참여하고 개발한 프로젝트들입니다."
             className="mb-0"
           />
 
@@ -93,7 +136,7 @@ export const ProjectsSection = memo(() => {
             <button
               onClick={() => scroll("left")}
               disabled={!canScrollLeft}
-              className={`border-border duration-fast flex h-10 w-10 items-center justify-center rounded-md border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+              className={`border-border duration-fast focus-visible:ring-primary focus-visible:ring-offset-background flex h-10 w-10 items-center justify-center rounded-md border transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
                 canScrollLeft
                   ? "text-foreground hover:bg-surface-elevated hover:border-primary"
                   : "text-muted cursor-not-allowed"
@@ -118,7 +161,7 @@ export const ProjectsSection = memo(() => {
             <button
               onClick={() => scroll("right")}
               disabled={!canScrollRight}
-              className={`border-border duration-fast flex h-10 w-10 items-center justify-center rounded-md border transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+              className={`border-border duration-fast focus-visible:ring-primary focus-visible:ring-offset-background flex h-10 w-10 items-center justify-center rounded-md border transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
                 canScrollRight
                   ? "text-foreground hover:bg-surface-elevated hover:border-primary"
                   : "text-muted cursor-not-allowed"
@@ -171,7 +214,7 @@ export const ProjectsSection = memo(() => {
         <div className="mt-8 text-center">
           <a
             href="#"
-            className="text-primary hover:text-primary-dark duration-fast inline-flex items-center gap-2 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+            className="text-primary hover:text-primary-dark duration-fast focus-visible:ring-primary focus-visible:ring-offset-background inline-flex items-center gap-2 rounded-sm text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
           >
             모든 프로젝트 보기
             <svg

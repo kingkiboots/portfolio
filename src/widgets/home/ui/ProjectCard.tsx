@@ -3,23 +3,28 @@
 import React, { memo } from "react";
 import * as Tooltip from "@radix-ui/react-tooltip";
 import { Card, Tag, ImagePlaceholder } from "@/shared/ui";
+import {
+  type Project,
+  useOgImage,
+  useTextClamp,
+  getProjectUrl,
+} from "@/features/project-card";
 
-export interface Project {
-  id: string;
-  title: string;
-  description: string;
-  tags: string[];
-  links?: {
-    demo?: string;
-    github?: string;
-  };
-}
+export type { Project };
 
 interface ProjectCardProps {
   project: Project;
 }
 
 export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
+  const projectUrl = getProjectUrl(project);
+  const { ogImage, loading: ogLoading } = useOgImage(
+    project.thumbnail ? null : projectUrl,
+  );
+  const { descRef, expanded, isClamped, toggleExpanded } = useTextClamp();
+
+  const thumbnailSrc = project.thumbnail || ogImage;
+
   return (
     <Card
       variant="elevated"
@@ -28,11 +33,22 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
     >
       {/* Project Image */}
       <div className="relative overflow-hidden">
-        <ImagePlaceholder
-          aspectRatio="video"
-          label={project.title}
-          className="duration-slow rounded-none transition-transform group-hover:scale-105"
-        />
+        {thumbnailSrc ? (
+          <div className="aspect-video w-full overflow-hidden">
+            <img
+              src={thumbnailSrc}
+              alt={project.title}
+              className="duration-slow h-full w-full rounded-none object-cover transition-transform group-hover:scale-105"
+              loading="lazy"
+            />
+          </div>
+        ) : (
+          <ImagePlaceholder
+            aspectRatio="video"
+            label={ogLoading ? "로딩 중..." : project.title}
+            className="duration-slow rounded-none transition-transform group-hover:scale-105"
+          />
+        )}
 
         {/* Overlay on hover */}
         <div
@@ -41,14 +57,14 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
           aria-label={`${project.title} 링크`}
         >
           <Tooltip.Provider delayDuration={300}>
-            {project.links?.demo && (
+            {project.links?.demo ? (
               <Tooltip.Root>
                 <Tooltip.Trigger asChild>
                   <a
                     href={project.links.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-background hover:bg-primary duration-fast flex h-10 w-10 items-center justify-center rounded-md bg-white transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                    className="text-background hover:bg-primary duration-fast flex h-10 w-10 items-center justify-center rounded-md bg-white transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
                     aria-label={`${project.title} 데모 보기`}
                   >
                     <svg
@@ -77,15 +93,52 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
                   </Tooltip.Content>
                 </Tooltip.Portal>
               </Tooltip.Root>
-            )}
-            {project.links?.github && (
+            ) : null}
+            {project.links?.website ? (
+              <Tooltip.Root>
+                <Tooltip.Trigger asChild>
+                  <a
+                    href={project.links.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-background hover:bg-primary duration-fast flex h-10 w-10 items-center justify-center rounded-md bg-white transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+                    aria-label={`${project.title} 서비스 바로 가기`}
+                  >
+                    <svg
+                      className="h-5 w-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+                      />
+                    </svg>
+                  </a>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    className="bg-foreground text-background animate-in fade-in-0 zoom-in-95 rounded-md px-3 py-1.5 text-xs font-medium shadow-md"
+                    sideOffset={5}
+                  >
+                    서비스 바로 가기
+                    <Tooltip.Arrow className="fill-foreground" />
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+            ) : null}
+            {project.links?.github ? (
               <Tooltip.Root>
                 <Tooltip.Trigger asChild>
                   <a
                     href={project.links.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-background hover:bg-primary duration-fast flex h-10 w-10 items-center justify-center rounded-md bg-white transition-colors hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white"
+                    className="text-background hover:bg-primary duration-fast flex h-10 w-10 items-center justify-center rounded-md bg-white transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
                     aria-label={`${project.title} 소스 코드 보기`}
                   >
                     <svg
@@ -108,7 +161,7 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
                   </Tooltip.Content>
                 </Tooltip.Portal>
               </Tooltip.Root>
-            )}
+            ) : null}
           </Tooltip.Provider>
         </div>
       </div>
@@ -118,12 +171,29 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
         <h3 className="text-foreground group-hover:text-primary duration-fast mb-2 text-lg font-semibold transition-colors">
           {project.title}
         </h3>
-        <p className="text-secondary mb-4 line-clamp-2 text-sm leading-relaxed">
+        <p
+          ref={descRef}
+          className={`text-secondary text-sm leading-relaxed ${expanded ? "" : "line-clamp-2"}`}
+        >
           {project.description}
         </p>
+        {isClamped || expanded ? (
+          <button
+            onClick={toggleExpanded}
+            className="text-primary hover:text-primary-dark duration-fast mt-1 mb-4 cursor-pointer text-xs font-medium transition-colors"
+          >
+            {expanded ? "접기" : "더보기"}
+          </button>
+        ) : (
+          <div className="mb-4" />
+        )}
 
         {/* Tags */}
-        <ul className="flex flex-wrap gap-1.5" role="list" aria-label="사용 기술">
+        <ul
+          className="flex flex-wrap gap-1.5"
+          role="list"
+          aria-label="사용 기술"
+        >
           {project.tags.map((tag) => (
             <li key={tag}>
               <Tag variant="primary" size="sm">
