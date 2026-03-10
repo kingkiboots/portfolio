@@ -79,9 +79,10 @@
 
 /* ===================
    DARK MODE - 다크모드 설정
+   @theme 바깥에서 :root에 직접 오버라이드
    =================== */
 @media (prefers-color-scheme: dark) {
-  @theme {
+  :root {
     /* Primary & Secondary - 다크모드에서 약간 밝게 */
     --color-primary: #3b82f6;
     --color-primary-light: #60a5fa;
