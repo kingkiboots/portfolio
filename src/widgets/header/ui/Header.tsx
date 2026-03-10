@@ -22,6 +22,8 @@ export const Header = memo(() => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const lastScrollY = useRef(0);
   const heroThreshold = useRef(0);
+  const showTimer = useRef<NodeJS.Timeout | null>(null);
+  const hasPassedThreshold = useRef(false);
 
   useEffect(() => {
     heroThreshold.current = window.innerHeight * 0.5;
@@ -31,18 +33,36 @@ export const Header = memo(() => {
       const isScrollingDown = currentScrollY > lastScrollY.current;
 
       if (currentScrollY < 50) {
+        if (showTimer.current) {
+          clearTimeout(showTimer.current);
+          showTimer.current = null;
+        }
         setIsVisible(true);
         setBgOpacity(0);
+        hasPassedThreshold.current = false;
       } else if (currentScrollY < heroThreshold.current) {
-        if (isScrollingDown) {
+        if (isScrollingDown && !hasPassedThreshold.current) {
+          if (showTimer.current) {
+            clearTimeout(showTimer.current);
+            showTimer.current = null;
+          }
           setIsVisible(false);
         }
         setBgOpacity(0);
       } else {
-        setIsVisible(true);
+        if (!showTimer.current && !isVisible) {
+          showTimer.current = setTimeout(() => {
+            setIsVisible(true);
+            hasPassedThreshold.current = true;
+            showTimer.current = null;
+          }, 300);
+        }
+        if (isVisible) {
+          hasPassedThreshold.current = true;
+        }
         const opacityProgress = Math.min(
           (currentScrollY - heroThreshold.current) / 200,
-          1
+          1,
         );
         setBgOpacity(opacityProgress);
       }
@@ -51,8 +71,13 @@ export const Header = memo(() => {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (showTimer.current) {
+        clearTimeout(showTimer.current);
+      }
+    };
+  }, [isVisible]);
 
   const handleMobileMenuClose = useCallback(() => {
     setIsMobileMenuOpen(false);
@@ -66,7 +91,8 @@ export const Header = memo(() => {
       style={{
         backgroundColor: `rgb(var(--color-background-rgb) / ${0.6 + bgOpacity * 0.3})`,
         backdropFilter: "blur(20px)",
-        borderBottom: bgOpacity > 0.2 ? "1px solid var(--color-border)" : "none",
+        borderBottom:
+          bgOpacity > 0.2 ? "1px solid var(--color-border)" : "none",
         boxShadow: bgOpacity > 0.2 ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
       }}
       role="banner"
