@@ -28,11 +28,10 @@
   --color-surface: #ffffff;
   --color-surface-elevated: #fafafa;
 
-  /* Text colors */
-  --color-text-primary: #0f0f0f;
-  --color-text-secondary: #525252;
-  --color-text-tertiary: #a3a3a3;
-  --color-text-muted: #d4d4d4;
+  /* Text colors - text-subtle, text-tertiary, text-muted 등으로 사용 */
+  --color-subtle: #64748b;    /* foreground보다 흐림, 부가 설명용 (slate-500, 쿨톤) */
+  --color-tertiary: #94a3b8;  /* 더 흐림, placeholder/copyright용 (slate-400) */
+  --color-muted: #cbd5e1;     /* 가장 흐림, disabled 등 (slate-300) */
 
   /* Border colors */
   --color-border: #e5e5e5;
@@ -99,10 +98,9 @@
     --color-surface-elevated: #1a1a1a;
 
     /* Text colors */
-    --color-text-primary: #fafafa;
-    --color-text-secondary: #a3a3a3;
-    --color-text-tertiary: #737373;
-    --color-text-muted: #404040;
+    --color-subtle: #94a3b8;    /* foreground보다 흐림 (slate-400, 쿨톤) */
+    --color-tertiary: #64748b;  /* 더 흐림 (slate-500) */
+    --color-muted: #475569;     /* 가장 흐림 (slate-600) */
 
     /* Border colors */
     --color-border: #262626;

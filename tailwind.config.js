@@ -27,12 +27,6 @@ module.exports = {
           light: "var(--color-border-light)",
         },
       },
-      textColor: {
-        primary: "var(--color-text-primary)",
-        secondary: "var(--color-text-secondary)",
-        tertiary: "var(--color-text-tertiary)",
-        muted: "var(--color-text-muted)",
-      },
       borderRadius: {
         xs: "var(--radius-xs)",
         sm: "var(--radius-sm)",
