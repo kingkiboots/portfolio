@@ -93,11 +93,7 @@ SkillCard.displayName = "SkillCard";
 
 export const SkillsSection = memo(() => {
   return (
-    <section
-      id="skills"
-      className="section bg-surface-elevated/50"
-      aria-labelledby="skills-heading"
-    >
+    <section id="skills" className="section" aria-labelledby="skills-heading">
       <div className="container mx-auto px-6">
         <SectionTitle
           title="Skills"

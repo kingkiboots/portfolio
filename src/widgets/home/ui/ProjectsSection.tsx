@@ -152,7 +152,7 @@ export const ProjectsSection = memo(() => {
   return (
     <section
       id="projects"
-      className="section"
+      className="section bg-surface-elevated/50"
       aria-labelledby="projects-heading"
     >
       <div className="container mx-auto px-6">
@@ -226,7 +226,7 @@ export const ProjectsSection = memo(() => {
         <div
           ref={scrollContainerRef}
           onScroll={updateScrollButtons}
-          className="scrollbar-hide -mx-6 flex items-stretch snap-x snap-mandatory gap-6 overflow-x-auto px-6 pb-4"
+          className="scrollbar-hide -mx-6 flex snap-x snap-mandatory items-stretch gap-6 overflow-x-auto px-6 pb-4"
           style={{
             scrollbarWidth: "none",
             msOverflowStyle: "none",

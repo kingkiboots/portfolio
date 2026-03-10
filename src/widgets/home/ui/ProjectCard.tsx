@@ -29,7 +29,7 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
     <Card
       variant="elevated"
       padding="none"
-      className="group flex h-full flex-col duration-normal overflow-hidden transition-all hover:shadow-xl"
+      className="group duration-normal flex h-full flex-col overflow-hidden transition-all hover:shadow-xl"
     >
       {/* Project Image */}
       <div className="relative shrink-0 overflow-hidden">
@@ -204,7 +204,7 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
         </ul>
 
         {project.period ? (
-          <p className="text-tertiary mt-4 border-t border-border pt-3 text-xs">
+          <p className="text-tertiary border-border mt-4 border-t pt-3 text-xs">
             {project.period}
           </p>
         ) : null}

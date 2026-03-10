@@ -14,11 +14,11 @@ export default function HomePage() {
       {/* Hero / About Section */}
       <HeroSection />
 
-      {/* Skills Section */}
-      <SkillsSection />
-
       {/* Projects Section */}
       <ProjectsSection />
+
+      {/* Skills Section */}
+      <SkillsSection />
 
       {/* Career Section */}
       <CareerSection />

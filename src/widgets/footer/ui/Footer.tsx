@@ -119,7 +119,7 @@ export const Footer = memo(() => {
           </div>
 
           {/* Credits */}
-          <p className="text-tertiary text-center text-sm leading-relaxed">
+          <p className="text-foreground text-center text-sm leading-relaxed">
             Roughly designed in <span className="text-secondary">Freeform</span>{" "}
             and coded in <span className="text-secondary">Cursor</span>.
             <br className="sm:hidden" />

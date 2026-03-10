@@ -1,8 +1,7 @@
 "use client";
 
 import React, { memo } from "react";
-import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
-import { ImagePlaceholder, SocialIcon } from "@/shared/ui";
+import { SocialIcon } from "@/shared/ui";
 import { useResume } from "@/features/resume";
 import { ENV } from "@/shared/env";
 
@@ -25,45 +24,80 @@ export const HeroSection = memo(() => {
       </div>
 
       <div className="container mx-auto px-6">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
-          {/* Text Content */}
-          <div className="order-2 flex h-full flex-col lg:order-1">
-            {/* Name */}
-            <h1
-              id="hero-heading"
-              className="text-foreground mt-auto mb-4 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl"
-            >
-              김기현
-            </h1>
-            {/* Title */}
-            <p
-              className="text-primary mb-6 text-xl font-medium sm:text-2xl"
-              role="doc-subtitle"
-            >
-              Web Frontend Developer
-            </p>
+        <div className="max-w-4xl">
+          {/* Greeting with Name */}
+          <h1
+            id="hero-heading"
+            className="text-foreground mb-6 text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl"
+          >
+            <span className="text-secondary block text-3xl font-medium sm:text-3xl lg:text-4xl xl:text-5xl">
+              Hi, I'm
+            </span>
+            <span className="relative inline-block">
+              <span className="relative z-10">Kihyeon Kim</span>
+              <span
+                className="bg-primary/40 absolute -bottom-1 left-0 z-0 h-4 w-full -skew-x-6 sm:h-5"
+                aria-hidden="true"
+              />
+            </span>
+            <span className="text-primary">,</span>
+          </h1>
 
-            {/* Description */}
-            <p className="text-secondary mb-8 max-w-lg text-base leading-relaxed sm:text-lg">
-              기술과 협업으로 가치를 창출하는 개발자입니다.
-              <br />
-              사용자 경험을 중시하며, 깔끔하고 유지보수하기 좋은 코드를
-              작성하려고 노력합니다.
-            </p>
+          {/* Subtitle */}
+          <p
+            className="text-foreground mb-6 text-3xl font-medium tracking-tight sm:text-4xl lg:text-5xl xl:text-6xl"
+            role="doc-subtitle"
+          >
+            <span className="text-primary capitalize">
+              who makes better Experiences!
+            </span>
+          </p>
 
-            {/* CTA Buttons */}
-            <div
-              className="mb-8 flex flex-wrap gap-4"
-              role="group"
-              aria-label="주요 링크"
+          {/* Achievement Stats - 부가 설명 */}
+          <p className="text-subtle lg:text-md mb-12 text-sm tracking-wide sm:text-base">
+            Time to First PR{" "}
+            <span className="text-secondary font-semibold">60%+</span> reduced •
+            Duplicate API calls{" "}
+            <span className="text-secondary font-semibold">80%</span> reduced •
+            Page navigation{" "}
+            <span className="text-secondary font-semibold">10x</span> faster
+          </p>
+
+          {/* CTA Buttons */}
+          <div
+            className="mb-8 flex flex-wrap gap-4"
+            role="group"
+            aria-label="주요 링크"
+          >
+            <a
+              href="#projects"
+              className="bg-primary hover:bg-primary-dark duration-fast focus-visible:ring-primary focus-visible:ring-offset-background inline-flex h-12 items-center justify-center rounded-md px-6 text-sm font-medium text-white shadow-md transition-all hover:shadow-lg focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.98]"
             >
-              <a
-                href="#projects"
-                className="bg-primary hover:bg-primary-dark duration-fast focus-visible:ring-primary focus-visible:ring-offset-background inline-flex h-12 items-center justify-center rounded-md px-6 text-sm font-medium text-white shadow-md transition-all hover:shadow-lg focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.98]"
+              프로젝트 보기
+              <svg
+                className="ml-2 h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
               >
-                프로젝트 보기
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </a>
+            {hasResume ? (
+              <a
+                href={resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="border-border text-foreground hover:bg-surface-elevated hover:border-primary duration-fast focus-visible:ring-primary focus-visible:ring-offset-background inline-flex h-12 items-center justify-center gap-2 rounded-md border px-6 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.98]"
+              >
                 <svg
-                  className="ml-2 h-4 w-4"
+                  className="h-4 w-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -73,80 +107,31 @@ export const HeroSection = memo(() => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
+                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
                   />
                 </svg>
+                이력서 보기
               </a>
-              {hasResume ? (
-                <a
-                  href={resumeUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="border-border text-foreground hover:bg-surface-elevated hover:border-primary duration-fast focus-visible:ring-primary focus-visible:ring-offset-background inline-flex h-12 items-center justify-center gap-2 rounded-md border px-6 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none active:scale-[0.98]"
-                >
-                  <svg
-                    className="h-4 w-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                    />
-                  </svg>
-                  이력서 보기
-                </a>
-              ) : null}
-            </div>
-
-            {/* Social Links */}
-            <nav aria-label="소셜 미디어 링크">
-              <ul className="flex items-center gap-1" role="list">
-                <li>
-                  <SocialIcon type="github" href={ENV.URL_GITHUB} />
-                </li>
-                <li>
-                  <SocialIcon type="linkedin" href={ENV.URL_LINKEDIN} />
-                </li>
-                <li>
-                  <SocialIcon type="blog" href={ENV.URL_BLOG} />
-                </li>
-                <li>
-                  <SocialIcon type="email" href={`mailto:${ENV.EMAIL}`} />
-                </li>
-              </ul>
-            </nav>
+            ) : null}
           </div>
 
-          {/* Profile Image */}
-          <div className="order-1 flex justify-center lg:order-2 lg:justify-end">
-            <figure className="relative">
-              {/* Decorative elements */}
-              <div
-                className="from-primary/20 to-secondary/20 absolute -inset-4 rounded-2xl bg-linear-to-br opacity-60 blur-2xl"
-                aria-hidden="true"
-              />
-
-              {/* Main image container */}
-              <div className="relative">
-                {/* Liquid glass frame */}
-                <div className="liquid-glass rounded-xl p-2">
-                  <ImagePlaceholder
-                    aspectRatio="square"
-                    label="Profile"
-                    className="h-64 w-64 rounded-lg sm:h-80 sm:w-80 lg:h-96 lg:w-96"
-                  />
-                </div>
-              </div>
-              <VisuallyHidden.Root>
-                <figcaption>김기현 프로필 이미지</figcaption>
-              </VisuallyHidden.Root>
-            </figure>
-          </div>
+          {/* Social Links */}
+          <nav aria-label="소셜 미디어 링크">
+            <ul className="flex items-center gap-1" role="list">
+              <li>
+                <SocialIcon type="github" href={ENV.URL_GITHUB} />
+              </li>
+              <li>
+                <SocialIcon type="linkedin" href={ENV.URL_LINKEDIN} />
+              </li>
+              <li>
+                <SocialIcon type="blog" href={ENV.URL_BLOG} />
+              </li>
+              <li>
+                <SocialIcon type="email" href={`mailto:${ENV.EMAIL}`} />
+              </li>
+            </ul>
+          </nav>
         </div>
 
         {/* Scroll indicator */}
