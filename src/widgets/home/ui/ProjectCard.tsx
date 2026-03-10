@@ -64,7 +64,7 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
                     href={project.links.demo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-background hover:bg-primary duration-fast flex h-10 w-10 items-center justify-center rounded-md bg-white transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+                    className="hover:bg-primary duration-fast flex h-10 w-10 items-center justify-center rounded-md bg-white text-black transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
                     aria-label={`${project.title} 데모 보기`}
                   >
                     <svg
@@ -101,7 +101,7 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
                     href={project.links.website}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-background hover:bg-primary duration-fast flex h-10 w-10 items-center justify-center rounded-md bg-white transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+                    className="hover:bg-primary duration-fast flex h-10 w-10 items-center justify-center rounded-md bg-white text-black transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
                     aria-label={`${project.title} 서비스 바로 가기`}
                   >
                     <svg
@@ -138,7 +138,7 @@ export const ProjectCard = memo<ProjectCardProps>(({ project }) => {
                     href={project.links.github}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-background hover:bg-primary duration-fast flex h-10 w-10 items-center justify-center rounded-md bg-white transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
+                    className="hover:bg-primary duration-fast flex h-10 w-10 items-center justify-center rounded-md bg-white text-black transition-colors hover:text-white focus-visible:ring-2 focus-visible:ring-white focus-visible:outline-none"
                     aria-label={`${project.title} 소스 코드 보기`}
                   >
                     <svg
