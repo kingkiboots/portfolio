@@ -1,6 +1,6 @@
 "use client";
 
-import React, { memo, useState, useEffect, useCallback } from "react";
+import React, { memo, useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import * as Dialog from "@radix-ui/react-dialog";
@@ -17,15 +17,40 @@ const navItems = [
 
 export const Header = memo(() => {
   const { resumeUrl, hasResume } = useResume();
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [bgOpacity, setBgOpacity] = useState(0);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const lastScrollY = useRef(0);
+  const heroThreshold = useRef(0);
 
   useEffect(() => {
+    heroThreshold.current = window.innerHeight * 0.5;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
+      const currentScrollY = window.scrollY;
+      const isScrollingDown = currentScrollY > lastScrollY.current;
+
+      if (currentScrollY < 50) {
+        setIsVisible(true);
+        setBgOpacity(0);
+      } else if (currentScrollY < heroThreshold.current) {
+        if (isScrollingDown) {
+          setIsVisible(false);
+        }
+        setBgOpacity(0);
+      } else {
+        setIsVisible(true);
+        const opacityProgress = Math.min(
+          (currentScrollY - heroThreshold.current) / 200,
+          1
+        );
+        setBgOpacity(opacityProgress);
+      }
+
+      lastScrollY.current = currentScrollY;
     };
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
@@ -35,11 +60,15 @@ export const Header = memo(() => {
 
   return (
     <header
-      className={`duration-normal fixed top-0 right-0 left-0 z-50 transition-all ${
-        isScrolled
-          ? "bg-background/80 border-border border-b shadow-sm backdrop-blur-lg"
-          : "bg-transparent"
-      } `}
+      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+      style={{
+        backgroundColor: `rgb(var(--color-background-rgb) / ${0.6 + bgOpacity * 0.3})`,
+        backdropFilter: "blur(20px)",
+        borderBottom: bgOpacity > 0.2 ? "1px solid var(--color-border)" : "none",
+        boxShadow: bgOpacity > 0.2 ? "0 2px 8px rgba(0,0,0,0.15)" : "none",
+      }}
       role="banner"
     >
       <nav
@@ -49,10 +78,10 @@ export const Header = memo(() => {
         {/* Logo */}
         <Link
           href="/"
-          className="text-foreground hover:text-primary duration-fast text-lg font-semibold tracking-tight transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background rounded-sm"
+          className="text-foreground hover:text-primary duration-fast focus-visible:ring-primary focus-visible:ring-offset-background rounded-sm text-xl font-semibold tracking-tight transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
           aria-label="홈으로 이동"
         >
-          Portfolio
+          Kihyeon Kim
         </Link>
 
         {/* Desktop Navigation - Radix NavigationMenu */}
@@ -62,7 +91,11 @@ export const Header = memo(() => {
               <NavigationMenu.Item key={item.href}>
                 <NavigationMenu.Link
                   href={item.href}
-                  className="text-secondary hover:text-foreground hover:bg-surface-elevated duration-fast rounded-md px-4 py-2 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  className={`focus-visible:ring-primary focus-visible:ring-offset-background px-4 py-2 text-sm font-medium transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
+                    bgOpacity > 0.5
+                      ? "text-foreground/80 hover:text-primary"
+                      : "text-subtle hover:text-foreground"
+                  }`}
                 >
                   {item.label}
                 </NavigationMenu.Link>
@@ -78,7 +111,7 @@ export const Header = memo(() => {
               href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="border-border text-foreground hover:bg-surface-elevated hover:border-primary duration-fast inline-flex h-9 items-center justify-center gap-1.5 rounded-md border px-4 text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="border-border text-foreground hover:bg-surface-elevated hover:border-primary duration-fast focus-visible:ring-primary focus-visible:ring-offset-background inline-flex h-9 items-center justify-center gap-1.5 rounded-md border px-4 text-sm font-medium transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
             >
               <svg
                 className="h-4 w-4"
@@ -99,7 +132,7 @@ export const Header = memo(() => {
           ) : null}
           <a
             href="#contact"
-            className="bg-primary hover:bg-primary-dark duration-fast inline-flex h-9 items-center justify-center rounded-md px-4 text-sm font-medium text-white shadow-sm transition-all hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+            className="bg-primary hover:bg-primary-dark duration-fast focus-visible:ring-primary focus-visible:ring-offset-background inline-flex h-9 items-center justify-center rounded-md px-4 text-sm font-medium text-white shadow-sm transition-all hover:shadow-md focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
           >
             Contact
           </a>
@@ -109,7 +142,7 @@ export const Header = memo(() => {
         <Dialog.Root open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <Dialog.Trigger asChild>
             <button
-              className="text-foreground hover:bg-surface-elevated duration-fast flex h-10 w-10 items-center justify-center rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background md:hidden"
+              className="text-foreground hover:bg-surface-elevated duration-fast focus-visible:ring-primary focus-visible:ring-offset-background flex h-10 w-10 items-center justify-center rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none md:hidden"
               aria-label={isMobileMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
             >
               <svg
@@ -151,7 +184,7 @@ export const Header = memo(() => {
               {/* Close Button */}
               <Dialog.Close asChild>
                 <button
-                  className="text-foreground hover:bg-surface-elevated duration-fast absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                  className="text-foreground hover:bg-surface-elevated duration-fast focus-visible:ring-primary absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-md transition-colors focus-visible:ring-2 focus-visible:outline-none"
                   aria-label="메뉴 닫기"
                 >
                   <svg
@@ -179,7 +212,7 @@ export const Header = memo(() => {
                       <a
                         href={item.href}
                         onClick={handleMobileMenuClose}
-                        className="text-secondary hover:text-foreground hover:bg-surface-elevated duration-fast block rounded-md px-4 py-3 text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        className="text-subtle hover:text-foreground hover:bg-surface-elevated duration-fast focus-visible:ring-primary block rounded-md px-4 py-3 text-base font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
                         role="menuitem"
                       >
                         {item.label}
@@ -194,7 +227,7 @@ export const Header = memo(() => {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={handleMobileMenuClose}
-                      className="border-border text-foreground hover:bg-surface-elevated hover:border-primary duration-fast flex h-10 w-full items-center justify-center gap-1.5 rounded-md border text-sm font-medium transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                      className="border-border text-foreground hover:bg-surface-elevated hover:border-primary duration-fast focus-visible:ring-primary flex h-10 w-full items-center justify-center gap-1.5 rounded-md border text-base font-medium transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                     >
                       <svg
                         className="h-4 w-4"
@@ -216,7 +249,7 @@ export const Header = memo(() => {
                   <a
                     href="#contact"
                     onClick={handleMobileMenuClose}
-                    className="bg-primary hover:bg-primary-dark duration-fast flex h-10 w-full items-center justify-center rounded-md text-sm font-medium text-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+                    className="bg-primary hover:bg-primary-dark duration-fast focus-visible:ring-primary flex h-10 w-full items-center justify-center rounded-md text-base font-medium text-white transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
                   >
                     Contact
                   </a>
