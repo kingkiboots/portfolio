@@ -134,18 +134,26 @@ export const HeroSection = memo(() => {
           </nav>
         </div>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator - responsive sizing */}
         <div
-          className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 lg:block"
+          className="absolute bottom-4 left-1/2 -translate-x-1/2 sm:bottom-6 lg:bottom-8"
           aria-hidden="true"
         >
-          <div className="text-tertiary flex flex-col items-center gap-2">
-            <span className="text-xs tracking-wider">SCROLL</span>
-            <div className="relative h-12 w-5">
+          <div className="text-tertiary flex flex-col items-center gap-1.5 lg:gap-2">
+            <span className="text-[10px] tracking-wider lg:text-xs">
+              SCROLL
+            </span>
+            <div className="relative h-8 w-4 sm:h-10 lg:h-12 lg:w-5">
               {/* Track line */}
               <div className="from-border absolute left-1/2 h-full w-px -translate-x-1/2 bg-linear-to-b to-transparent" />
               {/* Animated drop */}
-              <div className="scroll-drop absolute top-0 left-1/2 -translate-x-1/2">
+              <div className="scroll-drop-sm absolute top-0 left-1/2 -translate-x-1/2 sm:hidden">
+                <div className="liquid-glass h-2.5 w-2.5 rounded-full" />
+              </div>
+              <div className="scroll-drop-md absolute top-0 left-1/2 hidden -translate-x-1/2 sm:block lg:hidden">
+                <div className="liquid-glass h-2.5 w-2.5 rounded-full" />
+              </div>
+              <div className="scroll-drop absolute top-0 left-1/2 hidden -translate-x-1/2 lg:block">
                 <div className="liquid-glass h-3 w-3 rounded-full" />
               </div>
             </div>

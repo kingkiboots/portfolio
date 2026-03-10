@@ -234,7 +234,41 @@ img {
   transition: opacity var(--transition-normal);
 }
 
-/* Scroll indicator drop animation */
+/* Scroll indicator drop animation - responsive */
+@keyframes scroll-drop-sm {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(28px);
+    opacity: 0;
+  }
+}
+
+@keyframes scroll-drop-md {
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(36px);
+    opacity: 0;
+  }
+}
+
 @keyframes scroll-drop {
   0% {
     transform: translateY(0);
@@ -247,9 +281,17 @@ img {
     opacity: 1;
   }
   100% {
-    transform: translateY(48px);
+    transform: translateY(44px);
     opacity: 0;
   }
+}
+
+.scroll-drop-sm {
+  animation: scroll-drop-sm 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+.scroll-drop-md {
+  animation: scroll-drop-md 2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 
 .scroll-drop {
