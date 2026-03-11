@@ -1,6 +1,3 @@
-"use client";
-
-import React, { memo } from "react";
 import { SectionTitle, Card, Tag } from "@/shared/ui";
 
 interface SkillCategory {
@@ -59,39 +56,39 @@ const skillCategories: SkillCategory[] = [
   },
 ];
 
-const SkillCard = memo<{ category: SkillCategory }>(({ category }) => (
-  <Card
-    variant="elevated"
-    padding="lg"
-    className="h-full hover:shadow-xl"
-    role="article"
-    aria-labelledby={`skill-${category.title.toLowerCase().replace(/\s+/g, "-")}`}
-  >
-    <h3
-      id={`skill-${category.title.toLowerCase().replace(/\s+/g, "-")}`}
-      className="text-foreground mb-4 text-lg font-semibold"
+function SkillCard({ category }: { category: SkillCategory }) {
+  return (
+    <Card
+      variant="elevated"
+      padding="lg"
+      className="h-full hover:shadow-xl"
+      role="article"
+      aria-labelledby={`skill-${category.title.toLowerCase().replace(/\s+/g, "-")}`}
     >
-      {category.title}
-    </h3>
-    <ul
-      className="flex flex-wrap gap-2"
-      role="list"
-      aria-label={`${category.title} 기술 목록`}
-    >
-      {category.skills.map((skill) => (
-        <li key={skill}>
-          <Tag variant="default" size="md">
-            {skill}
-          </Tag>
-        </li>
-      ))}
-    </ul>
-  </Card>
-));
+      <h3
+        id={`skill-${category.title.toLowerCase().replace(/\s+/g, "-")}`}
+        className="text-foreground mb-4 text-lg font-semibold"
+      >
+        {category.title}
+      </h3>
+      <ul
+        className="flex flex-wrap gap-2"
+        role="list"
+        aria-label={`${category.title} 기술 목록`}
+      >
+        {category.skills.map((skill) => (
+          <li key={skill}>
+            <Tag variant="default" size="md">
+              {skill}
+            </Tag>
+          </li>
+        ))}
+      </ul>
+    </Card>
+  );
+}
 
-SkillCard.displayName = "SkillCard";
-
-export const SkillsSection = memo(() => {
+export function SkillsSection() {
   return (
     <section id="skills" className="section" aria-labelledby="skills-heading">
       <div className="container mx-auto px-6">
@@ -150,6 +147,4 @@ export const SkillsSection = memo(() => {
       </div>
     </section>
   );
-});
-
-SkillsSection.displayName = "SkillsSection";
+}

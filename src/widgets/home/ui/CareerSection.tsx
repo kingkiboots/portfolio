@@ -1,6 +1,3 @@
-"use client";
-
-import React, { memo } from "react";
 import { SectionTitle, Card, Tag } from "@/shared/ui";
 
 interface CareerItem {
@@ -47,8 +44,8 @@ const careerItems: CareerItem[] = [
   },
 ];
 
-const CareerCard = memo<{ item: CareerItem; isLast: boolean }>(
-  ({ item, isLast }) => (
+function CareerCard({ item, isLast }: { item: CareerItem; isLast: boolean }) {
+  return (
     <article
       className="group relative pb-8 pl-8"
       aria-labelledby={`career-${item.id}-title`}
@@ -127,12 +124,10 @@ const CareerCard = memo<{ item: CareerItem; isLast: boolean }>(
         )}
       </Card>
     </article>
-  ),
-);
+  );
+}
 
-CareerCard.displayName = "CareerCard";
-
-export const CareerSection = memo(() => {
+export function CareerSection() {
   return (
     <section
       id="career"
@@ -158,6 +153,4 @@ export const CareerSection = memo(() => {
       </div>
     </section>
   );
-});
-
-CareerSection.displayName = "CareerSection";
+}
