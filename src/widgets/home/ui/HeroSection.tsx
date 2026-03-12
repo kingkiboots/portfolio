@@ -48,7 +48,7 @@ export const HeroSection = memo(() => {
             className="text-foreground mb-6 text-3xl font-medium tracking-tight sm:text-4xl lg:text-5xl xl:text-6xl"
             role="doc-subtitle"
           >
-            <span className="text-primary capitalize">
+            <span className="text-gradient-primary capitalize">
               who makes better Experiences!
             </span>
           </p>
