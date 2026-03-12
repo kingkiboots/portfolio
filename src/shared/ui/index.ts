@@ -6,4 +6,5 @@ export { Tag } from "./Tag";
 export { ImagePlaceholder } from "./ImagePlaceholder";
 export { SocialIcon } from "./SocialIcon";
 export { SkipLink } from "./SkipLink";
+export { ScrollReveal } from "./ScrollReveal";
 

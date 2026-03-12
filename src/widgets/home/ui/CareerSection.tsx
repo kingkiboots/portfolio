@@ -129,28 +129,18 @@ function CareerCard({ item, isLast }: { item: CareerItem; isLast: boolean }) {
 
 export function CareerSection() {
   return (
-    <section
-      id="career"
-      className="section bg-surface-elevated/50"
-      aria-labelledby="career-heading"
-    >
-      <div className="container mx-auto px-6">
-        <SectionTitle title="Career" subtitle="저의 경력과 학력 사항입니다." />
+    <div className="container mx-auto px-6">
+      <SectionTitle title="Career" subtitle="저의 경력과 학력 사항입니다." />
 
-        <div
-          className="max-w-3xl"
-          role="feed"
-          aria-label="경력 및 학력 타임라인"
-        >
-          {careerItems.map((item, index) => (
-            <CareerCard
-              key={item.id}
-              item={item}
-              isLast={index === careerItems.length - 1}
-            />
-          ))}
-        </div>
+      <div className="max-w-3xl" role="feed" aria-label="경력 및 학력 타임라인">
+        {careerItems.map((item, index) => (
+          <CareerCard
+            key={item.id}
+            item={item}
+            isLast={index === careerItems.length - 1}
+          />
+        ))}
       </div>
-    </section>
+    </div>
   );
 }

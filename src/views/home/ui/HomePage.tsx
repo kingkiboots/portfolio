@@ -4,6 +4,7 @@ import {
   ProjectsSection,
   CareerSection,
 } from "@/widgets/home";
+import { ScrollReveal } from "@/shared/ui";
 
 export default function HomePage() {
   return (
@@ -12,13 +13,33 @@ export default function HomePage() {
       <HeroSection />
 
       {/* Projects Section */}
-      <ProjectsSection />
+      <section
+        id="projects"
+        className="section bg-surface-elevated/50"
+        aria-labelledby="projects-heading"
+      >
+        <ScrollReveal>
+          <ProjectsSection />
+        </ScrollReveal>
+      </section>
 
       {/* Skills Section */}
-      <SkillsSection />
+      <section id="skills" className="section" aria-labelledby="skills-heading">
+        <ScrollReveal>
+          <SkillsSection />
+        </ScrollReveal>
+      </section>
 
       {/* Career Section */}
-      <CareerSection />
+      <section
+        id="career"
+        className="section bg-surface-elevated/50"
+        aria-labelledby="career-heading"
+      >
+        <ScrollReveal>
+          <CareerSection />
+        </ScrollReveal>
+      </section>
     </main>
   );
 }

@@ -90,61 +90,59 @@ function SkillCard({ category }: { category: SkillCategory }) {
 
 export function SkillsSection() {
   return (
-    <section id="skills" className="section" aria-labelledby="skills-heading">
-      <div className="container mx-auto px-6">
-        <SectionTitle
-          title="Skills"
-          subtitle="주로 사용하는 기술 스택입니다. 새로운 기술을 배우는 것을 즐깁니다."
-        />
+    <div className="container mx-auto px-6">
+      <SectionTitle
+        title="Skills"
+        subtitle="주로 사용하는 기술 스택입니다. 새로운 기술을 배우는 것을 즐깁니다."
+      />
 
-        <div
-          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
-          role="region"
-          aria-label="기술 카테고리 목록"
-        >
-          {skillCategories.map((category) => (
-            <SkillCard key={category.title} category={category} />
-          ))}
-        </div>
+      <div
+        className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+        role="region"
+        aria-label="기술 카테고리 목록"
+      >
+        {skillCategories.map((category) => (
+          <SkillCard key={category.title} category={category} />
+        ))}
+      </div>
 
-        {/* Additional info with liquid glass effect */}
-        <aside className="mt-12" aria-labelledby="learning-heading">
-          <div className="liquid-glass rounded-lg p-6 sm:p-8">
-            <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-              <div className="shrink-0" aria-hidden="true">
-                <div className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-md">
-                  <svg
-                    className="text-primary h-6 w-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 10V3L4 14h7v7l9-11h-7z"
-                    />
-                  </svg>
-                </div>
-              </div>
-              <div>
-                <h4
-                  id="learning-heading"
-                  className="text-foreground mb-1 text-base font-semibold"
+      {/* Additional info with liquid glass effect */}
+      <aside className="mt-12" aria-labelledby="learning-heading">
+        <div className="liquid-glass rounded-lg p-6 sm:p-8">
+          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+            <div className="shrink-0" aria-hidden="true">
+              <div className="bg-primary/10 flex h-12 w-12 items-center justify-center rounded-md">
+                <svg
+                  className="text-primary h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
                 >
-                  계속 성장하고 있습니다
-                </h4>
-                <p className="text-secondary text-sm leading-relaxed">
-                  현재 Next.js App Router, 서버 컴포넌트, 그리고 모노레포와
-                  테스팅에 대해 깊이 공부하고 있습니다.
-                </p>
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M13 10V3L4 14h7v7l9-11h-7z"
+                  />
+                </svg>
               </div>
             </div>
+            <div>
+              <h4
+                id="learning-heading"
+                className="text-foreground mb-1 text-base font-semibold"
+              >
+                계속 성장하고 있습니다
+              </h4>
+              <p className="text-secondary text-sm leading-relaxed">
+                현재 Next.js App Router, 서버 컴포넌트, 그리고 모노레포와
+                테스팅에 대해 깊이 공부하고 있습니다.
+              </p>
+            </div>
           </div>
-        </aside>
-      </div>
-    </section>
+        </div>
+      </aside>
+    </div>
   );
 }

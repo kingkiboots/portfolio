@@ -150,111 +150,32 @@ export const ProjectsSection = memo(() => {
   }, []);
 
   return (
-    <section
-      id="projects"
-      className="section bg-surface-elevated/50"
-      aria-labelledby="projects-heading"
-    >
-      <div className="container mx-auto px-6">
-        <div className="mb-12 flex items-end justify-between">
-          <SectionTitle
-            title="Projects"
-            subtitle="직접 참여하고 개발한 프로젝트들입니다."
-            className="mb-0"
-          />
+    <div className="container mx-auto px-6">
+      <div className="mb-12 flex items-end justify-between">
+        <SectionTitle
+          title="Projects"
+          subtitle="직접 참여하고 개발한 프로젝트들입니다."
+          className="mb-0"
+        />
 
-          {/* Slider navigation */}
-          <div
-            className="hidden items-center gap-2 sm:flex"
-            role="group"
-            aria-label="프로젝트 슬라이더 네비게이션"
-          >
-            <button
-              onClick={() => scroll("left")}
-              disabled={!canScrollLeft}
-              className={`border-border duration-fast focus-visible:ring-primary focus-visible:ring-offset-background flex h-10 w-10 items-center justify-center rounded-md border transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
-                canScrollLeft
-                  ? "text-foreground hover:bg-surface-elevated hover:border-primary cursor-pointer"
-                  : "text-muted cursor-not-allowed"
-              } `}
-              aria-label="이전 프로젝트"
-            >
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
-            <button
-              onClick={() => scroll("right")}
-              disabled={!canScrollRight}
-              className={`border-border duration-fast focus-visible:ring-primary focus-visible:ring-offset-background flex h-10 w-10 items-center justify-center rounded-md border transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
-                canScrollRight
-                  ? "text-foreground hover:bg-surface-elevated hover:border-primary cursor-pointer"
-                  : "text-muted cursor-not-allowed"
-              } `}
-              aria-label="다음 프로젝트"
-            >
-              <svg
-                className="h-5 w-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-          </div>
-        </div>
-
-        {/* Projects slider */}
+        {/* Slider navigation */}
         <div
-          ref={scrollContainerRef}
-          onScroll={updateScrollButtons}
-          className="scrollbar-hide -mx-6 flex snap-x snap-mandatory items-stretch gap-6 overflow-x-auto px-6 pb-4"
-          style={{
-            scrollbarWidth: "none",
-            msOverflowStyle: "none",
-          }}
-          role="region"
-          aria-label="프로젝트 목록"
-          tabIndex={0}
+          className="hidden items-center gap-2 sm:flex"
+          role="group"
+          aria-label="프로젝트 슬라이더 네비게이션"
         >
-          {projects.map((project, index) => (
-            <article
-              key={project.id}
-              className="w-[320px] shrink-0 snap-start sm:w-[360px]"
-              aria-label={`프로젝트 ${index + 1}: ${project.title}`}
-            >
-              <ProjectCard project={project} />
-            </article>
-          ))}
-        </div>
-
-        {/* View all link */}
-        <div className="mt-8 text-center">
-          <a
-            href="#"
-            className="text-primary hover:text-primary-dark duration-fast focus-visible:ring-primary focus-visible:ring-offset-background inline-flex items-center gap-2 rounded-sm text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+          <button
+            onClick={() => scroll("left")}
+            disabled={!canScrollLeft}
+            className={`border-border duration-fast focus-visible:ring-primary focus-visible:ring-offset-background flex h-10 w-10 items-center justify-center rounded-md border transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
+              canScrollLeft
+                ? "text-foreground hover:bg-surface-elevated hover:border-primary cursor-pointer"
+                : "text-muted cursor-not-allowed"
+            } `}
+            aria-label="이전 프로젝트"
           >
-            모든 프로젝트 보기
             <svg
-              className="h-4 w-4"
+              className="h-5 w-5"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -264,13 +185,86 @@ export const ProjectsSection = memo(() => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M17 8l4 4m0 0l-4 4m4-4H3"
+                d="M15 19l-7-7 7-7"
               />
             </svg>
-          </a>
+          </button>
+          <button
+            onClick={() => scroll("right")}
+            disabled={!canScrollRight}
+            className={`border-border duration-fast focus-visible:ring-primary focus-visible:ring-offset-background flex h-10 w-10 items-center justify-center rounded-md border transition-all focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
+              canScrollRight
+                ? "text-foreground hover:bg-surface-elevated hover:border-primary cursor-pointer"
+                : "text-muted cursor-not-allowed"
+            } `}
+            aria-label="다음 프로젝트"
+          >
+            <svg
+              className="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M9 5l7 7-7 7"
+              />
+            </svg>
+          </button>
         </div>
       </div>
-    </section>
+
+      {/* Projects slider */}
+      <div
+        ref={scrollContainerRef}
+        onScroll={updateScrollButtons}
+        className="scrollbar-hide -mx-6 flex snap-x snap-mandatory items-stretch gap-6 overflow-x-auto px-6 pb-4"
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+        }}
+        role="region"
+        aria-label="프로젝트 목록"
+        tabIndex={0}
+      >
+        {projects.map((project, index) => (
+          <article
+            key={project.id}
+            className="w-[320px] shrink-0 snap-start sm:w-[360px]"
+            aria-label={`프로젝트 ${index + 1}: ${project.title}`}
+          >
+            <ProjectCard project={project} />
+          </article>
+        ))}
+      </div>
+
+      {/* View all link */}
+      <div className="mt-8 text-center">
+        <a
+          href="#"
+          className="text-primary hover:text-primary-dark duration-fast focus-visible:ring-primary focus-visible:ring-offset-background inline-flex items-center gap-2 rounded-sm text-sm font-medium transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
+        >
+          모든 프로젝트 보기
+          <svg
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M17 8l4 4m0 0l-4 4m4-4H3"
+            />
+          </svg>
+        </a>
+      </div>
+    </div>
   );
 });
 
