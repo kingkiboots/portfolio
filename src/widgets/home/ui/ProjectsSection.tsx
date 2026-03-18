@@ -2,8 +2,7 @@
 
 import React, { memo, useRef, useState, useCallback } from "react";
 import { SectionTitle } from "@/shared/ui";
-import type { Project } from "@/features/project-card";
-import { ProjectCard } from "./ProjectCard";
+import { ProjectCard, type Project } from "@/features/project-card";
 
 // 샘플 프로젝트 데이터 - 나중에 실제 데이터로 교체
 const projects: Project[] = [
