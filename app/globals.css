@@ -20,6 +20,11 @@
   --color-secondary-light: #34d399;
   --color-secondary-dark: #059669;
 
+  /* Warning: Orange - 강조 포인트 컬러 */
+  --color-warning: #f97316;
+  --color-warning-light: #fb923c;
+  --color-warning-dark: #ea580c;
+
   /* Background & Foreground */
   --color-background: #ffffff;
   --color-foreground: #0f0f0f;
@@ -99,6 +104,11 @@
     --color-secondary: #34d399;
     --color-secondary-light: #6ee7b7;
     --color-secondary-dark: #10b981;
+
+    /* Warning - 다크모드에서 약간 밝게 */
+    --color-warning: #fb923c;
+    --color-warning-light: #fdba74;
+    --color-warning-dark: #f97316;
 
     /* Background & Surface */
     --color-background: #0a0a0a;
