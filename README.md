@@ -1,6 +1,7 @@
 # Portfolio
 
 Next.js 기반 개인 포트폴리오 사이트입니다.
+링크: https://kingkiboots.github.io/portfolio/
 
 ## 기술 스택
 
