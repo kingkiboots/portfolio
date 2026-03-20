@@ -8,9 +8,10 @@ import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { useResume } from "@/features/resume";
 
 const navItems = [
+  { label: "Expertise", href: "#my-expertise" },
+  { label: "Projects", href: "#projects" },
   { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
-  { label: "Projects", href: "#projects" },
   { label: "Career", href: "#career" },
   { label: "Contact", href: "#contact" },
 ];

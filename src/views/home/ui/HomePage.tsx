@@ -14,7 +14,7 @@ export default function HomePage() {
       <HeroSection />
 
       <section
-        id="projects"
+        id="my-expertise"
         className="section bg-surface-elevated/50"
         aria-labelledby="projects-heading"
       >

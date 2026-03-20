@@ -1,10 +1,10 @@
 "use client";
 
-import React, { memo, useId } from "react";
+import React, { memo, ReactNode, useId } from "react";
 
 interface SectionTitleProps {
   title: string;
-  subtitle?: string;
+  subtitle?: ReactNode;
   align?: "left" | "center";
   className?: string;
   id?: string;
@@ -24,7 +24,7 @@ export const SectionTitle = memo<SectionTitleProps>(
       <header className={`mb-12 ${alignStyles[align]} ${className}`}>
         <h2
           id={headingId}
-          className="text-foreground text-2xl font-semibold tracking-tight sm:text-3xl"
+          className="text-foreground text-3xl font-semibold tracking-tight sm:text-4xl"
         >
           {title}
         </h2>
@@ -33,8 +33,7 @@ export const SectionTitle = memo<SectionTitleProps>(
         )}
       </header>
     );
-  }
+  },
 );
 
 SectionTitle.displayName = "SectionTitle";
-

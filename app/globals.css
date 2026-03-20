@@ -182,19 +182,19 @@ body {
   padding-bottom: var(--spacing-section);
 }
 
-/* Liquid Glass Effect - 강조, 장식용 */
+/* Liquid Glass Effect - iOS 위젯 스타일 */
 .liquid-glass {
   background: linear-gradient(
     135deg,
-    rgba(255, 255, 255, 0.1) 0%,
-    rgba(255, 255, 255, 0.05) 100%
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(255, 255, 255, 0.35) 100%
   );
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(50px) saturate(200%);
+  -webkit-backdrop-filter: blur(50px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   box-shadow:
-    0 8px 32px 0 rgba(0, 0, 0, 0.06),
-    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+    0 8px 32px 0 rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.4);
 }
 
 /* Dark mode liquid glass */
@@ -202,13 +202,15 @@ body {
   .liquid-glass {
     background: linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.08) 0%,
-      rgba(255, 255, 255, 0.02) 100%
+      rgba(255, 255, 255, 0.15) 0%,
+      rgba(255, 255, 255, 0.08) 100%
     );
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(50px) saturate(200%);
+    -webkit-backdrop-filter: blur(50px) saturate(200%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
     box-shadow:
       0 8px 32px 0 rgba(0, 0, 0, 0.3),
-      inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
   }
 }
 
@@ -378,11 +380,53 @@ img {
   background: linear-gradient(
     90deg,
     var(--color-foreground) 0%,
-    var(--color-primary-light) 31%,
+    var(--color-primary-dark) 31%,
     var(--color-primary) 68%,
-    var(--color-primary-dark) 100%
+    var(--color-primary-light) 100%
   );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Dark mode liquid glass */
+@media (prefers-color-scheme: dark) {
+  .text-gradient-primary {
+    background: linear-gradient(
+      90deg,
+      var(--color-foreground) 0%,
+      var(--color-primary-light) 31%,
+      var(--color-primary) 68%,
+      var(--color-primary-dark) 100%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}
+
+/* ============================================
+   SLIDE IN ANIMATIONS - 프로젝트 정보 슬라이드
+   ============================================ */
+
+@keyframes slide-in-right {
+  0% {
+    opacity: 0;
+    transform: translateX(40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-in-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
