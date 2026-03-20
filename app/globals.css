@@ -414,6 +414,53 @@ img {
 }
 
 /* ============================================
+   MDX CONTENT TYPOGRAPHY
+   ============================================ */
+
+.mdx-content {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-subtle);
+}
+
+.mdx-content > *:first-child {
+  margin-top: 0;
+}
+
+.mdx-content > *:last-child {
+  margin-bottom: 0;
+}
+
+.mdx-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.875rem;
+}
+
+.mdx-content thead th {
+  text-align: left;
+  font-weight: 600;
+  color: var(--color-foreground);
+  border-bottom: 2px solid var(--color-border);
+  padding: 0.75rem 1rem;
+}
+
+.mdx-content tbody td {
+  border-bottom: 1px solid var(--color-border);
+  padding: 0.75rem 1rem;
+  color: var(--color-subtle);
+}
+
+.mdx-content tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.mdx-content img {
+  border-radius: 0.5rem;
+}
+
+/* ============================================
    SLIDE IN ANIMATIONS - 프로젝트 정보 슬라이드
    ============================================ */
 
