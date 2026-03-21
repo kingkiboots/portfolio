@@ -31,7 +31,7 @@ export const ProjectCard = memo<ProjectCardProps>(
     const isMd = useBreakpoint("md");
 
     const thumbnailSrc = project.thumbnail || ogImage;
-    const detailHref = `/portfolio/projects/${project.slug}`;
+    const detailHref = `/projects/${project.slug}`;
 
     const maxVisibleIcons = (() => {
       if (isMd) {
