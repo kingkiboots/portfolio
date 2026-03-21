@@ -1,47 +1,20 @@
-import { notFound } from "next/navigation";
 import Link from "next/link";
-import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
-import {
-  getAllProjectSlugs,
-  getProjectBySlug,
-} from "@/features/project-card";
-import { getPostBySlug, getAllPostSlugs } from "@/shared/lib/mdx";
+import { type Project } from "@/features/project-card";
+import { type MdxPost } from "@/shared/lib/mdx";
 import { Tag } from "@/shared/ui";
 import { mdxComponents } from "@/shared/ui/mdx-components";
 
-interface PageProps {
-  params: Promise<{ slug: string }>;
+interface ProjectDetailPageProps {
+  project: Project;
+  post: MdxPost | null;
 }
 
-export function generateStaticParams() {
-  const projectSlugs = getAllProjectSlugs();
-  const postSlugs = getAllPostSlugs();
-  const allSlugs = [...new Set([...projectSlugs, ...postSlugs])];
-  return allSlugs.map((slug) => ({ slug }));
-}
-
-export async function generateMetadata({
-  params,
-}: PageProps): Promise<Metadata> {
-  const { slug } = await params;
-  const project = getProjectBySlug(slug);
-  if (!project) return {};
-
-  return {
-    title: `${project.title} | 김기현 포트폴리오`,
-    description: project.description,
-  };
-}
-
-export default async function ProjectDetailPage({ params }: PageProps) {
-  const { slug } = await params;
-  const project = getProjectBySlug(slug);
-  const post = getPostBySlug(slug);
-
-  if (!project) notFound();
-
+export default function ProjectDetailPage({
+  project,
+  post,
+}: ProjectDetailPageProps) {
   return (
     <main className="min-h-screen pt-28 pb-20">
       <article className="container mx-auto px-6">
@@ -130,15 +103,15 @@ export default async function ProjectDetailPage({ params }: PageProps) {
           <div className="lg:col-span-2">
             {post ? (
               <div className="mdx-content">
-              <MDXRemote
-                source={post.content}
-                components={mdxComponents}
-                options={{
-                  mdxOptions: {
-                    remarkPlugins: [remarkGfm],
-                  },
-                }}
-              />
+                <MDXRemote
+                  source={post.content}
+                  components={mdxComponents}
+                  options={{
+                    mdxOptions: {
+                      remarkPlugins: [remarkGfm],
+                    },
+                  }}
+                />
               </div>
             ) : (
               <section>
