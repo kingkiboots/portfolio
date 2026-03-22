@@ -8,7 +8,8 @@ export interface Project {
   role?: string;
   tags: string[];
   thumbnail?: string;
-  size?: "sm" | "lg";
+  gif?: string;
+  size?: "sm" | "md";
   links?: {
     demo?: string;
     website?: string;

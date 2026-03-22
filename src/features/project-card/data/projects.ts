@@ -43,7 +43,8 @@ export const projects: Project[] = [
     role: "프론트엔드 리드",
     thumbnail:
       "https://img.lottehotel.com/cms/asset/2025/04/16/26521/link_img.webp",
-    size: "lg",
+    gif: "/resources/img/projects/lotte-hotel-renewal/pc1.gif",
+    size: "md",
     tags: [
       "React",
       "Typescript",
@@ -86,6 +87,7 @@ export const projects: Project[] = [
       "Gitlab CI/CD",
     ],
     thumbnail: "https://www.e4net.net/assets/img/custom/E4NET-CI.png",
+    gif: "/resources/img/projects/e4-renewal/pc.gif",
     links: {
       website: "https://www.e4net.net",
     },

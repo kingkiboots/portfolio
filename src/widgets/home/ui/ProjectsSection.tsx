@@ -3,7 +3,7 @@ import { ProjectCard, projects } from "@/features/project-card";
 
 const sizeClasses = {
   sm: "col-span-1",
-  lg: "col-span-1 md:col-span-2 md:row-span-2",
+  md: "col-span-1 md:col-span-2 md:row-span-2",
 };
 
 export function ProjectsSection() {
@@ -22,12 +22,9 @@ export function ProjectsSection() {
         {projects.map((project) => (
           <article
             key={project.id}
-            className={sizeClasses[project.size === "lg" ? "lg" : "sm"]}
+            className={sizeClasses[project.size === "md" ? "md" : "sm"]}
           >
-            <ProjectCard
-              project={project}
-              featured={project.size === "lg"}
-            />
+            <ProjectCard project={project} featured={project.size === "md"} />
           </article>
         ))}
       </div>
