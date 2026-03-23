@@ -25,6 +25,11 @@
   --color-warning-light: #fb923c;
   --color-warning-dark: #ea580c;
 
+  /* Error: Red - 에러 및 경고 상태 */
+  --color-error: #ef4444; /* Base (Red-500) */
+  --color-error-light: #f87171; /* Light (Red-400) */
+  --color-error-dark: #dc2626; /* Dark (Red-600) */
+
   /* Background & Foreground */
   --color-background: #ffffff;
   --color-foreground: #0f0f0f;
@@ -109,6 +114,11 @@
     --color-warning: #fb923c;
     --color-warning-light: #fdba74;
     --color-warning-dark: #f97316;
+
+    /* Error - 다크모드에서 시인성을 위해 한 단계 밝게 */
+    --color-error: #f87171; /* Base (Red-400) */
+    --color-error-light: #fca5a5; /* Light (Red-300) */
+    --color-error-dark: #ef4444; /* Dark (Red-500) */
 
     /* Background & Surface */
     --color-background: #0a0a0a;
@@ -420,7 +430,7 @@ img {
 .mdx-content {
   font-size: 1rem;
   line-height: 1.75;
-  color: var(--color-subtle);
+  color: var(--color-foreground);
 }
 
 .mdx-content > *:first-child {
@@ -449,7 +459,7 @@ img {
 .mdx-content tbody td {
   border-bottom: 1px solid var(--color-border);
   padding: 0.75rem 1rem;
-  color: var(--color-subtle);
+  color: var(--color-foreground);
 }
 
 .mdx-content tbody tr:last-child td {
