@@ -102,7 +102,7 @@ export default function ProjectDetailPage({
           {/* Main content */}
           <div className="lg:col-span-2">
             {post ? (
-              <div className="mdx-content">
+              <div className="mdx-content text-foreground">
                 <MDXRemote
                   source={post.content}
                   components={mdxComponents}
