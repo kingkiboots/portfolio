@@ -21,10 +21,10 @@ export default function ProjectDetailPage({
         {/* Back link */}
         <Link
           href="/#projects"
-          className="group mb-10 inline-flex items-center gap-2 text-sm font-medium text-subtle transition-colors duration-fast hover:text-primary"
+          className="group text-subtle duration-fast hover:text-primary mb-10 inline-flex items-center gap-2 text-sm font-medium transition-colors"
         >
           <svg
-            className="h-4 w-4 transition-transform duration-fast group-hover:-translate-x-1"
+            className="duration-fast h-4 w-4 transition-transform group-hover:-translate-x-1"
             fill="none"
             stroke="currentColor"
             viewBox="0 0 24 24"
@@ -53,11 +53,11 @@ export default function ProjectDetailPage({
 
         {/* Header */}
         <div className="mb-10">
-          <h1 className="text-3xl font-bold text-foreground sm:text-4xl lg:text-5xl">
+          <h1 className="text-foreground text-3xl font-bold sm:text-4xl lg:text-5xl">
             {project.title}
           </h1>
 
-          <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-subtle">
+          <div className="text-subtle mt-4 flex flex-wrap items-center gap-4 text-sm">
             <span className="inline-flex items-center gap-1.5">
               <svg
                 className="h-4 w-4"
@@ -115,11 +115,11 @@ export default function ProjectDetailPage({
               </div>
             ) : (
               <section>
-                <h2 className="mb-4 text-xl font-semibold text-foreground">
+                <h2 className="text-foreground mb-4 text-xl font-semibold">
                   Overview
                 </h2>
-                <p className="text-base leading-relaxed text-subtle">
-                  {project.detail || project.description}
+                <p className="text-subtle text-base leading-relaxed">
+                  {project.detail ?? project.description}
                 </p>
               </section>
             )}
@@ -129,8 +129,8 @@ export default function ProjectDetailPage({
           <aside className="lg:col-span-1">
             <div className="sticky top-28 space-y-8">
               {/* Tech stack */}
-              <div className="rounded-lg border border-border bg-surface p-6">
-                <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-tertiary">
+              <div className="border-border bg-surface rounded-lg border p-6">
+                <h3 className="text-tertiary mb-4 text-sm font-semibold tracking-wider uppercase">
                   Tech Stack
                 </h3>
                 <ul className="flex flex-wrap gap-2" role="list">
@@ -148,8 +148,8 @@ export default function ProjectDetailPage({
               {(project.links?.website ||
                 project.links?.github ||
                 project.links?.demo) && (
-                <div className="rounded-lg border border-border bg-surface p-6">
-                  <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-tertiary">
+                <div className="border-border bg-surface rounded-lg border p-6">
+                  <h3 className="text-tertiary mb-4 text-sm font-semibold tracking-wider uppercase">
                     Links
                   </h3>
                   <div className="flex flex-col gap-3">
@@ -158,7 +158,7 @@ export default function ProjectDetailPage({
                         href={project.links.website}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors duration-fast hover:text-primary-dark"
+                        className="text-primary duration-fast hover:text-primary-dark inline-flex items-center gap-2 text-sm font-medium transition-colors"
                       >
                         <svg
                           className="h-4 w-4"
@@ -182,7 +182,7 @@ export default function ProjectDetailPage({
                         href={project.links.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors duration-fast hover:text-primary-dark"
+                        className="text-primary duration-fast hover:text-primary-dark inline-flex items-center gap-2 text-sm font-medium transition-colors"
                       >
                         <svg
                           className="h-4 w-4"
@@ -206,7 +206,7 @@ export default function ProjectDetailPage({
                         href={project.links.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 text-sm font-medium text-primary transition-colors duration-fast hover:text-primary-dark"
+                        className="text-primary duration-fast hover:text-primary-dark inline-flex items-center gap-2 text-sm font-medium transition-colors"
                       >
                         <svg
                           className="h-4 w-4"
