@@ -19,46 +19,34 @@ export const mdxComponents: MDXComponents = {
   // HTML tag overrides for consistent typography
   h2: ({ children, ...props }) => (
     <h2
-      className="mt-12 mb-4 border-b border-border pb-2 text-2xl font-bold text-foreground"
+      className="border-border text-foreground mt-12 mb-4 border-b pb-2 text-2xl font-bold"
       {...props}
     >
       {children}
     </h2>
   ),
   h3: ({ children, ...props }) => (
-    <h3
-      className="mt-8 mb-3 text-xl font-semibold text-foreground"
-      {...props}
-    >
+    <h3 className="text-foreground mt-8 mb-3 text-xl font-semibold" {...props}>
       {children}
     </h3>
   ),
   h4: ({ children, ...props }) => (
-    <h4
-      className="mt-6 mb-2 text-lg font-semibold text-foreground"
-      {...props}
-    >
+    <h4 className="text-foreground mt-6 mb-2 text-lg font-semibold" {...props}>
       {children}
     </h4>
   ),
   p: ({ children, ...props }) => (
-    <p className="my-4 leading-relaxed text-subtle" {...props}>
+    <p className="text-foreground my-4 leading-relaxed" {...props}>
       {children}
     </p>
   ),
   ul: ({ children, ...props }) => (
-    <ul
-      className="my-4 list-disc space-y-2 pl-6 text-subtle"
-      {...props}
-    >
+    <ul className="text-foreground my-4 list-disc space-y-2 pl-6" {...props}>
       {children}
     </ul>
   ),
   ol: ({ children, ...props }) => (
-    <ol
-      className="my-4 list-decimal space-y-2 pl-6 text-subtle"
-      {...props}
-    >
+    <ol className="text-foreground my-4 list-decimal space-y-2 pl-6" {...props}>
       {children}
     </ol>
   ),
@@ -70,7 +58,7 @@ export const mdxComponents: MDXComponents = {
   a: ({ children, href, ...props }) => (
     <a
       href={href}
-      className="font-medium text-primary underline decoration-primary/30 underline-offset-2 transition-colors duration-fast hover:decoration-primary"
+      className="text-primary decoration-primary/30 duration-fast hover:decoration-primary font-medium underline underline-offset-2 transition-colors"
       target={href?.startsWith("http") ? "_blank" : undefined}
       rel={href?.startsWith("http") ? "noopener noreferrer" : undefined}
       {...props}
@@ -79,25 +67,25 @@ export const mdxComponents: MDXComponents = {
     </a>
   ),
   strong: ({ children, ...props }) => (
-    <strong className="font-semibold text-foreground" {...props}>
+    <strong className="text-foreground font-semibold" {...props}>
       {children}
     </strong>
   ),
   blockquote: ({ children, ...props }) => (
     <blockquote
-      className="my-6 border-l-4 border-primary/30 pl-4 italic text-subtle"
+      className="border-primary/30 text-subtle my-6 border-l-4 pl-4 italic"
       {...props}
     >
       {children}
     </blockquote>
   ),
-  hr: (props) => <hr className="my-8 border-border" {...props} />,
+  hr: (props) => <hr className="border-border my-8" {...props} />,
   code: ({ children, ...props }) => {
     const isInline = typeof children === "string";
     if (isInline) {
       return (
         <code
-          className="rounded bg-foreground/5 px-1.5 py-0.5 text-sm font-mono text-foreground"
+          className="bg-foreground/5 text-foreground rounded px-1.5 py-0.5 font-mono text-sm"
           {...props}
         >
           {children}
@@ -108,7 +96,7 @@ export const mdxComponents: MDXComponents = {
   },
   pre: ({ children, ...props }) => (
     <pre
-      className="my-6 overflow-x-auto rounded-lg border border-border bg-surface-elevated p-4 text-sm"
+      className="border-border bg-surface-elevated my-6 overflow-x-auto rounded-lg border p-4 text-sm"
       {...props}
     >
       {children}
