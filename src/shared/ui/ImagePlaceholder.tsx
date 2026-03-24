@@ -2,10 +2,11 @@
 
 import React, { memo } from "react";
 
+export type AspectRatio = "square" | "video" | "portrait" | "wide";
 interface ImagePlaceholderProps {
   width?: string;
   height?: string;
-  aspectRatio?: "square" | "video" | "portrait" | "wide";
+  aspectRatio?: AspectRatio;
   label?: string;
   className?: string;
 }
@@ -50,4 +51,3 @@ export const ImagePlaceholder = memo<ImagePlaceholderProps>(
 );
 
 ImagePlaceholder.displayName = "ImagePlaceholder";
-
