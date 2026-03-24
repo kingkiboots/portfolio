@@ -1,5 +1,6 @@
 import type { MDXRemoteProps } from "next-mdx-remote/rsc";
 import React from "react";
+import { CommonImage } from "@/shared/ui";
 
 type MDXComponents = NonNullable<MDXRemoteProps["components"]>;
 import { HighlightBox } from "./HighlightBox";
@@ -15,6 +16,16 @@ export const mdxComponents: MDXComponents = {
   ArchitectureImage,
   ResultCard,
   MermaidDiagram,
+
+  // img override: basePath prefix + error fallback
+  img: ({ src, alt, ...props }) => (
+    <CommonImage
+      src={src || ""}
+      alt={alt || ""}
+      className="my-6 w-full rounded-lg"
+      {...props}
+    />
+  ),
 
   // HTML tag overrides for consistent typography
   h2: ({ children, ...props }) => (

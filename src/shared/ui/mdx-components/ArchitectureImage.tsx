@@ -1,3 +1,5 @@
+import { CommonImage } from "@/shared/ui";
+
 interface ArchitectureImageProps {
   src: string;
   caption?: string;
@@ -12,11 +14,11 @@ export function ArchitectureImage({
   return (
     <figure className="my-8">
       <div className="overflow-hidden rounded-lg border border-border bg-surface shadow-sm">
-        <img
+        <CommonImage
           src={src}
           alt={alt || caption || "Architecture diagram"}
           className="w-full"
-          loading="lazy"
+          aspectRatio="wide"
         />
       </div>
       {caption && (
