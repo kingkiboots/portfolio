@@ -3,7 +3,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import { type Project } from "@/features/project-card";
 import { type MdxPost } from "@/shared/lib/mdx";
-import { Tag } from "@/shared/ui";
+import { CommonImage, Tag } from "@/shared/ui";
 import { mdxComponents } from "@/shared/ui/mdx-components";
 
 interface ProjectDetailPageProps {
@@ -43,7 +43,7 @@ export default function ProjectDetailPage({
         {/* Hero image */}
         {project.thumbnail && (
           <div className="mb-10 overflow-hidden rounded-xl shadow-lg">
-            <img
+            <CommonImage
               src={project.thumbnail}
               alt={project.title}
               className="h-auto w-full object-cover"

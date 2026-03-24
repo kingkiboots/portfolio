@@ -18,6 +18,7 @@ const nextConfig: NextConfig = {
     URL_LINKEDIN: process.env.URL_LINKEDIN,
     URL_BLOG: process.env.URL_BLOG,
     RESUME_URL: process.env.RESUME_URL,
+    BASE_PATH: isGithubPages ? `/${repoName}` : "",
   },
 
   // GitHub Pages 배포 시 basePath 설정

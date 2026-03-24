@@ -1,6 +1,7 @@
 "use client";
 
 import { ImagePlaceholder } from "@/shared/ui";
+import { getAssetPath } from "@/shared/lib/get-asset-path";
 import { memo, useState, useCallback } from "react";
 
 interface ProjectThumbnailProps {
@@ -14,16 +15,15 @@ interface ProjectThumbnailProps {
 
 export const ProjectThumbnail = memo<ProjectThumbnailProps>(
   ({ title, thumbnailSrc, gif, featured, ogLoading, canHover }) => {
-    // [rerender-functional-setstate] 및 [rerender-derived-state] 원칙 적용
     const [hasError, setHasError] = useState(false);
 
-    // 에러 발생 시 호출될 콜백 - useCallback으로 안정성 확보
     const handleError = useCallback(() => {
       setHasError(true);
     }, []);
 
-    // 이미지 출력 여부 결정 (원본 소스가 없거나 에러가 발생한 경우 fallback 노출)
     const shouldShowPlaceholder = !thumbnailSrc || hasError;
+    const safeThumbnail = thumbnailSrc ? getAssetPath(thumbnailSrc) : null;
+    const safeGif = gif ? getAssetPath(gif) : undefined;
 
     return (
       <div
@@ -39,9 +39,9 @@ export const ProjectThumbnail = memo<ProjectThumbnailProps>(
           />
         ) : (
           <>
-            {!canHover && gif ? (
+            {!canHover && safeGif ? (
               <img
-                src={gif}
+                src={safeGif}
                 alt={`${title} demo`}
                 className="h-full w-full object-cover"
                 loading="lazy"
@@ -50,19 +50,19 @@ export const ProjectThumbnail = memo<ProjectThumbnailProps>(
             ) : (
               <>
                 <img
-                  src={thumbnailSrc}
+                  src={safeThumbnail!}
                   alt={title}
                   className={`h-full w-full object-cover ${
-                    gif
+                    safeGif
                       ? "duration-slow transition-opacity group-hover:opacity-0"
                       : "duration-slow transition-transform group-hover:scale-105"
                   }`}
                   loading="lazy"
                   onError={handleError}
                 />
-                {gif && (
+                {safeGif && (
                   <img
-                    src={gif}
+                    src={safeGif}
                     alt={`${title} demo`}
                     className="duration-slow absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity group-hover:opacity-100"
                     loading="lazy"
