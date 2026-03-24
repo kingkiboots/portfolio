@@ -99,10 +99,10 @@ React 로의 리뉴얼을 통해 화면 전환 간 속도는 급격히 개선되
 이에 저는 기존 S3 인프라와 React 개발 환경을 유지하면서 SEO 요구사항을 충족할 수 있는 **절충안으로 prerendering**을 채택했습니다.
 
 ### SEO 를 위한 prerendering 구현 방식
-<img 
-  loading="lazy"
+<ArchitectureImage 
   src="/resources/img/projects/lotte-hotel-renewal/prerendering-script-workflow.png"
   alt="Prerenderding 자동화 워크플로우"
+  caption="Prerenderding 자동화 워크플로우"
 />
 
 <HighlightBox type="info" title="핵심 구현 사항">
@@ -172,10 +172,10 @@ const routerProcessor: IRouteProcessor = new SitemapRouteProcessor();
 
 
 ### 정적 HTML 로의 크롤링봇 분기 처리
-<img 
-  loading="lazy"
+<ArchitectureImage
   src="/resources/img/projects/lotte-hotel-renewal/prerendering-crawling-bot.png"
   alt="사용자 및 Crawler Bot 진입 시 분기 처리"
+  caption="사용자 및 Crawler Bot 진입 시 분기 처리 다이어그램"
 />
 구현 단계에서 인프라 접근 제약으로 인해 CDN 레벨의 봇 분기 처리가 어려운 상황이었습니다. 이에 대한
 대안으로 저는 클라이언트 진입점에서 User-Agent 를 식별하여 prerendering 된 정적 HTML 로 라우팅 하는
