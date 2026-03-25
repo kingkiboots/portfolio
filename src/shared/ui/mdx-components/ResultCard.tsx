@@ -19,7 +19,7 @@ export function ResultCard({
   description,
 }: ResultCardProps) {
   return (
-    <div className="border-border bg-surface-elevated my-6 inline-flex flex-col items-center rounded-lg border p-6 text-center shadow-sm">
+    <div className="border-border bg-surface-elevated my-6 mr-3 inline-flex flex-col items-center rounded-lg border p-6 text-center shadow-sm">
       <span className={`${styles[type]} text-3xl font-bold`}>{value}</span>
       <span className="text-foreground mt-1 text-sm font-semibold">
         {title}

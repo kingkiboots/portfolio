@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { type Project } from "@/features/project-card";
 import { type MdxPost } from "@/shared/lib/mdx";
@@ -109,6 +110,7 @@ export default function ProjectDetailPage({
                   options={{
                     mdxOptions: {
                       remarkPlugins: [remarkGfm],
+                      rehypePlugins: [rehypeSlug],
                     },
                   }}
                 />
@@ -126,7 +128,7 @@ export default function ProjectDetailPage({
           </div>
 
           {/* Sidebar */}
-          <aside className="lg:col-span-1">
+          <aside className="order-first lg:order-last lg:col-span-1">
             <div className="sticky top-28 space-y-8">
               {/* Tech stack */}
               <div className="border-border bg-surface rounded-lg border p-6">
