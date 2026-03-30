@@ -42,7 +42,7 @@ const expertiseItems = [
         ></path>
       </svg>
     ),
-    title: "Frontend Dev",
+    title: "Frontend",
     subtitle: "React",
     underlineColor: "bg-primary/60",
     description:
