@@ -6,17 +6,16 @@ import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { useResume } from "@/features/resume";
+import { getAssetPath } from "@/shared/lib";
 
 const navItems = [
-  { label: "Expertise", href: "#my-expertise" },
-  { label: "Projects", href: "#projects" },
-  { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
-  { label: "Career", href: "#career" },
-  { label: "Contact", href: "#contact" },
+  { label: "Expertise", href: "/#my-expertise" },
+  { label: "Projects", href: "/#projects" },
+  { label: "About", href: "/#about" },
+  { label: "Skills", href: "/#skills" },
+  { label: "Career", href: "/#career" },
+  { label: "Contact", href: "/#contact" },
 ];
-
-const basePath = process.env.BASE_PATH ?? "";
 
 export const Header = memo(() => {
   const { resumeUrl, hasResume } = useResume();
@@ -119,7 +118,7 @@ export const Header = memo(() => {
             {navItems.map((item) => (
               <NavigationMenu.Item key={item.href}>
                 <NavigationMenu.Link
-                  href={`/${basePath}${item.href}`}
+                  href={getAssetPath(item.href)}
                   className={`focus-visible:ring-primary focus-visible:ring-offset-background px-4 py-2 text-sm font-medium transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none ${
                     bgOpacity > 0.5
                       ? "text-foreground/80 hover:text-primary"
@@ -239,7 +238,7 @@ export const Header = memo(() => {
                   {navItems.map((item) => (
                     <li key={item.href} role="none">
                       <a
-                        href={`/${basePath}${item.href}`}
+                        href={getAssetPath(item.href)}
                         onClick={handleMobileMenuClose}
                         className="text-subtle hover:text-foreground hover:bg-surface-elevated duration-fast focus-visible:ring-primary block rounded-md px-4 py-3 text-base font-medium transition-colors focus-visible:ring-2 focus-visible:outline-none"
                         role="menuitem"
