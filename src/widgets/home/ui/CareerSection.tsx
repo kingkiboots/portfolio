@@ -1,3 +1,8 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { registerGsapPlugins } from "@/shared/lib/gsap-plugins";
 import { SectionTitle, Card, Tag } from "@/shared/ui";
 
 interface CareerItem {
@@ -53,6 +58,7 @@ function CareerCard({ item, isLast }: { item: CareerItem; isLast: boolean }) {
       {/* Timeline line */}
       {!isLast && (
         <div
+          data-timeline-line
           className="bg-border group-hover:bg-primary/30 duration-normal absolute top-6 bottom-0 left-[11px] w-px transition-colors"
           aria-hidden="true"
         />
@@ -60,6 +66,7 @@ function CareerCard({ item, isLast }: { item: CareerItem; isLast: boolean }) {
 
       {/* Timeline dot */}
       <div
+        data-timeline-dot
         className={`duration-normal absolute top-1.5 left-0 flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all ${
           item.type === "work"
             ? "border-primary bg-primary/10 group-hover:bg-primary group-hover:border-primary"
@@ -128,11 +135,85 @@ function CareerCard({ item, isLast }: { item: CareerItem; isLast: boolean }) {
 }
 
 export function CareerSection() {
+  const listRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    registerGsapPlugins();
+    const list = listRef.current;
+    if (!list) return;
+
+    const ctx = gsap.context(() => {
+      const cards = list.querySelectorAll<HTMLElement>(":scope > article");
+      const dots = list.querySelectorAll<HTMLElement>("[data-timeline-dot]");
+      const line = list.querySelector<HTMLElement>("[data-timeline-line]");
+
+      // 타임라인 라인 드로우
+      if (line) {
+        gsap.fromTo(
+          line,
+          { scaleY: 0, transformOrigin: "top center" },
+          {
+            scaleY: 1,
+            duration: 1.0,
+            ease: "power2.inOut",
+            scrollTrigger: {
+              trigger: list,
+              start: "top 80%",
+              toggleActions: "play none none none",
+            },
+          },
+        );
+      }
+
+      // 도트 + 카드 stagger
+      gsap.fromTo(
+        dots,
+        { scale: 0, opacity: 0 },
+        {
+          scale: 1,
+          opacity: 1,
+          duration: 0.4,
+          ease: "back.out(1.7)",
+          stagger: 0.25,
+          scrollTrigger: {
+            trigger: list,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
+
+      gsap.fromTo(
+        cards,
+        { opacity: 0, x: -32 },
+        {
+          opacity: 1,
+          x: 0,
+          duration: 0.6,
+          ease: "power3.out",
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: list,
+            start: "top 80%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
+    }, list);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <div className="container mx-auto px-6">
       <SectionTitle title="Career" subtitle="저의 경력과 학력 사항입니다." />
 
-      <div className="max-w-3xl" role="feed" aria-label="경력 및 학력 타임라인">
+      <div
+        ref={listRef}
+        className="max-w-3xl"
+        role="feed"
+        aria-label="경력 및 학력 타임라인"
+      >
         {careerItems.map((item, index) => (
           <CareerCard
             key={item.id}

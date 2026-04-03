@@ -1,3 +1,8 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { registerGsapPlugins } from "@/shared/lib/gsap-plugins";
 import { SectionTitle, Card, Tag } from "@/shared/ui";
 
 interface SkillCategory {
@@ -89,6 +94,55 @@ function SkillCard({ category }: { category: SkillCategory }) {
 }
 
 export function SkillsSection() {
+  const gridRef = useRef<HTMLDivElement>(null);
+  const asideRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    registerGsapPlugins();
+    const grid = gridRef.current;
+    const aside = asideRef.current;
+    if (!grid) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        grid.querySelectorAll(":scope > *"),
+        { opacity: 0, y: 32 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.55,
+          ease: "power3.out",
+          stagger: 0.07,
+          scrollTrigger: {
+            trigger: grid,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
+
+      if (aside) {
+        gsap.fromTo(
+          aside,
+          { opacity: 0, y: 24 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.6,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: aside,
+              start: "top 90%",
+              toggleActions: "play none none none",
+            },
+          },
+        );
+      }
+    }, grid);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <div className="container mx-auto px-6">
       <SectionTitle
@@ -97,6 +151,7 @@ export function SkillsSection() {
       />
 
       <div
+        ref={gridRef}
         className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
         role="region"
         aria-label="기술 카테고리 목록"
@@ -107,7 +162,7 @@ export function SkillsSection() {
       </div>
 
       {/* Additional info with liquid glass effect */}
-      <aside className="mt-12" aria-labelledby="learning-heading">
+      <aside ref={asideRef} className="mt-12" aria-labelledby="learning-heading">
         <div className="liquid-glass rounded-lg p-6 sm:p-8">
           <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center">
             <div className="shrink-0" aria-hidden="true">

@@ -1,3 +1,9 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { registerGsapPlugins } from "@/shared/lib/gsap-plugins";
 import { Card } from "@/shared/ui";
 
 const expertiseItems = [
@@ -75,12 +81,42 @@ const expertiseItems = [
 ];
 
 export function MyExpertiseSection() {
+  const gridRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    registerGsapPlugins();
+    const grid = gridRef.current;
+    if (!grid) return;
+
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        grid.querySelectorAll(":scope > *"),
+        { opacity: 0, y: 36 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power3.out",
+          stagger: 0.12,
+          scrollTrigger: {
+            trigger: grid,
+            start: "top 85%",
+            toggleActions: "play none none none",
+          },
+        },
+      );
+    }, grid);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <div className="container mx-auto px-6">
       <h2 className="text-foreground mb-12 text-center text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
         My Expertise
       </h2>
       <div
+        ref={gridRef}
         className="grid gap-6 sm:grid-cols-1 md:grid-cols-3"
         role="region"
         aria-label="내 전문 분야 목록"
