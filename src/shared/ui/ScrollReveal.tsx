@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { registerGsapPlugins } from "../lib/gsap-plugins";
 import { ReactNode } from "react";
 
@@ -29,22 +28,20 @@ export function ScrollReveal({
     if (!el) return;
 
     const ctx = gsap.context(() => {
-      gsap.fromTo(
-        el,
-        { opacity: 0, y: 48 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: durations[speed],
-          delay: delay / 1000,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 88%",
-            toggleActions: "play none none none",
-          },
+      // y만 초기 설정 (opacity는 SSR inline style로 이미 0)
+      gsap.set(el, { y: 20 });
+      gsap.to(el, {
+        opacity: 1,
+        y: 0,
+        duration: durations[speed],
+        delay: delay / 1000,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 88%",
+          toggleActions: "play none none none",
         },
-      );
+      });
     }, el);
 
     return () => ctx.revert();

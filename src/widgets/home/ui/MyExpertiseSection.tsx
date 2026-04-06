@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { registerGsapPlugins } from "@/shared/lib/gsap-plugins";
 import { Card } from "@/shared/ui";
 
@@ -122,8 +121,8 @@ export function MyExpertiseSection() {
         aria-label="내 전문 분야 목록"
       >
         {expertiseItems.map((item) => (
+          <div key={item.id}>
           <Card
-            key={item.id}
             variant="elevated"
             padding="lg"
             className="border-border h-full border transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
@@ -147,6 +146,7 @@ export function MyExpertiseSection() {
               {item.description}
             </p>
           </Card>
+          </div>
         ))}
       </div>
     </div>

@@ -157,7 +157,9 @@ export function SkillsSection() {
         aria-label="기술 카테고리 목록"
       >
         {skillCategories.map((category) => (
-          <SkillCard key={category.title} category={category} />
+          <div key={category.title}>
+            <SkillCard category={category} />
+          </div>
         ))}
       </div>
 
