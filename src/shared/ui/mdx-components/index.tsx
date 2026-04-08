@@ -3,19 +3,24 @@ import React from "react";
 import { CommonImage } from "@/shared/ui";
 
 type MDXComponents = NonNullable<MDXRemoteProps["components"]>;
+
+function extractText(children: unknown): string {
+  if (typeof children === "string") return children;
+  if (Array.isArray(children)) return children.map(extractText).join("");
+  return "";
+}
 import { HighlightBox } from "./HighlightBox";
 import { ArchitectureImage } from "./ArchitectureImage";
 import { ResultCard } from "./ResultCard";
 import { MermaidDiagram } from "./MermaidDiagram";
 
-export { HighlightBox, ArchitectureImage, ResultCard, MermaidDiagram };
+export { HighlightBox, ArchitectureImage, ResultCard };
 
 export const mdxComponents: MDXComponents = {
   // Custom components
   HighlightBox,
   ArchitectureImage,
   ResultCard,
-  MermaidDiagram,
 
   // img override: basePath prefix + error fallback
   img: ({ src, alt, ...props }) => (
@@ -105,12 +110,33 @@ export const mdxComponents: MDXComponents = {
     }
     return <code {...props}>{children}</code>;
   },
-  pre: ({ children, ...props }) => (
-    <pre
-      className="border-border bg-surface-elevated my-6 overflow-x-auto rounded-lg border p-4 text-sm"
-      {...props}
-    >
-      {children}
-    </pre>
-  ),
+  pre: ({ children, ...props }) => {
+    // React.Children.only 대신 toArray로 안전하게 탐색
+    // (MDX가 code 앞뒤에 whitespace text node를 끼워넣을 수 있음)
+    const codeEl = React.Children.toArray(children).find(
+      (child): child is React.ReactElement<{
+        className?: string;
+        children?: unknown;
+      }> =>
+        React.isValidElement(child) &&
+        typeof (child.props as { className?: string }).className === "string" &&
+        (child.props as { className?: string }).className!.includes(
+          "language-mermaid",
+        ),
+    );
+
+    if (codeEl) {
+      const chart = extractText(codeEl.props.children);
+      return <MermaidDiagram chart={chart} />;
+    }
+
+    return (
+      <pre
+        className="border-border bg-surface-elevated my-6 overflow-x-auto rounded-lg border p-4 text-sm"
+        {...props}
+      >
+        {children}
+      </pre>
+    );
+  },
 };

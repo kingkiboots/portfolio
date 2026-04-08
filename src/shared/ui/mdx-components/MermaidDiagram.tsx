@@ -1,6 +1,26 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+
+// 모듈 레벨에서 mermaid를 한 번만 로드/초기화
+let mermaidPromise: Promise<typeof import("mermaid")["default"]> | null = null;
+
+function loadMermaid() {
+  if (!mermaidPromise) {
+    mermaidPromise = import("mermaid").then((m) => {
+      m.default.initialize({
+        startOnLoad: false,
+        theme: "neutral",
+        fontFamily: "inherit",
+        suppressErrorRendering: true,
+      });
+      return m.default;
+    });
+  }
+  return mermaidPromise;
+}
+
+let uidCounter = 0;
 
 interface MermaidDiagramProps {
   chart: string;
@@ -8,26 +28,32 @@ interface MermaidDiagramProps {
 }
 
 export function MermaidDiagram({ chart, caption }: MermaidDiagramProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const [svg, setSvg] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    let cancelled = false;
-
-    async function render() {
-      const mermaid = (await import("mermaid")).default;
-      mermaid.initialize({
-        startOnLoad: false,
-        theme: "neutral",
-        fontFamily: "inherit",
-      });
-
-      const id = `mermaid-${Math.random().toString(36).slice(2, 9)}`;
-      const { svg: rendered } = await mermaid.render(id, chart);
-      if (!cancelled) setSvg(rendered);
+    const safeChart = (chart ?? "").trim();
+    if (!safeChart) {
+      setError("mermaid 차트 내용이 비어 있습니다.");
+      return;
     }
 
-    render();
+    let cancelled = false;
+    setSvg("");
+    setError("");
+
+    // effect 실행마다 고유한 ID 생성 (StrictMode 이중 실행 대응)
+    const id = `mermaid-${++uidCounter}`;
+
+    loadMermaid()
+      .then((mermaid) => mermaid.render(id, safeChart))
+      .then(({ svg: rendered }) => {
+        if (!cancelled) setSvg(rendered);
+      })
+      .catch((e: unknown) => {
+        if (!cancelled) setError(String(e));
+      });
+
     return () => {
       cancelled = true;
     };
@@ -35,11 +61,17 @@ export function MermaidDiagram({ chart, caption }: MermaidDiagramProps) {
 
   return (
     <figure className="my-8">
-      <div
-        ref={containerRef}
-        className="overflow-x-auto rounded-lg border border-border bg-surface p-4 [&>svg]:mx-auto"
-        dangerouslySetInnerHTML={{ __html: svg }}
-      />
+      <div className="overflow-x-auto rounded-lg border border-border bg-surface p-4 [&>svg]:mx-auto">
+        {error ? (
+          <pre className="text-xs text-red-500 whitespace-pre-wrap">{error}</pre>
+        ) : svg ? (
+          <div dangerouslySetInnerHTML={{ __html: svg }} />
+        ) : (
+          <div className="flex h-16 items-center justify-center text-sm text-subtle">
+            렌더링 중...
+          </div>
+        )}
+      </div>
       {caption && (
         <figcaption className="mt-3 text-center text-sm text-tertiary">
           {caption}
