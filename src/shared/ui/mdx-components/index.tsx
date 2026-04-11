@@ -4,11 +4,6 @@ import { CommonImage } from "@/shared/ui";
 
 type MDXComponents = NonNullable<MDXRemoteProps["components"]>;
 
-function extractText(children: unknown): string {
-  if (typeof children === "string") return children;
-  if (Array.isArray(children)) return children.map(extractText).join("");
-  return "";
-}
 import { HighlightBox } from "./HighlightBox";
 import { ArchitectureImage } from "./ArchitectureImage";
 import { ResultCard } from "./ResultCard";
@@ -110,31 +105,26 @@ export const mdxComponents: MDXComponents = {
     }
     return <code {...props}>{children}</code>;
   },
-  pre: ({ children, ...props }) => {
-    // React.Children.only 대신 toArray로 안전하게 탐색
-    // (MDX가 code 앞뒤에 whitespace text node를 끼워넣을 수 있음)
-    const codeEl = React.Children.toArray(children).find(
-      (
-        child,
-      ): child is React.ReactElement<{
-        className?: string;
-        children?: unknown;
-      }> =>
-        React.isValidElement(child) &&
-        typeof (child.props as { className?: string }).className === "string" &&
-        (child.props as { className?: string }).className!.includes(
-          "language-mermaid",
-        ),
-    );
+  pre: (allProps) => {
+    const mermaidSource = (allProps as Record<string, unknown>)[
+      "data-mermaid-source"
+    ];
+    const {
+      "data-mermaid-source": _ms,
+      children,
+      ...props
+    } = allProps as typeof allProps & { "data-mermaid-source"?: string };
 
-    if (codeEl) {
-      const chart = extractText(codeEl.props.children);
-      return <MermaidDiagram chart={chart} />;
+    // Mermaid 다이어그램 (rehypePreprocessCode에서 추출된 소스)
+    if (typeof mermaidSource === "string" && mermaidSource.trim()) {
+      return <MermaidDiagram chart={mermaidSource} />;
     }
 
+    // caption/title은 rehype-pretty-code가 figcaption으로 추가,
+    // 스타일은 globals.css의 [data-rehype-pretty-code-caption/title]으로 처리
     return (
       <pre
-        className="border-border bg-surface-elevated my-6 overflow-x-auto rounded-lg border p-4 text-sm"
+        className="border-border bg-surface-elevated overflow-x-auto rounded-lg border text-sm"
         {...props}
       >
         {children}

@@ -1,11 +1,53 @@
 import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
 import remarkGfm from "remark-gfm";
 import { type Project } from "@/features/project-card";
 import { type MdxPost } from "@/shared/lib/mdx";
 import { CommonImage, Tag } from "@/shared/ui";
 import { mdxComponents } from "@/shared/ui/mdx-components";
+
+// rehype-pretty-code 이전에 실행:
+// mermaid 코드 블록의 소스를 pre의 data-mermaid-source에 저장하고
+// language-mermaid 클래스를 제거하여 pretty-code가 건드리지 않도록 함
+// (caption/title은 rehype-pretty-code가 meta string에서 직접 처리)
+function rehypePreprocessCode() {
+  return (tree: { type: string; children?: unknown[] }) => {
+    type HastNode = {
+      type: string;
+      tagName?: string;
+      properties?: Record<string, unknown>;
+      children?: HastNode[];
+    };
+    function walk(node: HastNode) {
+      if (node.type === "element" && node.tagName === "pre") {
+        const codeEl = (node.children ?? []).find(
+          (c) => c.type === "element" && c.tagName === "code",
+        );
+        if (codeEl) {
+          const classes = Array.isArray(codeEl.properties?.className)
+            ? (codeEl.properties!.className as string[])
+            : [];
+
+          if (classes.includes("language-mermaid")) {
+            const text = (codeEl.children ?? [])
+              .filter((c) => c.type === "text")
+              .map((c) => (c as { value?: string }).value ?? "")
+              .join("");
+            node.properties = node.properties ?? {};
+            node.properties["data-mermaid-source"] = text;
+            codeEl.properties!.className = classes.filter(
+              (c) => c !== "language-mermaid",
+            );
+          }
+        }
+      }
+      (node.children ?? []).forEach((c) => walk(c as HastNode));
+    }
+    walk(tree as HastNode);
+  };
+}
 
 interface ProjectDetailPageProps {
   project: Project;
@@ -110,7 +152,31 @@ export default function ProjectDetailPage({
                   options={{
                     mdxOptions: {
                       remarkPlugins: [remarkGfm],
-                      rehypePlugins: [rehypeSlug],
+                      rehypePlugins: [
+                        rehypePreprocessCode,
+                        [
+                          rehypePrettyCode,
+                          {
+                            // dual theme: CSS 변수로 light/dark 색상 주입
+                            // globals.css의 @media prefers-color-scheme으로 전환
+                            theme: {
+                              dark: "github-dark",
+                              light: "github-light",
+                            },
+                            // shiki가 주입하는 background-color 제거 (Tailwind bg 클래스로 제어)
+                            transformers: [
+                              {
+                                pre(node: {
+                                  properties: Record<string, unknown>;
+                                }) {
+                                  delete node.properties.style;
+                                },
+                              },
+                            ],
+                          },
+                        ],
+                        rehypeSlug,
+                      ],
                     },
                   }}
                 />
