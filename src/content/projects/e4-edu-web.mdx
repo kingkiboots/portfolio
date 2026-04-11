@@ -1,0 +1,218 @@
+---
+title: "E4.카드결제시스템실습프로젝트-web"
+---
+
+## 프로젝트 개요
+사내 수습 기간 실습 프로젝트로, Spring Boot를 통해 백엔드 서버를 구축하고, React.js를 통해 프론트엔드 애플리케이션을 개발했습니다. 
+
+선불 머니 충전, 상품 결제, 상품 판매 등의 기능이 구현되어 있습니다. Android와 SwiftUI를 통해 로그인과 회원가입을 구현하였고 그 외 기능은 Webview를 통해 구현하였습니다.
+
+## 사용 기술
+### Backend
+Spring Boot, PostgresSql, Docker, Security, JWT, AOP, JPA, JPQL, Querydsl, CoolSms API, Iamport API, Junit Test
+
+### Frontend
+React.js, React Hooks, Router, Axios, env, Bootstrap, DaumPostCdAPI
+
+### etc
+Git
+
+## 구현 특징
+* JPA는 엔터티 간의 연관관계와 이해하고 생명주기를 이해하며 코드를 짜는데 중점을 뒀습니다.
+* React.js는 컴포넌트의 생명 주기를 이해하고 불필요한 렌더링을 최소화해보려는 데에 중점을 뒀습니다.
+
+## 구현 기능
+### 회원가입
+* Cool Sms API를 이용한 휴대폰 인증
+* DaumPostCdAPI 를 사용한 우편번호 검색
+* Password encoder를 활용한 비밀번호 암호화
+* 정규표현식을 이용한 아이디, 비밀번호 검사
+
+### 로그인/로그아웃
+* JWT, Spring Security 활용
+
+### 머니충전, 상품 결제
+* Iamport 결제 API 이용
+* 잔액부족 시 AOP를 이용하여 Errorsend
+
+### 머니 거래 이력
+* 페이징처리
+* 날짜, 결제수단 기반 검색 
+
+### 가맹점 등록, 상품 등록
+* SequenceStyleGenerator를 상속한 SequenceGenerator를 만들어 상품 등록 시 년월일+sequence 로 구성된 시퀀스를 생성하여 매일 시퀀스가 초기화 
+
+
+## 트러블슈팅 및 핵심 구현
+### 1. [Frontend] 회원가입 폼 UX 개선 : 실시간 유효성 검사
+사용자가 폼 제출 버튼을 누르기 전에, 포커스가 인풋 창을 벗어나는 순간(`onBlur`) 즉각적인 피드백을 주어 UX를 개선하고자 했습니다. 정규표현식과 Axios를 활용해 실시간 아이디 중복 검사를 수행합니다.
+
+<ArchitectureImage 
+  src="/resources/img/projects/e4-edu-web/join_scr.png"
+  alt="회원가입 폼 onBlur 실시간 검사 UI"
+/>
+
+```jsx
+// onBlur 이벤트를 활용한 아이디 중복 검사
+useEffect(() => {
+    let id = member.membId;
+    if(id !== undefined) {
+        let regex = /(([a-z]|\d)+(_|-)*([a-z]|\d)*){5,}/;
+        if(id.length < 1 || idStatus === "id_empty") {
+            setIdStatus(() => "id_empty");
+        } else if(!regex.test(id) && idStatus !== "id_wrong_pattern") {
+            setIdStatus(() => "id_wrong_pattern");
+        } else {
+            e4EduAxios.post("/auth/dupCheck", { membId: id })
+            .then(res => {
+                if (res.data === 0) setIdStatus(() => "id_available");
+                else setIdStatus(() => "id_in_use");
+            })
+            .catch(err => { ... })
+        } 
+    }
+}, [member.membId]);
+
+return (
+    ...
+    <input
+        ...
+        name={'membId'}
+        id={'membId'}
+        onBlur={e => onChange(e)}
+    />
+    ...
+)
+```
+
+
+### 2. [Backend] 결제 시스템 안정화 : 커스텀 예외 처리 (`@RestControllerAdvice`)
+선불 머니 결제 시, 잔고가 부족하면 예외를 발생시키도록 한 후 이를 클라이언트에게 전송했습니다.
+
+<ArchitectureImage 
+  src="/resources/img/projects/e4-edu-web/bizexception_scr.png"
+  alt="잔고 부족 커스텀 예외 처리 UI"
+/>
+
+```java
+    Long blce = money.getMoneyBlce();
+    Long amt = buyHst.getBuyAmt();
+    Long res = blce - amt;
+
+    if(res < 0) {
+        // 아래 예외 발생 시 net.e4net.demo.advice.BlceLackofMoneyService가 응답을 보낸다.
+        throw new BlceLackOfMoney("잔고에 돈이 부족합니다.");
+    }
+
+    // 1. RuntimeException 상속 커스텀 예외
+    // net.e4net.demo.service.PayCashService 의 buyUsingMoney 메서드에서 사용
+    public class BlceLackofMoney extends RuntimeException {
+        public BlceLackOfMoney(String message) {
+            super(message);
+        }
+    }
+
+    // 2. Exception Handler
+    @RestControllerAdvice
+    @RequiredArgsConstructor
+    public class BlceLackofMoneyAdvice {
+
+        @ExceptionHandler(BlceLackofMoney.class)
+        @ResponseStatus(HttpStatus.BAD_REQUEST)
+        public ErrorResponse blceLackofMoney(RuntimeException e) {
+            log.error("머니 부족 에러", e.getMessage());
+            return new ErrorResponse("NOT_SUFFICIENT", "잔고가 없습니다!");
+        }
+    }
+```
+
+
+### 3. [Database] 식별성 강화를 위한 커스텀 시퀀스 제너레이터
+상품 번호(PK)를 단순 숫자가 아닌, 날짜 정보를 포함하는 형식(YYYYMMDD + 7자리 시퀀스)으로 자동 생성하기 위해 `SequenceStyleGenerator`를 커스텀했습니다.
+
+<ArchitectureImage 
+  src="/resources/img/projects/e4-edu-web/seq-style-generator_scr.png"
+  alt="커스텀 시퀀스 DB 테이블 정의서"
+  caption="커스텀 시퀀스 DB 테이블 정의서"
+/>
+<ArchitectureImage 
+  src="/resources/img/projects/e4-edu-web/seq-style-generator-db.png"
+  alt="커스텀 시퀀스가 적용된 DB 테이블"
+  caption="커스텀 시퀀스가 적용된 DB 테이블"
+/>
+
+```java
+package net.e4net.demo.config;
+...
+
+public class DatePrefixedSequenceIdGenerator extends SequenceStyleGenerator {
+    public static final String NUMBER_FORMAT_PARAMETER = "numberFormat";
+    public static final String NUMBER_FORMAT_DEFAULT = "%07d";
+
+
+    private String format;  
+     
+    @Override
+    public Serializable generate(SharedSessionContractImplementor session,
+            Object object) throws HibernateException {
+        return String.format(format, super.generate(session, object));
+    }
+
+    @Override
+    public void configure(Type type, Properties params,
+            ServiceRegistry serviceRegistry) throws MappingException {
+        
+        configure_type = LongType.INSTANCE;
+        configure_params = params;
+        configure_serviceRegistry = serviceRegistry;
+
+        super.configure(LongType.INSTANCE, params, serviceRegistry);
+        // 지금 날짜 를 yyyyMMdd 형태로
+        // params는 시퀀스 번호 
+        String dateFormat = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String numberFormat = ConfigurationHelper.getString(NUMBER_FORMAT_PARAMETER, params, NUMBER_FORMAT_DEFAULT); 
+        
+        this.format = dateFormat+numberFormat; 
+    }
+}
+```
+
+``` java
+package net.e4net.demo.entity.store;
+...
+
+@Getter
+@Entity
+@DynamicInsert
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "tb_goods")
+public class TbGoods extends TbParent{
+	
+	@Id
+	@Column(name = "goods_no", length = 15, updatable = false, nullable = false)
+	// 시퀀스를 하나 만들어 줍니다.
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq_goods")
+	// 그리고 위에서 만든 시퀀스를 사용하려 custom sequence를 만들 것입니다.
+	@GenericGenerator(
+			name = "seq_goods",
+			//시퀀스 전략을 아까 만들어준 CustomSequence의 클래스 경로로 설정해줍니다.
+			strategy = "net.e4net.demo.config.DatePrefixedSequenceIdGenerator",
+			parameters = {
+					// INCREMENT_PARAM은 sql에서 increment by 입니다. 한번에 얼마나 증가할 것인가!
+					@Parameter(name = DatePrefixedSequenceIdGenerator.INCREMENT_PARAM, value = "1")
+			})
+	private String goodsNo; // 상품번호  pk(yyyymmdd(8) + sequence(7)), nn
+
+    ...
+}
+```
+
+## 레슨런
+### Docker 기반 DB 마이그레이션 트러블슈팅  
+&nbsp;개발 환경이 변경될 때마다 Docker 컨테이너 내부의 PostgreSQL 데이터가 제대로 연동되지 않는 문제를 경험한 적이 있습니다. 이 문제를 해결하고자 pg_dump 명령어로 데이터를 백업한 후, **Docker Hub를 활용해 이미지를 공유**하는 방식을 도입했습니다. 이러한 실전 과정을 통해 Docker 생태계와 데이터베이스 구조에 대한 이해를 한층 더 넓힐 수 있었으며, 실제 현업 환경에서 발생하는 마이그레이션 이슈를 능동적으로 해결하는 역량을 키웠습니다.
+
+### React 렌더링 최적화 및 UX 개선  
+&nbsp;회원가입 과정에서 타이핑할 때마다 불필요한 리렌더링이 반복되는 문제를 발견하고, 기존의 onChange 이벤트 대신 onBlur 이벤트를 적용해 효율적으로 유효성 검증이 이루어지도록 개선했습니다. 이 과정에서 React의 컴포넌트 생명주기와 useMemo, useCallback 등 **다양한 Hook을 상황에 맞게 활용**하는 법을 몸소 익혔습니다. 그 결과 사용자 경험을 해치지 않으면서도 성능을 최적화하는 방법에 대해 실질적인 노하우를 얻게 되었습니다.
+
+### JPA 영속성 및 RESTful 아키텍처 이해  
+&nbsp;프론트엔드와 백엔드를 완전히 분리한 구조를 직접 설계하고 개발하면서, 각 계층 간의 네트워크 통신 흐름을 체계적으로 이해할 수 있었습니다. 특히 JPA를 적용하는 과정에서는 단순히 쿼리를 작성하는 수준을 넘어, 엔티티 간 연관관계와 생명주기(영속성 컨텍스트)까지 고려하여 더욱 견고하고 효율적인 데이터베이스를 설계하는 경험을 쌓았습니다. 이러한 경험은 RESTful 아키텍처 원칙에 기반해 유연하고 확장성 있는 백엔드 시스템을 구축하는 밑거름이 되었습니다.

@@ -114,7 +114,9 @@ export const mdxComponents: MDXComponents = {
     // React.Children.only 대신 toArray로 안전하게 탐색
     // (MDX가 code 앞뒤에 whitespace text node를 끼워넣을 수 있음)
     const codeEl = React.Children.toArray(children).find(
-      (child): child is React.ReactElement<{
+      (
+        child,
+      ): child is React.ReactElement<{
         className?: string;
         children?: unknown;
       }> =>

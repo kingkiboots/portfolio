@@ -53,7 +53,7 @@ export const techMap: Record<string, TechEntry> = {
     type: "img",
     url: `${DEVICON_BASE}/storybook/storybook-original.svg`,
   },
-  Docker: { type: "img", url: `${DEVICON_BASE}/docker/docker-original.svg` },
+  Docker: { type: "img", url: `${DEVICON_BASE}/docker/docker-plain.svg` },
   Git: { type: "img", url: `${DEVICON_BASE}/git/git-original.svg` },
   Figma: { type: "img", url: `${DEVICON_BASE}/figma/figma-original.svg` },
   Webpack: { type: "img", url: `${DEVICON_BASE}/webpack/webpack-original.svg` },
@@ -61,6 +61,10 @@ export const techMap: Record<string, TechEntry> = {
   "Spring Boot": {
     type: "img",
     url: `${DEVICON_BASE}/spring/spring-original.svg`,
+  },
+  PostgreSQL: {
+    type: "img",
+    url: `${DEVICON_BASE}/postgresql/postgresql-plain.svg`,
   },
   Maven: { type: "img", url: `${DEVICON_BASE}/maven/maven-original.svg` },
   "Google Analytics": {
@@ -95,5 +99,10 @@ export const techMap: Record<string, TechEntry> = {
     type: "img",
     url: `${DEVICON_BASE}/zustand/zustand-plain.svg`,
     hoverUrl: `${DEVICON_BASE}/zustand/zustand-original.svg`,
+  },
+  Swift: {
+    type: "img",
+    url: `${DEVICON_BASE}/swift/swift-plain.svg`,
+    hoverUrl: `${DEVICON_BASE}/swift/swift-original.svg`,
   },
 };
