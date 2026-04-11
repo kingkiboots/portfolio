@@ -1,0 +1,258 @@
+---
+title: "E4.카드결제시스템실습프로젝트-AOS"
+---
+
+## 프로젝트 개요
+사내 수습 기간 실습 프로젝트로, Spring Boot를 통해 백엔드 서버를 구축하고, React.js를 통해 프론트엔드 애플리케이션을 개발했습니다. 
+
+선불 머니 충전, 상품 결제, 상품 판매 등의 기능이 구현되어 있습니다. Android와 SwiftUI를 통해 로그인과 회원가입을 구현하였고 그 외 기능은 Webview를 통해 구현했습니다.
+
+## 구현 특징
+- 안드로이드 Activity와 Fragment의 생명주기를 이용하고 이를 활용해보려 했습니다.
+- `Nav-graph FragmentActivity`를 이용하여 `Activity Stack`에 Activity를 쌓아두기보다 `Fragment Backstack`에서 Fragment를 관리하였음 -> 메모리의 효율성, 화면 전환시에 Activity보다 더 순조롭다고 합니다.
+
+
+## 구현 기능
+### 네트워크 통신
+* Retrofit2를 이용한 서버 통신
+
+### 화면 전환 및 네비게이션
+* Splash Activity를 이용한 오프닝 화면
+* Nav Graph – Fragment Activity
+* 로그인 회원가입 화면 간의 transition 애니메이션
+
+### 앱 세션관리
+* Room Database를 활용한 로그인 정보 저장, 조회
+
+### 앱 푸쉬
+* 충전, 거래 발생 시 FCM을 이용한 푸쉬 알림
+
+### 웹뷰
+* css 미디어쿼리를 활용한 반응형 웹 설계
+
+
+## 트러블슈팅 및 핵심 구현
+### 회원가입
+setOnFocusChangeListener와 setError속성을 사용하여 사용자가 focus를 다른 곳을 옮길 때 정규표현식을 이용하여 유효성 검사를 실시하도록 했습니다.
+
+<ArchitectureImage 
+  src="/resources/img/projects/e4-edu-aos/join_scr.png"
+  alt="회원가입 진행 UI"
+  caption="회원가입 진행"
+/>
+
+```java caption="android - 회원가입 진행 코드"
+package com.example.kihyeon_application.auth;
+...
+public class SignupFragment extends Fragment {
+
+    ...
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        // 비밀번호
+        et_membPwd =  binding.etMembPwd;
+        et_membPwd.getEditText().setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean b) {
+                if(!b){
+                    String pwd = et_membPwd.getEditText().getText().toString();
+                    if(pwd.isEmpty() || pwd.length() < 1){
+                        et_membPwd.setError(NO_VAL_MSG);
+                        pwdChkStart = false;
+                    }else{
+                        String reg = "([\\w|\\W|\\d|\\{\\}\\[\\]\\/?.,;:|\\)*~`!^\\-_+<>@\\#$%&\\\\\\=\\(\\'\\\"]+){8,20}";
+                        if(!pwd.matches(reg)){
+                            et_membPwd.setError("8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.");
+                            pwdChkStart = false;
+                        }else{
+                            et_membPwd.setError(null);
+                            et_membPwd.setErrorEnabled(false);
+                            pwdChkStart = true;
+                        }
+                    }
+                }
+            }
+        });
+    }
+    ...
+}
+```
+
+
+### 디바이스에서 첫 로그인 시 fcm토큰 서버에 저장
+디바이스에서 첫 로그인 한 유저는 로그인 시 푸시알림 수신 동의 확인 알림 출력 후 이를 서버에 저장합니다.
+
+<ArchitectureImage
+  isFullWidthString="false"
+  src="/resources/img/projects/e4-edu-aos/fcm-push-agree_scr.png"
+  alt="푸쉬 동의 여부 UI"
+  caption="푸쉬 동의 여부 UI"
+/>
+
+```java caption="android - 로그인 성공 시 푸쉬 동의 여부 dialog 코드"
+package com.example.kihyeon_application.auth;
+...
+
+public class LoginFragment extends Fragment implements Backpressedlistener {
+    ...
+        @Override
+        public void onResponse(Call<TokenDto> call, Response<TokenDto> response) {
+            if (response.isSuccessful()) {
+                Toast.makeText(getContext(), "로그인 성공!", Toast.LENGTH_SHORT).show();
+                TokenDto tokenDto = response.body();
+                Gson gson = new Gson();
+                String tokenInfo = gson.toJson(tokenDto);
+                editor.putString("tokenDto", tokenInfo);
+                editor.apply();
+                // 이 어플에서 첫 로그인 하는지 알아보는 과정
+                // roomdb를 사용했다.
+                int firstLogin = dao.selectCountofId(membId);
+                // 0 이면 한번도 로그인 안한거다. => 첫로그인
+                // 첫 로그인 시 roomdb에 저장하고 서버에 토큰과 membSn을 보내는 요청을 한다.
+                if(firstLogin == 0) {
+                    String fcmToken = sharedPreferences.getString("fcmToken", "None");
+                    Map<String, String> map = new HashMap<>();
+                    alert.setTitle("E4NET PAY SERVICE")
+                        .setMessage("결제알림, 소식 등 푸쉬알람을 받으시겠습니까?")
+                        .setIcon(R.drawable.logo)
+                        .setPositiveButton("예", new DialogInterface.OnClickListener() {
+                            //혹시 모를 메모리 누수를 위해서 외부 자원을 끌어 쓰지 않겠음
+                            // 근데 생각해보니 alert도 뭔가 UI에서 따로 움직이는 것 같고 어짜피 enqueue하면 비동기이고,
+                            // 멀티 스레드를 사용할 만큼 작업시간이 길지 않음.
+                            // 그러나 스레드를 하나 생성하는데 있어서 비용이 크니깐... 안사용하는게 맞겠다 싶다.
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                sendFcmToken(tokenDto, fcmToken, "Y", membId);
+                            }
+                        })
+                        .setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                sendFcmToken(tokenDto, fcmToken, "N", membId);
+                            }
+                        }).create().show();
+                }
+                editor.putString("membId", membId);
+                editor.apply();
+                // nav-graph 씀
+                NavHostFragment.findNavController(LoginFragment.this)
+                        .navigate(R.id.action_loginFragment_to_webviewActivity);
+    ...
+}
+```
+
+```java caption="server - 서버가 FCM 토큰을 받아 DB에 저장하는 로직"
+package net.e4net.demo.service;
+...
+
+@Slf4j
+@RequiredArgsConstructor
+@Service
+public class FcmService {
+	
+	private final TbFcmTokenRepository fcmTokenRepository;
+	private final TbMembRepository tbMembRepository;
+	
+    @Async("threadPoolTaskExecutor")
+    @Transactional(isolation = Isolation.REPEATABLE_READ)
+    public void registerFcmToken(Map<String, String> fcmTokenInfo) {
+        
+        Long membSn = Long.parseLong(fcmTokenInfo.get("membSn"));
+        String alertOn = (String) fcmTokenInfo.get("alertOn");
+        String fcmToken = (String) fcmTokenInfo.get("fcmToken");
+        log.debug("fcmToken => {}", fcmToken);
+        TbFcmToken tbFcmToken = null;
+        Optional<TbFcmToken> tbFcmTokenRes = fcmTokenRepository.findById(membSn);
+        // TbFcmToken에 이미 토큰이 있는 사람이라면 Update, 없다면 insert해줄 것이다. 		
+        if(tbFcmTokenRes.isEmpty()) {
+            Optional<TbMemb> tbMemb = tbMembRepository.findById(membSn);
+            tbFcmToken = TbFcmToken.builder()
+                                    .useYn(alertOn)
+                                    .tbMemb(tbMemb.get())
+                                    .fcmToken(fcmToken)
+                                    .build();
+            // insert
+            tbFcmToken = fcmTokenRepository.save(tbFcmToken);
+        }else {
+            // 이미 db에 도큰 정보가 담겨 있다느 것이다. Update
+            // 변경감지로 수정 
+            tbFcmToken = tbFcmTokenRes.get();
+            tbFcmToken.setUseYn(alertOn);
+            tbFcmToken.setFcmToken(fcmToken);
+        }
+    }
+}
+```
+
+
+### 거래 발생 시 푸쉬 동의한 유저에게 푸쉬 알림 전송
+거래 이력 발생 시 푸쉬 수신 동의한 유저에게 멀티쓰레드로 알림을 전송합니다. Notification이 여러 일 때 Group으로 처리하도록 했습니다.
+
+<ArchitectureImage
+  isFullWidthString="false"
+  src="/resources/img/projects/e4-edu-aos/push_scr.png"
+  alt="푸쉬 메시지 예시"
+  caption="푸쉬 메시지 예시"
+/>
+
+```java caption="android - 서버로부터 fcm 메세지를 받을 경우 알람을 띄우는 로직"
+package com.example.kihyeon_application;
+...
+
+public class FcmService extends FirebaseMessagingService {
+    ...
+    // 메세지를 받았을 때 알림을 띄우는 메서드
+    @Override
+    public void onMessageReceived(@NonNull RemoteMessage message) {
+        super.onMessageReceived(message);
+        ...
+            NotificationCompat.Builder builder
+                    = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle(message.getData().get("title"))
+                    .setContentText(message.getData().get("content"))
+                    .setStyle(new NotificationCompat.BigTextStyle()
+                            .bigText(message.getData().get("detail")))
+                    .setSmallIcon(R.drawable.logo)
+                    .setAutoCancel(true)
+                    .setGroup(GROUP_KEY)
+                    .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
+                    .setContentIntent(pendingIntent);
+            // 알림을 보낸다!
+            // 저 16 즉 첫번째 인자는 노티피케이션의 id인데, 이거가 같으면 하나의 알림만 생성된다. 이거 알면 등록된 알림을 취소도 가능!
+            // 알림의 여러 설정과 종류 https://codechacha.com/ko/notifications-in-android/
+
+            // 알림을 그룹으로 묶어줄 것이다.
+            Notification summaryNotification
+                    = new NotificationCompat.Builder(this, CHANNEL_ID)
+                    .setContentTitle("E4net Pay Service")
+                    .setContentText("알림 서비스")
+                    .setSmallIcon(R.drawable.logo)
+                    .setStyle(new NotificationCompat.InboxStyle())
+                    .setGroup(GROUP_KEY)
+                    // setGroupSummary얘 에다가 묶어주는 것이다.
+                    .setGroupSummary(true)
+                    .setAutoCancel(true)
+                    .build();
+
+            // 알람이 덮어씌워지지 않고 여러개가 뜨게 하고 싶다면 id값을 다르게줘야한다.
+//            NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+            manager.notify((int) System.currentTimeMillis(), builder.build());
+            manager.notify(123, summaryNotification);
+        ...
+    }
+}
+```
+
+<ArchitectureImage
+  isFullWidthString="false"
+  src="/resources/img/projects/e4-edu-aos/fcm-fervice_code.png"
+  alt="푸쉬 메시지를 보내는 로직"
+  caption="service - 푸쉬 메시지를 보내는 로직"
+/>
+
+
+## 레슨런
+### Single Activity Architecture 도입을 통한 메모리 최적화
+기존에는 여러 개의 Activity를 연속적으로 쌓는 구조를 사용했으나, 이를 하나의 Activity에서 Nav-Graph를 활용해 Fragment Backstack을 관리하는 방식으로 전환하였습니다. 이 과정에서 Activity 생성과 생명주기 관리로 인해 발생하던 불필요한 리소스 소모를 크게 줄였으며, 결과적으로 앱 전체의 메모리 오버헤드를 현저히 낮출 수 있었습니다. 또한, 화면 전환이 훨씬 부드러워져 사용자 경험(UX) 측면에서도 한층 완성도 높은 결과를 얻을 수 있었습니다.

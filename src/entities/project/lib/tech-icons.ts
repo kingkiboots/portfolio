@@ -19,6 +19,16 @@ interface TechSvg {
 export type TechEntry = TechIcon | TechSvg;
 
 export const techMap: Record<string, TechEntry> = {
+  Android: {
+    type: "img",
+    url: `${DEVICON_BASE}/android/android-plain.svg`,
+    hoverUrl: `${DEVICON_BASE}/android/android-original.svg`,
+  },
+  "Android Studio": {
+    type: "img",
+    url: `${DEVICON_BASE}/androidstudio/androidstudio-plain.svg`,
+    hoverUrl: `${DEVICON_BASE}/androidstudio/androidstudio-original.svg`,
+  },
   React: { type: "img", url: `${DEVICON_BASE}/react/react-original.svg` },
   Typescript: {
     type: "img",
@@ -62,6 +72,16 @@ export const techMap: Record<string, TechEntry> = {
     type: "img",
     url: `${DEVICON_BASE}/spring/spring-original.svg`,
   },
+  Java: {
+    type: "img",
+    url: `${DEVICON_BASE}/java/java-plain.svg`,
+    hoverUrl: `${DEVICON_BASE}/java/java-original.svg`,
+  },
+  Kotlin: {
+    type: "img",
+    url: `${DEVICON_BASE}/kotlin/kotlin-plain.svg`,
+    hoverUrl: `${DEVICON_BASE}/kotlin/kotlin-original.svg`,
+  },
   PostgreSQL: {
     type: "img",
     url: `${DEVICON_BASE}/postgresql/postgresql-plain.svg`,
@@ -104,5 +124,10 @@ export const techMap: Record<string, TechEntry> = {
     type: "img",
     url: `${DEVICON_BASE}/swift/swift-plain.svg`,
     hoverUrl: `${DEVICON_BASE}/swift/swift-original.svg`,
+  },
+  Xcode: {
+    type: "img",
+    url: `${DEVICON_BASE}/xcode/xcode-plain.svg`,
+    hoverUrl: `${DEVICON_BASE}/xcode/xcode-original.svg`,
   },
 };

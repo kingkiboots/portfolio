@@ -156,7 +156,24 @@ export const projects: Project[] = [
     thumbnail: "/resources/img/projects/e4-edu-ios/thumbnail.png",
     gif: "/resources/img/projects/e4-edu-ios/ios.gif",
     size: "sm",
-    tags: ["Swift", "Git"],
+    tags: ["Swift", "Xcode", "Git"],
+    links: {
+      github: "https://github.com/kingkiboots/e4_edu/tree/KIMKIHYEON",
+    },
+  },
+  {
+    id: "7",
+    slug: "e4-edu-aos",
+    title: "E4.카드결제시스템실습프로젝트-AOS",
+    description: "Android 기반의 카드결제시스템 실습 프로젝트를 진행했습니다.",
+    detail:
+      "Spring Boot를 통해 백엔드 서버를 구축하고, React.js를 통해 프론트엔드 애플리케이션을 개발했습니다. 선불 머니 충전, 상품 결제, 상품 판매 등의 기능이 구현되어 있습니다. Android와 SwiftUI를 통해 로그인과 회원가입을 구현하였고 그 외 기능은 Webview를 통해 구현했습니다.",
+    period: "2022.12",
+    role: "풀스택 개발",
+    thumbnail: "/resources/img/projects/e4-edu-aos/join_scr.png",
+    gif: "/resources/img/projects/e4-edu-aos/aos.gif",
+    size: "sm",
+    tags: ["Java", "Kotlin", "Android Studio", "Git"],
     links: {
       github: "https://github.com/kingkiboots/e4_edu/tree/KIMKIHYEON",
     },
