@@ -38,7 +38,7 @@ export const projects: Project[] = [
     slug: "lotte-hotel-renewal",
     title: "롯데호텔 채널시스템 리뉴얼",
     description:
-      "글로벌 호텔 이용객을 대상으로 한 롯데호텔 홈페이지를 리뉴얼하였습니다. 다국어 지원, 호텔 예약 시스템, 호텔 정보 제공 등 다양한 기능을 제공합니다.",
+      "글로벌 호텔 이용객을 대상으로 한 롯데호텔 홈페이지를 리뉴얼했습니다. 다국어 지원, 호텔 예약 시스템, 호텔 정보 제공 등 다양한 기능을 제공합니다.",
     detail:
       "롯데호텔의 글로벌 채널 시스템을 완전히 리뉴얼한 대규모 프로젝트입니다. 다국어(i18n) 지원, 호텔 예약 시스템, SEO 최적화(react-helmet), Puppeteer 기반 프리렌더링, Google Analytics 연동 등 다양한 기능을 구현했습니다. FSD 아키텍처를 도입하여 코드의 유지보수성과 확장성을 확보했습니다.",
     period: "2024.04 - 2025.05",
@@ -150,13 +150,13 @@ export const projects: Project[] = [
     title: "E4.카드결제시스템실습프로젝트-IOS",
     description: "SwiftUI 기반의 카드결제시스템 실습 프로젝트를 진행했습니다.",
     detail:
-      "Spring Boot를 통해 백엔드 서버를 구축하고, React.js를 통해 프론트엔드 애플리케이션을 개발했습니다. 선불 머니 충전, 상품 결제, 상품 판매 등의 기능이 구현되어 있습니다. Android와 SwiftUI를 통해 로그인과 회원가입을 구현하였고 그 외 기능은 Webview를 통해 구현하였습니다.",
+      "Spring Boot를 통해 백엔드 서버를 구축하고, React.js를 통해 프론트엔드 애플리케이션을 개발했습니다. 선불 머니 충전, 상품 결제, 상품 판매 등의 기능이 구현되어 있습니다. Android와 SwiftUI를 통해 로그인과 회원가입을 구현하였고 그 외 기능은 Webview를 통해 구현했습니다.",
     period: "2022.12 - 2023.01",
     role: "풀스택 개발",
     thumbnail: "/resources/img/projects/e4-edu-ios/thumbnail.png",
     gif: "/resources/img/projects/e4-edu-ios/ios.gif",
     size: "sm",
-    tags: ["Swift", "Alamofire", "Git"],
+    tags: ["Swift", "Git"],
     links: {
       github: "https://github.com/kingkiboots/e4_edu/tree/KIMKIHYEON",
     },
@@ -168,7 +168,7 @@ export const projects: Project[] = [
     description:
       "Spring Boot, React.js 기반의 카드결제시스템 실습 프로젝트를 진행했습니다.",
     detail:
-      "Spring Boot를 통해 백엔드 서버를 구축하고, React.js를 통해 프론트엔드 애플리케이션을 개발했습니다. 선불 머니 충전, 상품 결제, 상품 판매 등의 기능이 구현되어 있습니다. Android와 SwiftUI를 통해 로그인과 회원가입을 구현하였고 그 외 기능은 Webview를 통해 구현하였습니다.",
+      "Spring Boot를 통해 백엔드 서버를 구축하고, React.js를 통해 프론트엔드 애플리케이션을 개발했습니다. 선불 머니 충전, 상품 결제, 상품 판매 등의 기능이 구현되어 있습니다. Android와 SwiftUI를 통해 로그인과 회원가입을 구현하였고 그 외 기능은 Webview를 통해 구현했습니다.",
     period: "2022.11",
     role: "풀스택 개발",
     thumbnail: "/resources/img/projects/e4-edu-web/main.png",

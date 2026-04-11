@@ -5,7 +5,7 @@ title: "E4.카드결제시스템실습프로젝트-web"
 ## 프로젝트 개요
 사내 수습 기간 실습 프로젝트로, Spring Boot를 통해 백엔드 서버를 구축하고, React.js를 통해 프론트엔드 애플리케이션을 개발했습니다. 
 
-선불 머니 충전, 상품 결제, 상품 판매 등의 기능이 구현되어 있습니다. Android와 SwiftUI를 통해 로그인과 회원가입을 구현하였고 그 외 기능은 Webview를 통해 구현하였습니다.
+선불 머니 충전, 상품 결제, 상품 판매 등의 기능이 구현되어 있습니다. Android와 SwiftUI를 통해 로그인과 회원가입을 구현하였고 그 외 기능은 Webview를 통해 구현했습니다.
 
 ## 사용 기술
 ### Backend
@@ -52,8 +52,7 @@ Git
   alt="회원가입 폼 onBlur 실시간 검사 UI"
 />
 
-```jsx
-// onBlur 이벤트를 활용한 아이디 중복 검사
+```jsx caption="onBlur 이벤트를 활용한 아이디 중복 검사 예시"
 useEffect(() => {
     let id = member.membId;
     if(id !== undefined) {
@@ -94,7 +93,7 @@ return (
   alt="잔고 부족 커스텀 예외 처리 UI"
 />
 
-```java
+```java caption="커스텀 예외처리 구현"
     Long blce = money.getMoneyBlce();
     Long amt = buyHst.getBuyAmt();
     Long res = blce - amt;
@@ -135,13 +134,14 @@ return (
   alt="커스텀 시퀀스 DB 테이블 정의서"
   caption="커스텀 시퀀스 DB 테이블 정의서"
 />
-<ArchitectureImage 
+<ArchitectureImage
+  isFullWidthString="false"
   src="/resources/img/projects/e4-edu-web/seq-style-generator-db.png"
   alt="커스텀 시퀀스가 적용된 DB 테이블"
   caption="커스텀 시퀀스가 적용된 DB 테이블"
 />
 
-```java
+```java caption="커스텀 시퀀스 구현"
 package net.e4net.demo.config;
 ...
 
@@ -177,7 +177,7 @@ public class DatePrefixedSequenceIdGenerator extends SequenceStyleGenerator {
 }
 ```
 
-``` java
+``` java caption="커스텀 시퀀스 적용"
 package net.e4net.demo.entity.store;
 ...
 
@@ -206,6 +206,15 @@ public class TbGoods extends TbParent{
     ...
 }
 ```
+
+날짜와 시퀀스를 합친 시퀀스를 만드는 것은 가능하지만 매일매일 시퀀스가 초기화 되는 것은 id generator에서 할 수가 없다고 합니다. 그래서 가장 최신의 pk 를 가져와 앞 8자리를 비교 후 다르다면 sequence를 초기화 하도록 하였습니다.
+
+<ArchitectureImage
+  src="/resources/img/projects/e4-edu-web/tbgoods-custom-sequence_code.png"
+  alt="커스텀 시퀀스 일일 초기화 코드"
+  caption="커스텀 시퀀스 일일 초기화 로직"
+/>
+
 
 ## 레슨런
 ### Docker 기반 DB 마이그레이션 트러블슈팅  
