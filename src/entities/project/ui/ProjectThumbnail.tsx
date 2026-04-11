@@ -51,15 +51,13 @@ export const ProjectThumbnail = memo<ProjectThumbnailProps>(
                 />
                 <div className="absolute inset-0 bg-black/20" />
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="w-[92%] overflow-hidden rounded-xl bg-white/5 ring-1 ring-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.55)] backdrop-blur-[1px]">
-                    <img
-                      src={safeGif}
-                      alt={`${title} demo`}
-                      className="w-full object-cover"
-                      loading="lazy"
-                      onError={handleError}
-                    />
-                  </div>
+                  <img
+                    src={safeGif}
+                    alt={`${title} demo`}
+                    className="max-h-[90%] max-w-[92%] rounded-xl ring-1 ring-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.55)]"
+                    loading="lazy"
+                    onError={handleError}
+                  />
                 </div>
               </>
             ) : (
@@ -81,15 +79,13 @@ export const ProjectThumbnail = memo<ProjectThumbnailProps>(
                     <div className="duration-slow absolute inset-0 bg-black/20 opacity-0 transition-opacity group-hover:opacity-100" />
                     {/* Floating GIF panel */}
                     <div className="duration-slow absolute inset-0 flex translate-y-2 items-center justify-center opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
-                      <div className="duration-slow w-[92%] scale-95 overflow-hidden rounded-xl bg-white/5 ring-1 ring-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.55)] backdrop-blur-[1px] transition-transform group-hover:scale-100">
-                        <img
-                          src={safeGif}
-                          alt={`${title} demo`}
-                          className="w-full object-cover"
-                          loading="lazy"
-                          onError={handleError}
-                        />
-                      </div>
+                      <img
+                        src={safeGif}
+                        alt={`${title} demo`}
+                        className="duration-slow max-h-[90%] max-w-[92%] scale-95 rounded-xl ring-1 ring-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.55)] transition-transform group-hover:scale-100"
+                        loading="lazy"
+                        onError={handleError}
+                      />
                     </div>
                   </>
                 )}
