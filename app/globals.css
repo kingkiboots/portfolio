@@ -534,15 +534,15 @@ img {
    ============================================ */
 
 /* light 모드 기본값 */
-code[data-theme*=" "],
-code[data-theme*=" "] span {
+code[data-theme],
+code[data-theme] span {
   color: var(--shiki-light);
 }
 
 /* dark 모드 전환 */
 @media (prefers-color-scheme: dark) {
-  code[data-theme*=" "],
-  code[data-theme*=" "] span {
+  code[data-theme],
+  code[data-theme] span {
     color: var(--shiki-dark);
   }
 }
