@@ -11,7 +11,8 @@ interface CareerItem {
   title: string;
   organization: string;
   period: string;
-  description: string;
+  description?: string;
+  responsibilities?: string[];
   skills?: string[];
 }
 
@@ -22,8 +23,13 @@ const careerItems: CareerItem[] = [
     title: "Frontend Core Developer",
     organization: "(주)이포넷",
     period: "2022.10 - Present",
-    description:
-      "프론트엔드 아키텍처 설계와 빌드 환경 구축을 담당하고 있으며, 공통 컴포넌트와 라이브러리를 개발하고 있습니다.",
+    responsibilities: [
+      "프론트엔드 아키텍처 설계",
+      "애플리케이션 빌드/배포",
+      "공통 UI 및 컴포넌트, 공통 모듈 및 커스텀훅 개발",
+      "프론트엔드 성능 최적화",
+      "컴포넌트 문서화, 개발 가이드 작성 및 교육",
+    ],
     skills: [
       "React",
       "TypeScript",
@@ -45,11 +51,11 @@ const careerItems: CareerItem[] = [
     title: "영미어문학과",
     organization: "가천대학교",
     period: "2014.03 - 2022.02",
-    description: "",
   },
 ];
 
 function CareerCard({ item, isLast }: { item: CareerItem; isLast: boolean }) {
+  const isWork = item.type === "work";
   return (
     <article
       className="group relative pb-8 pl-8"
@@ -68,14 +74,14 @@ function CareerCard({ item, isLast }: { item: CareerItem; isLast: boolean }) {
       <div
         data-timeline-dot
         className={`duration-normal absolute top-1.5 left-0 flex h-6 w-6 items-center justify-center rounded-full border-2 transition-all ${
-          item.type === "work"
+          isWork
             ? "border-primary bg-primary/10 group-hover:bg-primary group-hover:border-primary"
             : "border-secondary bg-secondary/10 group-hover:bg-secondary group-hover:border-secondary"
         } `}
         aria-hidden="true"
       >
         <div
-          className={`h-2 w-2 rounded-full ${item.type === "work" ? "bg-primary" : "bg-secondary"} duration-normal transition-colors group-hover:bg-white`}
+          className={`h-2 w-2 rounded-full ${isWork ? "bg-primary" : "bg-secondary"} duration-normal transition-colors group-hover:bg-white`}
         />
       </div>
 
@@ -83,22 +89,26 @@ function CareerCard({ item, isLast }: { item: CareerItem; isLast: boolean }) {
       <Card
         variant="default"
         padding="lg"
-        className="hover:border-primary/30 duration-normal transition-all hover:shadow-md"
+        className={`hover:border-${isWork ? "primary" : "secondary"}/30 duration-normal transition-all hover:shadow-md`}
       >
         {/* Header */}
         <header className="mb-3 flex flex-wrap items-start justify-between gap-2">
           <div>
             <h3
               id={`career-${item.id}-title`}
-              className="text-foreground text-lg font-semibold"
+              className="text-foreground text-lg font-bold"
             >
               {item.title}
             </h3>
-            <p className="text-secondary text-sm">{item.organization}</p>
+            <p
+              className={`mt-0.5 text-sm ${isWork ? "text-primary" : "text-secondary"}`}
+            >
+              {item.organization}
+            </p>
           </div>
           <time
             className={`rounded-sm px-3 py-1 text-xs font-medium ${
-              item.type === "work"
+              isWork
                 ? "bg-primary/10 text-primary"
                 : "bg-secondary/10 text-secondary"
             } `}
@@ -109,9 +119,20 @@ function CareerCard({ item, isLast }: { item: CareerItem; isLast: boolean }) {
         </header>
 
         {/* Description */}
-        <p className="text-secondary mb-4 text-sm leading-relaxed">
-          {item.description}
-        </p>
+        {item.description && (
+          <p className="text-secondary mb-4 text-sm leading-relaxed">
+            {item.description}
+          </p>
+        )}
+
+        {/* Responsibilities */}
+        {item.responsibilities && item.responsibilities.length > 0 && (
+          <ul className="text-subtle mb-4 list-disc space-y-1 pl-4 text-sm leading-relaxed">
+            {item.responsibilities.map((resp, i) => (
+              <li key={i}>{resp}</li>
+            ))}
+          </ul>
+        )}
 
         {/* Skills */}
         {item.skills && item.skills.length > 0 && (
@@ -122,7 +143,7 @@ function CareerCard({ item, isLast }: { item: CareerItem; isLast: boolean }) {
           >
             {item.skills.map((skill) => (
               <li key={skill}>
-                <Tag variant="default" size="sm">
+                <Tag variant="primary" size="sm">
                   {skill}
                 </Tag>
               </li>
