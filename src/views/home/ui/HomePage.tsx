@@ -34,7 +34,7 @@ export default function HomePage() {
       </section>
 
       {/* Skills Section */}
-      <section
+      {/* <section
         id="skills"
         className="section bg-surface-elevated/50"
         aria-labelledby="skills-heading"
@@ -42,10 +42,14 @@ export default function HomePage() {
         <ScrollReveal>
           <SkillsSection />
         </ScrollReveal>
-      </section>
+      </section> */}
 
       {/* Career Section */}
-      <section id="career" className="section" aria-labelledby="career-heading">
+      <section
+        id="career"
+        className="section bg-surface-elevated/50"
+        aria-labelledby="career-heading"
+      >
         <ScrollReveal>
           <CareerSection />
         </ScrollReveal>

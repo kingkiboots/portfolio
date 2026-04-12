@@ -11,8 +11,8 @@ import { getAssetPath } from "@/shared/lib";
 const navItems = [
   { label: "Expertise", href: "/#my-expertise" },
   { label: "Projects", href: "/#projects" },
-  { label: "About", href: "/#about" },
-  { label: "Skills", href: "/#skills" },
+  // { label: "About", href: "/#about" },
+  // { label: "Skills", href: "/#skills" },
   { label: "Career", href: "/#career" },
   { label: "Contact", href: "/#contact" },
 ];
