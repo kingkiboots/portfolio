@@ -206,6 +206,40 @@ export const projects: Project[] = [
       github: "https://github.com/kingkiboots/e4_edu/tree/KIMKIHYEON",
     },
   },
+  {
+    id: "9",
+    slug: "mr-dog-ms-cat",
+    title: "Mr.강 & Ms.고",
+    description: "AI을 활용한 반려동물 종합 플랫폼 프로젝트를 진행했습니다.",
+    detail:
+      "머신러닝(svm, tf-idf, knn), 딥러닝(cnn)을 활용한 반려동물 친구 추천, 반려동물 추천, 반려동물 품종 분석 기능이 포함된 반려동물 종합 플랫폼을 개발했습니다.",
+    period: "2022.08 - 2022.09",
+    role: "풀스택 개발",
+    thumbnail: "/resources/img/projects/mr-dog-ms-cat/recommendation_scr.png",
+    size: "sm",
+    tags: [
+      "Java",
+      "Python",
+      "Django",
+      "Spring",
+      "Spring Boot",
+      "OracleSQL",
+      "MyBatis",
+      "TensorFlow",
+      "Keras",
+      "Scikit-learn",
+      "Pandas",
+      "NumPy",
+      "JQuery",
+      "Bootstrap",
+      "Jupyter Notebook",
+      "Maven",
+      "UiPath",
+    ],
+    links: {
+      github: "https://github.com/kingkiboots/kosmo113_mainProject",
+    },
+  },
 ];
 
 export function getProjectBySlug(slug: string): Project | undefined {
