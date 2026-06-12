@@ -2,7 +2,6 @@ import { type Project } from "../types/project.types";
 
 export const projects: Project[] = [
   {
-    id: "1",
     slug: "kbank-admin-portal",
     title: "케이뱅크 서비스 관리자포털 구축",
     description: "케이뱅크의 SPA 관리자 페이지를 구축하고 있습니다.",
@@ -34,7 +33,6 @@ export const projects: Project[] = [
     links: {},
   },
   {
-    id: "2",
     slug: "lotte-hotel-renewal",
     title: "롯데호텔 채널시스템 리뉴얼",
     description:
@@ -66,7 +64,6 @@ export const projects: Project[] = [
     },
   },
   {
-    id: "3",
     slug: "e4net-homepage-renewal",
     title: "이포넷 홈페이지 리뉴얼",
     description:
@@ -95,7 +92,6 @@ export const projects: Project[] = [
     },
   },
   {
-    id: "4",
     slug: "admin-typescript-migration",
     title: "관리자 페이지 Typescript 마이그레이션",
     description:
@@ -116,7 +112,6 @@ export const projects: Project[] = [
     links: {},
   },
   {
-    id: "5",
     slug: "sectanine-pay2",
     title: "섹타나인 pay2.0 시스템 개발",
     description:
@@ -145,7 +140,6 @@ export const projects: Project[] = [
     },
   },
   {
-    id: "6",
     slug: "e4-edu-ios",
     title: "E4.카드결제시스템실습프로젝트-IOS",
     description: "SwiftUI 기반의 카드결제시스템 실습 프로젝트를 진행했습니다.",
@@ -162,7 +156,6 @@ export const projects: Project[] = [
     },
   },
   {
-    id: "7",
     slug: "e4-edu-aos",
     title: "E4.카드결제시스템실습프로젝트-AOS",
     description: "Android 기반의 카드결제시스템 실습 프로젝트를 진행했습니다.",
@@ -179,7 +172,6 @@ export const projects: Project[] = [
     },
   },
   {
-    id: "8",
     slug: "e4-edu-web",
     title: "E4.카드결제시스템실습프로젝트-web",
     description:
@@ -207,7 +199,6 @@ export const projects: Project[] = [
     },
   },
   {
-    id: "9",
     slug: "mr-dog-ms-cat",
     title: "Mr.강 & Ms.고",
     description: "AI을 활용한 반려동물 종합 플랫폼 프로젝트를 진행했습니다.",
@@ -238,6 +229,60 @@ export const projects: Project[] = [
     ],
     links: {
       github: "https://github.com/kingkiboots/kosmo113_mainProject",
+    },
+  },
+
+  {
+    slug: "ho-eat",
+    title: "Ho Eat (호잇)",
+    description: "Django 프로젝트로 진행했던 레시피 공유 플랫폼입니다.",
+    detail:
+      "사람들이 자신의 음식레시피를 공유하고, 소통하며, 인기 순위를 확인할 수 있는 플랫폼입니다. Django 프레임워크에 MVP 패턴을 적용하여 개발하였습니다.",
+    period: "2022.08",
+    role: "풀스택 개발",
+    thumbnail: "/resources/img/projects/ho-eat/main-ranking_scr.png",
+    size: "sm",
+    tags: [
+      "Python",
+      "Django",
+      "Javascript",
+      "C3.js",
+      "JQuery",
+      "OracleSQL",
+      "MyBatis",
+      "SQLite",
+      "Hibernate",
+      "UiPath",
+    ],
+    links: {
+      github: "https://github.com/kingkiboots/HoEat",
+    },
+  },
+  {
+    slug: "game-matching-site",
+    title: "Game Matching Site",
+    description: "Spring 프로젝트로 진행했던 게임 매칭 플랫폼입니다.",
+    detail:
+      "사람들과의 파티를 형성하기 위한 채팅방 생성 및 실시간 채팅 기능, 카테고리 필터 기능, 추천 기능, 게시판 밀 설문조사 기능을 제공하는 플랫폼",
+    period: "2022.07",
+    role: "풀스택 개발",
+    thumbnail: "/resources/img/projects/game-matching-site/chat-room_scr.png",
+    size: "sm",
+    tags: [
+      "Java",
+      "Spring",
+      "Websocket",
+      "JSP",
+      "HTML",
+      "CSS",
+      "Bootstrap",
+      "Javascript",
+      "JQuery",
+      "OracleSQL",
+      "MyBatis",
+    ],
+    links: {
+      github: "https://github.com/kingkiboots/Game_Matching_Site",
     },
   },
 ];

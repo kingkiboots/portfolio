@@ -56,7 +56,7 @@ export function ProjectsSection() {
       >
         {projects.map((project) => (
           <article
-            key={project.id}
+            key={project.slug}
             className={sizeClasses[project.size === "md" ? "md" : "sm"]}
           >
             <ProjectCard project={project} featured={project.size === "md"} />
