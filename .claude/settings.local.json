@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git status:*)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(pnpm lint:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(find .:*)",
+      "Bash(ls:*)",
+      "Bash(grep:*)"
+    ]
+  }
+}
