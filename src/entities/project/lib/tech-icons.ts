@@ -1,5 +1,5 @@
 import { type IconType } from "react-icons";
-import { SiRecoil, SiReactquery } from "react-icons/si";
+import { SiRecoil, SiReactquery, SiSocket, SiSpringboot } from "react-icons/si";
 
 const DEVICON_BASE =
   "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons";
@@ -69,9 +69,14 @@ export const techMap: Record<string, TechEntry> = {
   Figma: { type: "img", url: `${DEVICON_BASE}/figma/figma-original.svg` },
   Webpack: { type: "img", url: `${DEVICON_BASE}/webpack/webpack-original.svg` },
   Gulp: { type: "img", url: `${DEVICON_BASE}/gulp/gulp-plain.svg` },
-  "Spring Boot": {
+  Spring: {
     type: "img",
     url: `${DEVICON_BASE}/spring/spring-original.svg`,
+  },
+  "Spring Boot": {
+    type: "icon",
+    icon: SiSpringboot,
+    color: "#6DB33F",
   },
   Java: {
     type: "img",
@@ -130,6 +135,7 @@ export const techMap: Record<string, TechEntry> = {
     url: `${DEVICON_BASE}/swift/swift-plain.svg`,
     hoverUrl: `${DEVICON_BASE}/swift/swift-original.svg`,
   },
+  Websocket: { type: "icon", icon: SiSocket, color: "#000000" },
   Xcode: {
     type: "img",
     url: `${DEVICON_BASE}/xcode/xcode-plain.svg`,
