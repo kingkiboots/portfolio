@@ -101,7 +101,12 @@ export function ProjectsSection() {
         });
       },
       onComplete: () => {
-        // Flip 완료 시점에 grid는 자연스러운 새 높이로 복원됨
+        // absolute: true가 남긴 인라인 width/height/position 잔여 스타일 제거
+        // 제거하지 않으면 2회차부터 grid 컬럼 폭이 아닌 고정 px 폭이 적용되어 gap이 넓어짐
+        gsap.set(grid.querySelectorAll(":scope > article"), {
+          clearProps: "width,height,position,top,left",
+        });
+
         const newHeight = grid.getBoundingClientRect().height;
         gsap.to(wrapper, {
           height: newHeight,
