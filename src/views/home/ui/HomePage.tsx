@@ -1,11 +1,10 @@
-import {
-  HeroSection,
-  SkillsSection,
-  ProjectsSection,
-  CareerSection,
-  MyExpertiseSection,
-} from "@/widgets/home";
 import { ScrollReveal } from "@/shared/ui";
+import {
+  CareerSection,
+  HeroSection,
+  MyExpertiseSection,
+  ProjectsSection,
+} from "@/widgets/home";
 
 export default function HomePage() {
   return (

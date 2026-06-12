@@ -27,8 +27,8 @@ export const ProjectThumbnail = memo<ProjectThumbnailProps>(
 
     return (
       <div
-        className={`bg-foreground/5 relative min-h-[125px] w-full shrink-0 overflow-hidden ${
-          featured ? "flex-1" : "aspect-video"
+        className={`bg-foreground/5 relative min-h-[125px] w-full flex-1 shrink-0 overflow-hidden ${
+          featured || "aspect-video"
         }`}
       >
         {shouldShowPlaceholder ? (
@@ -54,7 +54,7 @@ export const ProjectThumbnail = memo<ProjectThumbnailProps>(
                   <img
                     src={safeGif}
                     alt={`${title} demo`}
-                    className="max-h-[90%] max-w-[92%] rounded-xl ring-1 ring-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.55)]"
+                    className="max-h-[90%] max-w-[92%] rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.55)] ring-1 ring-white/25"
                     loading="lazy"
                     onError={handleError}
                   />
@@ -65,7 +65,7 @@ export const ProjectThumbnail = memo<ProjectThumbnailProps>(
                 <img
                   src={safeThumbnail!}
                   alt={title}
-                  className={`h-full w-full object-cover transition-all duration-slow ${
+                  className={`duration-slow h-full w-full object-cover transition-all ${
                     safeGif
                       ? "group-hover:scale-110 group-hover:blur-sm group-hover:brightness-50 group-hover:saturate-150"
                       : "group-hover:scale-105"
@@ -82,7 +82,7 @@ export const ProjectThumbnail = memo<ProjectThumbnailProps>(
                       <img
                         src={safeGif}
                         alt={`${title} demo`}
-                        className="duration-slow max-h-[90%] max-w-[92%] scale-95 rounded-xl ring-1 ring-white/25 shadow-[0_8px_32px_rgba(0,0,0,0.55)] transition-transform group-hover:scale-100"
+                        className="duration-slow max-h-[90%] max-w-[92%] scale-95 rounded-xl shadow-[0_8px_32px_rgba(0,0,0,0.55)] ring-1 ring-white/25 transition-transform group-hover:scale-100"
                         loading="lazy"
                         onError={handleError}
                       />
