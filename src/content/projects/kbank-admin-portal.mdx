@@ -29,7 +29,98 @@ Turborepo의 Remote Caching을 활용하여 변경되지 않은 패키지는 빌
 의존 관계가 있는 패키지만 선택적으로 재빌드함으로써 CI/CD 파이프라인의 실행 시간을 단축했습니다.
 
 ## 2. Module-Federation 구축
+```mermaid
+graph TD
+  MFE[MFE] --> root[root]
+  MFE --> workspace[workspace]
+  MFE --> remote[remote]
 
+  root --> turborepo[turborepo]
+
+  workspace --> apps[apps (비즈니스 애플리케이션)]
+  workspace --> packages[packages (프로젝트 공용 공유 패키지)]
+
+  subgraph remote_nodes [remote]
+    direction TB
+    host[host]
+    편의서비스[편의서비스]
+    혜택[혜택]
+    고객[고객]
+    대외통합[대외통합]
+    포털[포털]
+    ui[ui]
+    hooks[hooks]
+    tsconfig[tsconfig]
+    dots[...]
+  end
+  remote --> remote_nodes
+
+  %% Styling for orange nodes
+  classDef orange fill:#F6A65D,stroke:#000,stroke-width:1px,color:#fff;
+  class host,편의서비스,혜택,고객,대외통합,포털,ui,hooks,tsconfig,dots orange
+```
+
+```mermaid
+flowchart TB
+    %% Styling for yellow boxes and overall layout
+    classDef yellow_box fill:#FFD54F,stroke:#000,stroke-width:1px,color:#000;
+    linkStyle default stroke:#888,stroke-width:1px;
+
+    %% User icon (optional, represented as a circle for mermaid simplicity)
+    User((이용자)) --> Host_Subgraph
+
+    subgraph Host_Subgraph ["host"]
+        direction TB
+        Navigate[Navigate]:::yellow_box
+        View[view]:::yellow_box
+        Feature[feature]:::yellow_box
+    end
+
+    subgraph Remote_Subgraph ["remote(business)"]
+        direction TB
+        Convenience[편의서비스]:::yellow_box
+        Benefit[혜택]:::yellow_box
+        Customer[고객]:::yellow_box
+        Integration[대외통합]:::yellow_box
+    end
+
+    subgraph Core_Subgraph ["core libraries"]
+        direction TB
+        Auth[Auth]:::yellow_box
+        Utils[utils]:::yellow_box
+        UI[ui]:::yellow_box
+        Hooks[hooks]:::yellow_box
+    end
+
+    %% Connections based on image_1.png
+
+    %% Host to Remote connections (from Navigate)
+    Navigate --> Convenience
+    Navigate --> Benefit
+    Navigate --> Customer
+    Navigate --> Integration
+
+    %% Host to Core connections (from View)
+    View --> Utils
+    View --> UI
+
+    %% Feature to Remote connection
+    Feature --> Integration
+
+    %% Remote to Core connections (Represented by the red dependency group in the image)
+    %% This indicates that these business modules rely on shared utils and UI.
+    Convenience -.-> Utils
+    Convenience -.-> UI
+    Benefit -.-> Utils
+    Benefit -.-> UI
+    Customer -.-> Utils
+    Customer -.-> UI
+    Integration -.-> Utils
+    Integration -.-> UI
+
+    %% Styling specific connections (red dependency lines as dotted)
+    linkStyle 7,8,9,10,11,12,13,14 stroke:#d9534f,stroke-width:2px,stroke-dasharray: 5 5;
+```
 
 
 ## 3. MDI(Multi Document Interface) 구현
