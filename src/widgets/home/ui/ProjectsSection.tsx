@@ -24,6 +24,7 @@ export function ProjectsSection() {
   const [activeTab, setActiveTab] = useState<Tab>("all");
   const gridRef = useRef<HTMLDivElement>(null);
   const flipStateRef = useRef<ReturnType<typeof Flip.getState> | null>(null);
+  const prevHeightRef = useRef<number>(0);
 
   useEffect(() => {
     registerGsapPlugins();
@@ -59,6 +60,8 @@ export function ProjectsSection() {
       setActiveTab(tab);
       return;
     }
+    // DOM 변경 전에 현재 높이와 요소 위치를 캡처
+    prevHeightRef.current = grid.getBoundingClientRect().height;
     flipStateRef.current = Flip.getState(
       grid.querySelectorAll(":scope > article"),
     );
@@ -67,26 +70,47 @@ export function ProjectsSection() {
 
   useLayoutEffect(() => {
     const state = flipStateRef.current;
-    if (!state) return;
+    if (!state || !gridRef.current) return;
     flipStateRef.current = null;
+
+    const grid = gridRef.current;
+
+    // 애니메이션 중 grid가 즉시 collapse되지 않도록 높이 고정
+    gsap.set(grid, { minHeight: prevHeightRef.current, overflow: "hidden" });
+
+    // minHeight 없는 상태의 자연스러운 새 높이를 미리 측정
+    gsap.set(grid, { minHeight: 0 });
+    const newHeight = grid.getBoundingClientRect().height;
+    gsap.set(grid, { minHeight: prevHeightRef.current });
 
     Flip.from(state, {
       duration: 0.45,
       ease: "power2.inOut",
       absolute: true,
-      onEnter: (els) =>
+      onEnter: (els) => {
         gsap.fromTo(
           els,
           { opacity: 0, scale: 0.88 },
           { opacity: 1, scale: 1, duration: 0.35, ease: "power2.out" },
-        ),
-      onLeave: (els) =>
+        );
+      },
+      onLeave: (els) => {
         gsap.to(els, {
           opacity: 0,
           scale: 0.88,
           duration: 0.25,
           ease: "power2.in",
-        }),
+        });
+      },
+      onComplete: () => {
+        // Flip 완료 후 새 높이로 부드럽게 전환
+        gsap.to(grid, {
+          minHeight: newHeight,
+          duration: 0.3,
+          ease: "power2.inOut",
+          onComplete: () => { gsap.set(grid, { minHeight: "", overflow: "" }); },
+        });
+      },
     });
   }, [activeTab]);
 
