@@ -101,10 +101,10 @@ export function ProjectsSection() {
         });
       },
       onComplete: () => {
-        // absolute: true가 남긴 인라인 width/height/position 잔여 스타일 제거
-        // 제거하지 않으면 2회차부터 grid 컬럼 폭이 아닌 고정 px 폭이 적용되어 gap이 넓어짐
+        // absolute: true가 hidden 아이템에 심은 display: block 포함 모든 잔여 인라인 스타일 제거
+        // display를 빠뜨리면 2회차부터 hidden 아이템이 grid flow에 남아 gap이 넓어짐
         gsap.set(grid.querySelectorAll(":scope > article"), {
-          clearProps: "width,height,position,top,left",
+          clearProps: "all",
         });
 
         const newHeight = grid.getBoundingClientRect().height;
@@ -113,7 +113,7 @@ export function ProjectsSection() {
           duration: 0.3,
           ease: "power2.inOut",
           onComplete: () => {
-            gsap.set(wrapper, { height: "", overflow: "" });
+            gsap.set(wrapper, { clearProps: "height,overflow" });
           },
         });
       },
