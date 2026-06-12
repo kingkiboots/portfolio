@@ -156,6 +156,137 @@ import { useOgImage } from "@/features/project-card/lib/use-og-image";
 import { ProjectCard } from "@/widgets/home";
 ```
 
+## 프로젝트 콘텐츠 구조
+
+프로젝트 하나를 추가하려면 아래 4곳을 수정/추가합니다.
+
+| 역할 | 경로 |
+|------|------|
+| 프로젝트 목록 데이터 | `src/features/project-card/data/projects.ts` |
+| 상세 페이지 콘텐츠 | `src/content/projects/<slug>.mdx` |
+| 썸네일 · 이미지 | `public/resources/img/projects/<slug>/` |
+| 기술 스택 아이콘 | `src/entities/project/lib/tech-icons.ts` |
+
+### projects.ts 필드
+
+```typescript
+{
+  slug: string;          // URL 식별자 (MDX 파일명 · 이미지 폴더명과 일치)
+  title: string;
+  description: string;   // 카드 한 줄 요약
+  detail?: string;       // MDX 없을 때 상세 페이지 대체 텍스트
+  period: string;        // 예: "2023.03 ~ 현재"
+  role?: string;         // 예: "프론트엔드 개발"
+  thumbnail?: string;    // public/ 기준 경로
+  gif?: string;          // 호버 시 재생되는 GIF
+  size: "md" | "sm";     // 홈 그리드 카드 크기
+  tags: string[];        // tech-icons.ts에 등록된 키와 일치해야 아이콘 표시
+  links: { website?, github?, demo? };
+}
+```
+
+### 이미지 경로 규칙
+
+```
+public/
+└── resources/img/projects/
+    └── <slug>/
+        ├── <slug>_scr.png        # 썸네일 (thumbnail 필드에 지정)
+        └── *.png / *.gif         # MDX 내부에서 참조하는 이미지
+```
+
+MDX 내부에서 이미지를 참조할 때는 `/resources/img/projects/<slug>/파일명` 형태로 작성합니다.
+GitHub Pages 배포 시 `basePath`가 자동으로 붙습니다 (`CommonImage` 컴포넌트가 처리).
+
+---
+
+## MDX 구현
+
+프로젝트 상세 페이지의 본문은 `src/content/projects/<slug>.mdx` 파일로 관리합니다.
+MDX 파일이 없으면 `projects.ts`의 `detail` 필드를 폴백으로 표시합니다.
+
+### 관련 파일
+
+| 파일 | 역할 |
+|------|------|
+| `src/shared/lib/mdx.ts` | `gray-matter`로 MDX 파일 읽기 (frontmatter + 본문 분리) |
+| `app/projects/[slug]/page.tsx` | 라우트 셸 — slug로 데이터 리졸브 후 뷰에 위임 |
+| `src/views/project-detail/ui/ProjectDetailPage.tsx` | `MDXRemote`로 본문 렌더링, 플러그인 파이프라인 정의 |
+| `src/shared/ui/mdx-components/index.tsx` | 커스텀 컴포넌트 · HTML 태그 오버라이드 등록 |
+
+### 렌더링 흐름
+
+```
+MDX 파일
+  └─ gray-matter (frontmatter 파싱)
+       └─ MDXRemote (next-mdx-remote/rsc — React Server Component)
+            ├─ remark-gfm          # GitHub Flavored Markdown 지원
+            ├─ rehypePreprocessCode # mermaid 코드블록 사전 추출 (커스텀)
+            ├─ rehype-pretty-code   # shiki 기반 코드 신택스 하이라이팅
+            └─ rehype-slug          # 헤딩에 id 자동 부여
+```
+
+### 코드 하이라이팅
+
+`rehype-pretty-code` + `shiki`로 처리하며, light/dark 테마를 CSS 변수로 동시에 주입합니다.
+
+```typescript
+theme: { dark: "github-dark", light: "github-light" }
+```
+
+shiki가 주입하는 인라인 `background-color` 스타일은 Tailwind 클래스로 제어하기 위해 `transformers`에서 제거합니다.
+
+### Mermaid 다이어그램
+
+````md
+```mermaid
+graph TD
+  A --> B
+```
+````
+
+위처럼 작성하면 클라이언트에서 SVG로 렌더링됩니다. 처리 과정:
+
+1. `rehypePreprocessCode` (커스텀 rehype 플러그인): HAST 트리를 순회하며 `language-mermaid` 코드블록의 소스를 `<pre data-mermaid-source="...">` 속성으로 저장하고, `language-mermaid` 클래스를 제거해 `rehype-pretty-code`가 건드리지 않도록 함
+2. `mdxComponents`의 `pre` 오버라이드: `data-mermaid-source` 속성이 있으면 `<MermaidDiagram>` 렌더링
+3. `MermaidDiagram` (Client Component): `mermaid` 라이브러리를 동적 import해 SVG를 생성, 모듈 레벨 싱글톤으로 초기화를 한 번만 수행
+
+### 커스텀 MDX 컴포넌트
+
+MDX 파일 내에서 아래 컴포넌트를 별도 import 없이 바로 사용할 수 있습니다.
+
+#### `<HighlightBox>`
+
+강조 박스 (info / warning / success / error).
+
+```mdx
+<HighlightBox type="info" title="참고">
+  내용을 여기에 작성합니다.
+</HighlightBox>
+```
+
+#### `<ArchitectureImage>`
+
+아키텍처 다이어그램 이미지. `isFullWidthString` 기본값은 `"true"`.
+
+```mdx
+<ArchitectureImage
+  src="/resources/img/projects/my-project/architecture.png"
+  caption="시스템 아키텍처"
+  isFullWidthString="false"
+/>
+```
+
+#### `<ResultCard>`
+
+수치 지표 카드 (info / warning / success / error).
+
+```mdx
+<ResultCard type="success" title="빌드 시간 단축" value="68%" description="Turborepo Remote Caching 적용 후" />
+```
+
+---
+
 ## 파일 네이밍 컨벤션
 
 | 유형 | 케이스 | 예시 |
