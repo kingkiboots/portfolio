@@ -1,5 +1,8 @@
+export type ProjectCategory = "work" | "personal";
+
 export interface Project {
   slug: string;
+  category: ProjectCategory;
   title: string;
   description: string;
   detail?: string;

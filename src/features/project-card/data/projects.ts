@@ -3,6 +3,7 @@ import { type Project } from "../types/project.types";
 export const projects: Project[] = [
   {
     slug: "kbank-admin-portal",
+    category: "work",
     title: "케이뱅크 서비스 관리자포털 구축",
     description: "케이뱅크의 SPA 관리자 페이지를 구축하고 있습니다.",
     detail:
@@ -34,6 +35,7 @@ export const projects: Project[] = [
   },
   {
     slug: "lotte-hotel-renewal",
+    category: "work",
     title: "롯데호텔 채널시스템 리뉴얼",
     description:
       "글로벌 호텔 이용객을 대상으로 한 롯데호텔 홈페이지를 리뉴얼했습니다. 다국어 지원, 호텔 예약 시스템, 호텔 정보 제공 등 다양한 기능을 제공합니다.",
@@ -65,6 +67,7 @@ export const projects: Project[] = [
   },
   {
     slug: "e4net-homepage-renewal",
+    category: "work",
     title: "이포넷 홈페이지 리뉴얼",
     description:
       "회사 홈페이지를 리뉴얼하는 프로젝트입니다. 다국어와 백엔드 통합 빌드를 지원합니다.",
@@ -93,6 +96,7 @@ export const projects: Project[] = [
   },
   {
     slug: "admin-typescript-migration",
+    category: "work",
     title: "관리자 페이지 Typescript 마이그레이션",
     description:
       "프로젝트마다 사용되는 관리자 페이지를 TypeScript로 마이그레이션하여 코드 품질과 유지보수성을 향상시키며 성능최적화를 진행했습니다.",
@@ -113,6 +117,7 @@ export const projects: Project[] = [
   },
   {
     slug: "sectanine-pay2",
+    category: "work",
     title: "섹타나인 pay2.0 시스템 개발",
     description:
       "해피포인트 머니/카드의 대고객 웹뷰와 관리자 페이지를 개발했습니다.",
@@ -141,6 +146,7 @@ export const projects: Project[] = [
   },
   {
     slug: "e4-edu-ios",
+    category: "work",
     title: "E4.카드결제시스템실습프로젝트-IOS",
     description: "SwiftUI 기반의 카드결제시스템 실습 프로젝트를 진행했습니다.",
     detail:
@@ -157,6 +163,7 @@ export const projects: Project[] = [
   },
   {
     slug: "e4-edu-aos",
+    category: "work",
     title: "E4.카드결제시스템실습프로젝트-AOS",
     description: "Android 기반의 카드결제시스템 실습 프로젝트를 진행했습니다.",
     detail:
@@ -173,6 +180,7 @@ export const projects: Project[] = [
   },
   {
     slug: "e4-edu-web",
+    category: "work",
     title: "E4.카드결제시스템실습프로젝트-web",
     description:
       "Spring Boot, React.js 기반의 카드결제시스템 실습 프로젝트를 진행했습니다.",
@@ -200,6 +208,7 @@ export const projects: Project[] = [
   },
   {
     slug: "mr-dog-ms-cat",
+    category: "personal",
     title: "Mr.강 & Ms.고",
     description: "AI을 활용한 반려동물 종합 플랫폼 프로젝트를 진행했습니다.",
     detail:
@@ -234,6 +243,7 @@ export const projects: Project[] = [
 
   {
     slug: "ho-eat",
+    category: "personal",
     title: "Ho Eat (호잇)",
     description: "Django 프로젝트로 진행했던 레시피 공유 플랫폼입니다.",
     detail:
@@ -260,6 +270,7 @@ export const projects: Project[] = [
   },
   {
     slug: "game-matching-site",
+    category: "personal",
     title: "Game Matching Site",
     description: "Spring 프로젝트로 진행했던 게임 매칭 플랫폼입니다.",
     detail:
