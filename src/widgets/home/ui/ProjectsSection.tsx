@@ -62,11 +62,21 @@ export function ProjectsSection() {
       setActiveTab(tab);
       return;
     }
-    // DOM 변경 전 wrapper 높이와 카드 위치 캡처
+
     prevHeightRef.current = wrapper.getBoundingClientRect().height;
+
+    // display:none 아이템은 Flip.getState()가 위치를 캡처하지 못함
+    // Work↔Personal처럼 disjoint한 탭 전환 시 2회차부터 gap이 깨지는 원인
+    // 모든 아이템을 일시적으로 보여줘서 grid 위치를 정확히 캡처한 뒤 복원
+    const hiddenItems = Array.from(
+      grid.querySelectorAll<HTMLElement>(":scope > article.hidden"),
+    );
+    hiddenItems.forEach((el) => el.classList.remove("hidden"));
     flipStateRef.current = Flip.getState(
       grid.querySelectorAll(":scope > article"),
     );
+    hiddenItems.forEach((el) => el.classList.add("hidden"));
+
     setActiveTab(tab);
   };
 
