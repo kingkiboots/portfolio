@@ -22,6 +22,7 @@ const sizeClasses = {
 
 export function ProjectsSection() {
   const [activeTab, setActiveTab] = useState<Tab>("all");
+  const wrapperRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
   const flipStateRef = useRef<ReturnType<typeof Flip.getState> | null>(null);
   const prevHeightRef = useRef<number>(0);
@@ -56,12 +57,13 @@ export function ProjectsSection() {
   const handleTabChange = (tab: Tab) => {
     if (tab === activeTab) return;
     const grid = gridRef.current;
-    if (!grid) {
+    const wrapper = wrapperRef.current;
+    if (!grid || !wrapper) {
       setActiveTab(tab);
       return;
     }
-    // DOM 변경 전에 현재 높이와 요소 위치를 캡처
-    prevHeightRef.current = grid.getBoundingClientRect().height;
+    // DOM 변경 전 wrapper 높이와 카드 위치 캡처
+    prevHeightRef.current = wrapper.getBoundingClientRect().height;
     flipStateRef.current = Flip.getState(
       grid.querySelectorAll(":scope > article"),
     );
@@ -70,18 +72,14 @@ export function ProjectsSection() {
 
   useLayoutEffect(() => {
     const state = flipStateRef.current;
-    if (!state || !gridRef.current) return;
+    if (!state || !gridRef.current || !wrapperRef.current) return;
     flipStateRef.current = null;
 
     const grid = gridRef.current;
+    const wrapper = wrapperRef.current;
 
-    // 애니메이션 중 grid가 즉시 collapse되지 않도록 높이 고정
-    gsap.set(grid, { minHeight: prevHeightRef.current, overflow: "hidden" });
-
-    // minHeight 없는 상태의 자연스러운 새 높이를 미리 측정
-    gsap.set(grid, { minHeight: 0 });
-    const newHeight = grid.getBoundingClientRect().height;
-    gsap.set(grid, { minHeight: prevHeightRef.current });
+    // grid가 아닌 wrapper에 height 고정 → grid 내부 fr 행 레이아웃 영향 없음
+    gsap.set(wrapper, { height: prevHeightRef.current, overflow: "hidden" });
 
     Flip.from(state, {
       duration: 0.45,
@@ -103,12 +101,15 @@ export function ProjectsSection() {
         });
       },
       onComplete: () => {
-        // Flip 완료 후 새 높이로 부드럽게 전환
-        gsap.to(grid, {
-          minHeight: newHeight,
+        // Flip 완료 시점에 grid는 자연스러운 새 높이로 복원됨
+        const newHeight = grid.getBoundingClientRect().height;
+        gsap.to(wrapper, {
+          height: newHeight,
           duration: 0.3,
           ease: "power2.inOut",
-          onComplete: () => { gsap.set(grid, { minHeight: "", overflow: "" }); },
+          onComplete: () => {
+            gsap.set(wrapper, { height: "", overflow: "" });
+          },
         });
       },
     });
@@ -137,24 +138,26 @@ export function ProjectsSection() {
         ))}
       </div>
 
-      <div
-        ref={gridRef}
-        className="grid auto-rows-fr grid-cols-1 gap-6 md:grid-cols-3"
-        role="region"
-        aria-label="프로젝트 목록"
-      >
-        {projects.map((project) => (
-          <article
-            key={project.slug}
-            className={`${sizeClasses[project.size === "md" ? "md" : "sm"]} ${
-              activeTab !== "all" && project.category !== activeTab
-                ? "hidden"
-                : ""
-            }`}
-          >
-            <ProjectCard project={project} featured={project.size === "md"} />
-          </article>
-        ))}
+      <div ref={wrapperRef}>
+        <div
+          ref={gridRef}
+          className="relative grid auto-rows-fr grid-cols-1 gap-6 md:grid-cols-3"
+          role="region"
+          aria-label="프로젝트 목록"
+        >
+          {projects.map((project) => (
+            <article
+              key={project.slug}
+              className={`${sizeClasses[project.size === "md" ? "md" : "sm"]} ${
+                activeTab !== "all" && project.category !== activeTab
+                  ? "hidden"
+                  : ""
+              }`}
+            >
+              <ProjectCard project={project} featured={project.size === "md"} />
+            </article>
+          ))}
+        </div>
       </div>
     </div>
   );
