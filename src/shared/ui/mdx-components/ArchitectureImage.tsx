@@ -1,4 +1,5 @@
 import { CommonImage } from "@/shared/ui";
+import { Caption } from "./Caption";
 
 interface ArchitectureImageProps {
   src: string;
@@ -24,11 +25,7 @@ export function ArchitectureImage({
           aspectRatio={isFullWidth ? "wide" : "square"}
         />
       </div>
-      {caption && (
-        <figcaption className="text-tertiary mt-3 text-center text-sm">
-          {caption}
-        </figcaption>
-      )}
+      {caption && <Caption>{caption}</Caption>}
     </figure>
   );
 }

@@ -8,8 +8,9 @@ import { HighlightBox } from "./HighlightBox";
 import { ArchitectureImage } from "./ArchitectureImage";
 import { ResultCard } from "./ResultCard";
 import { MermaidDiagram } from "./MermaidDiagram";
+import { Caption } from "./Caption";
 
-export { HighlightBox, ArchitectureImage, ResultCard };
+export { HighlightBox, ArchitectureImage, ResultCard, Caption };
 
 export const mdxComponents: MDXComponents = {
   // Custom components
@@ -91,6 +92,14 @@ export const mdxComponents: MDXComponents = {
     </blockquote>
   ),
   hr: (props) => <hr className="border-border my-8" {...props} />,
+  figcaption: ({ children, ...props }) => {
+    // rehype-pretty-code title (파일탭): 기존 CSS로 처리
+    if ("data-rehype-pretty-code-title" in props) {
+      return <figcaption {...props}>{children}</figcaption>;
+    }
+    // caption 또는 일반 figcaption: Caption 컴포넌트로 통일
+    return <Caption>{children}</Caption>;
+  },
   code: ({ children, ...props }) => {
     const isInline = typeof children === "string";
     if (isInline) {

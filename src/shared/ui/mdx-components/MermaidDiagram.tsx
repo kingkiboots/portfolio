@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Caption } from "./Caption";
 
 // 모듈 레벨에서 mermaid를 한 번만 로드/초기화
 let mermaidPromise: Promise<typeof import("mermaid")["default"]> | null = null;
@@ -72,11 +73,7 @@ export function MermaidDiagram({ chart, caption }: MermaidDiagramProps) {
           </div>
         )}
       </div>
-      {caption && (
-        <figcaption className="mt-3 text-center text-sm text-tertiary">
-          {caption}
-        </figcaption>
-      )}
+      {caption && <Caption>{caption}</Caption>}
     </figure>
   );
 }

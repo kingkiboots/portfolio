@@ -505,16 +505,6 @@ img {
   margin-block: calc(var(--spacing) * 8);
 }
 
-/* caption: 코드 블록 하단에 표시 (```lang caption="...") */
-[data-rehype-pretty-code-caption] {
-  display: block;
-  text-align: center;
-  font-size: var(--text-sm);
-  line-height: var(--tw-leading, var(--text-sm--line-height));
-  color: var(--color-tertiary);
-  margin-top: calc(var(--spacing) * 3);
-}
-
 /* title: 코드 블록 상단 파일명 표시 (```lang title="...") */
 [data-rehype-pretty-code-title] {
   display: inline-block;
