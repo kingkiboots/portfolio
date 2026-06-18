@@ -50,35 +50,35 @@ export function ProjectDetailNavBar() {
         boxShadow: "0 -2px 8px rgba(0,0,0,0.08)",
       }}
     >
-      <div className="container mx-auto flex h-14 items-center justify-between px-6">
-        {/* Previous */}
-        {prevProject ? (
-          <Link
-            href={getAssetPath(`/projects/${prevProject.slug}`)}
-            className="text-subtle hover:text-foreground duration-fast inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
-          >
-            <svg
-              className="h-4 w-4 shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
+      <div className="container mx-auto grid h-14 grid-cols-3 items-center px-6">
+        {/* Previous — 왼쪽 컬럼 */}
+        <div>
+          {prevProject && (
+            <Link
+              href={getAssetPath(`/projects/${prevProject.slug}`)}
+              className="text-subtle hover:text-foreground duration-fast inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-            <span className="hidden sm:inline">이전</span>
-          </Link>
-        ) : (
-          <div className="w-8" aria-hidden="true" />
-        )}
+              <svg
+                className="h-4 w-4 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+              <span className="hidden sm:inline">이전</span>
+            </Link>
+          )}
+        </div>
 
-        {/* Project list selector */}
-        <div ref={containerRef} className="relative">
+        {/* Project list selector — 가운데 컬럼 */}
+        <div ref={containerRef} className="relative flex justify-center">
           <button
             onClick={() => setIsOpen((v) => !v)}
             aria-expanded={isOpen}
@@ -158,31 +158,31 @@ export function ProjectDetailNavBar() {
           )}
         </div>
 
-        {/* Next */}
-        {nextProject ? (
-          <Link
-            href={getAssetPath(`/projects/${nextProject.slug}`)}
-            className="text-subtle hover:text-foreground duration-fast inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
-          >
-            <span className="hidden sm:inline">다음</span>
-            <svg
-              className="h-4 w-4 shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
+        {/* Next — 오른쪽 컬럼 */}
+        <div className="flex justify-end">
+          {nextProject && (
+            <Link
+              href={getAssetPath(`/projects/${nextProject.slug}`)}
+              className="text-subtle hover:text-foreground duration-fast inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M9 5l7 7-7 7"
-              />
-            </svg>
-          </Link>
-        ) : (
-          <div className="w-8" aria-hidden="true" />
-        )}
+              <span className="hidden sm:inline">다음</span>
+              <svg
+                className="h-4 w-4 shrink-0"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </Link>
+          )}
+        </div>
       </div>
     </nav>
   );
