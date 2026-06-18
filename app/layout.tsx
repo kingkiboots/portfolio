@@ -2,8 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Header } from "@/widgets/header";
-import { Footer } from "@/widgets/footer";
 import { SkipLink } from "@/shared/ui";
 
 const inter = Inter({
@@ -55,9 +53,7 @@ export default function RootLayout({
     >
       <body className={`${inter.variable} ${pretendard.variable} antialiased`}>
         <SkipLink />
-        <Header />
         {children}
-        <Footer />
       </body>
     </html>
   );

@@ -1,85 +1,25 @@
 "use client";
 
-import React, { memo, useState, useEffect, useCallback, useRef } from "react";
+import { memo, useState, useCallback } from "react";
 import Link from "next/link";
 import * as NavigationMenu from "@radix-ui/react-navigation-menu";
 import * as Dialog from "@radix-ui/react-dialog";
 import * as VisuallyHidden from "@radix-ui/react-visually-hidden";
 import { useResume } from "@/features/resume";
 import { getAssetPath } from "@/shared/lib";
+import { useMainHeaderScroll } from "../lib/use-main-header-scroll";
 
 const navItems = [
   { label: "Expertise", href: "/#my-expertise" },
   { label: "Projects", href: "/#projects" },
-  // { label: "About", href: "/#about" },
-  // { label: "Skills", href: "/#skills" },
   { label: "Career", href: "/#career" },
   { label: "Contact", href: "/#contact" },
 ];
 
 export const Header = memo(() => {
   const { resumeUrl, hasResume } = useResume();
-  const [isVisible, setIsVisible] = useState(true);
-  const [bgOpacity, setBgOpacity] = useState(0);
+  const { isVisible, bgOpacity } = useMainHeaderScroll();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const lastScrollY = useRef(0);
-  const heroThreshold = useRef(0);
-  const showTimer = useRef<NodeJS.Timeout | null>(null);
-  const hasPassedThreshold = useRef(false);
-
-  useEffect(() => {
-    heroThreshold.current = window.innerHeight * 0.5;
-
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      const isScrollingDown = currentScrollY > lastScrollY.current;
-
-      if (currentScrollY < 50) {
-        if (showTimer.current) {
-          clearTimeout(showTimer.current);
-          showTimer.current = null;
-        }
-        setIsVisible(true);
-        setBgOpacity(0);
-        hasPassedThreshold.current = false;
-      } else if (currentScrollY < heroThreshold.current) {
-        if (isScrollingDown && !hasPassedThreshold.current) {
-          if (showTimer.current) {
-            clearTimeout(showTimer.current);
-            showTimer.current = null;
-          }
-          setIsVisible(false);
-        }
-        setBgOpacity(0);
-      } else {
-        if (!showTimer.current && !isVisible) {
-          showTimer.current = setTimeout(() => {
-            setIsVisible(true);
-            hasPassedThreshold.current = true;
-            showTimer.current = null;
-          }, 300);
-        }
-        if (isVisible) {
-          hasPassedThreshold.current = true;
-        }
-        const opacityProgress = Math.min(
-          (currentScrollY - heroThreshold.current) / 200,
-          1,
-        );
-        setBgOpacity(opacityProgress);
-      }
-
-      lastScrollY.current = currentScrollY;
-    };
-
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      if (showTimer.current) {
-        clearTimeout(showTimer.current);
-      }
-    };
-  }, [isVisible]);
 
   const handleMobileMenuClose = useCallback(() => {
     setIsMobileMenuOpen(false);
@@ -112,7 +52,7 @@ export const Header = memo(() => {
           Kihyeon Kim
         </Link>
 
-        {/* Desktop Navigation - Radix NavigationMenu */}
+        {/* Desktop Navigation */}
         <NavigationMenu.Root className="hidden md:flex">
           <NavigationMenu.List className="flex items-center gap-1">
             {navItems.map((item) => (
@@ -166,7 +106,7 @@ export const Header = memo(() => {
           </a>
         </div>
 
-        {/* Mobile Menu - Radix Dialog */}
+        {/* Mobile Menu */}
         <Dialog.Root open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
           <Dialog.Trigger asChild>
             <button
@@ -209,7 +149,6 @@ export const Header = memo(() => {
                 <Dialog.Title>네비게이션 메뉴</Dialog.Title>
               </VisuallyHidden.Root>
 
-              {/* Close Button */}
               <Dialog.Close asChild>
                 <button
                   className="text-foreground hover:bg-surface-elevated duration-fast focus-visible:ring-primary absolute top-4 right-4 flex h-10 w-10 items-center justify-center rounded-md transition-colors focus-visible:ring-2 focus-visible:outline-none"
@@ -232,7 +171,6 @@ export const Header = memo(() => {
                 </button>
               </Dialog.Close>
 
-              {/* Mobile Navigation */}
               <nav className="mt-12" aria-label="모바일 네비게이션">
                 <ul className="flex flex-col gap-1" role="menu">
                   {navItems.map((item) => (

@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import rehypePrettyCode from "rehype-pretty-code";
 import rehypeSlug from "rehype-slug";
@@ -59,30 +58,8 @@ export default function ProjectDetailPage({
   post,
 }: ProjectDetailPageProps) {
   return (
-    <main className="min-h-screen pt-28 pb-20">
+    <main className="min-h-screen pt-28 pb-24">
       <article className="container mx-auto px-6">
-        {/* Back link */}
-        <Link
-          href="/#projects"
-          className="group text-subtle duration-fast hover:text-primary mb-10 inline-flex items-center gap-2 text-sm font-medium transition-colors"
-        >
-          <svg
-            className="duration-fast h-4 w-4 transition-transform group-hover:-translate-x-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-            aria-hidden="true"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M7 16l-4-4m0 0l4-4m-4 4h18"
-            />
-          </svg>
-          Back to Projects
-        </Link>
-
         {/* Hero image */}
         {project.thumbnail && (
           <div className="mb-10 overflow-hidden rounded-xl shadow-lg">
