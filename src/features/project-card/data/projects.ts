@@ -8,7 +8,7 @@ export const projects: Project[] = [
     description: "케이뱅크의 SPA 관리자 페이지를 구축하고 있습니다.",
     detail:
       "케이뱅크의 서비스 관리를 위한 어드민 포털을 처음부터 설계하고 구축하는 프로젝트입니다. Turborepo 기반 모노레포로 구성하여 여러 패키지의 코드 공유와 빌드 최적화를 달성했습니다. MUI 기반 디자인 시스템과 Storybook을 활용한 컴포넌트 개발, Plop을 통한 코드 자동 생성, Vitest 기반 테스트 환경을 구축했습니다.",
-    period: "2025.12 - 현재",
+    period: "2025.12 - 2026.05",
     role: "프론트엔드 개발",
     thumbnail:
       "https://www.kbanknow.com/resource/img/bim/adm_kbank_og_default_2025.png",
@@ -146,7 +146,7 @@ export const projects: Project[] = [
   },
   {
     slug: "e4-edu-ios",
-    category: "work",
+    category: "personal",
     title: "E4.카드결제시스템실습프로젝트-IOS",
     description: "SwiftUI 기반의 카드결제시스템 실습 프로젝트를 진행했습니다.",
     detail:
@@ -163,7 +163,7 @@ export const projects: Project[] = [
   },
   {
     slug: "e4-edu-aos",
-    category: "work",
+    category: "personal",
     title: "E4.카드결제시스템실습프로젝트-AOS",
     description: "Android 기반의 카드결제시스템 실습 프로젝트를 진행했습니다.",
     detail:
@@ -180,7 +180,7 @@ export const projects: Project[] = [
   },
   {
     slug: "e4-edu-web",
-    category: "work",
+    category: "personal",
     title: "E4.카드결제시스템실습프로젝트-web",
     description:
       "Spring Boot, React.js 기반의 카드결제시스템 실습 프로젝트를 진행했습니다.",
