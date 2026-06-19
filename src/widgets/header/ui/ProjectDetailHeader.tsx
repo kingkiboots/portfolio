@@ -4,7 +4,7 @@ import { memo } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { getProjectBySlug } from "@/features/project-card";
-import { getAssetPath, useProjectDetailVisibility } from "@/shared/lib";
+import { useProjectDetailVisibility } from "@/shared/lib";
 
 export const ProjectDetailHeader = memo(() => {
   const { isVisible, bgOpacity } = useProjectDetailVisibility();
@@ -32,7 +32,7 @@ export const ProjectDetailHeader = memo(() => {
       >
         {/* Mobile: back button */}
         <Link
-          href={getAssetPath("/#projects")}
+          href="/#projects"
           className="text-foreground hover:text-primary duration-fast focus-visible:ring-primary focus-visible:ring-offset-background flex h-10 w-10 items-center justify-center rounded-md transition-colors focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none md:hidden"
           aria-label="프로젝트 목록으로"
         >

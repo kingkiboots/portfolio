@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { projects } from "@/features/project-card";
-import { getAssetPath, useProjectDetailVisibility } from "@/shared/lib";
+import { useProjectDetailVisibility } from "@/shared/lib";
 
 export function ProjectDetailNavBar() {
   const { isVisible } = useProjectDetailVisibility();
@@ -55,7 +55,7 @@ export function ProjectDetailNavBar() {
         <div>
           {prevProject && (
             <Link
-              href={getAssetPath(`/projects/${prevProject.slug}`)}
+              href={`/projects/${prevProject.slug}`}
               className="text-subtle hover:text-foreground duration-fast inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
             >
               <svg
@@ -111,7 +111,7 @@ export function ProjectDetailNavBar() {
             >
               {/* Back to all projects */}
               <Link
-                href={getAssetPath("/#projects")}
+                href="/#projects"
                 onClick={() => setIsOpen(false)}
                 className="text-subtle hover:text-foreground hover:bg-surface-elevated border-border flex items-center gap-2 border-b px-4 py-3 text-sm transition-colors"
               >
@@ -137,7 +137,7 @@ export function ProjectDetailNavBar() {
                 {projects.map((project, idx) => (
                   <Link
                     key={project.slug}
-                    href={getAssetPath(`/projects/${project.slug}`)}
+                    href={`/projects/${project.slug}`}
                     role="option"
                     aria-selected={project.slug === params?.slug}
                     onClick={() => setIsOpen(false)}
@@ -162,7 +162,7 @@ export function ProjectDetailNavBar() {
         <div className="flex justify-end">
           {nextProject && (
             <Link
-              href={getAssetPath(`/projects/${nextProject.slug}`)}
+              href={`/projects/${nextProject.slug}`}
               className="text-subtle hover:text-foreground duration-fast inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
             >
               <span className="hidden sm:inline">다음</span>
