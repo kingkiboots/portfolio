@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
+import * as Popover from "@radix-ui/react-popover";
+import * as Separator from "@radix-ui/react-separator";
+import * as Tooltip from "@radix-ui/react-tooltip";
 import { projects } from "@/features/project-card";
 import { useProjectDetailVisibility } from "@/shared/lib";
 
@@ -10,110 +13,78 @@ export function ProjectDetailNavBar() {
   const { isVisible } = useProjectDetailVisibility();
   const params = useParams<{ slug: string }>();
   const [isOpen, setIsOpen] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
 
   const currentIndex = projects.findIndex((p) => p.slug === params?.slug);
   const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
   const nextProject =
     currentIndex < projects.length - 1 ? projects[currentIndex + 1] : null;
 
-  // 숨겨질 때 드롭다운도 닫기
   useEffect(() => {
     if (!isVisible) setIsOpen(false);
   }, [isVisible]);
 
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleClick = (e: MouseEvent) => {
-      if (
-        containerRef.current &&
-        !containerRef.current.contains(e.target as Node)
-      ) {
-        setIsOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, [isOpen]);
-
   return (
-    <nav
-      data-header-chrome
-      className={`fixed right-0 bottom-0 left-0 z-50 transition-all duration-300 ${
-        isVisible ? "translate-y-0" : "translate-y-full"
-      }`}
-      aria-label="프로젝트 네비게이션"
-      style={{
-        backgroundColor: "rgb(var(--color-background-rgb) / 0.85)",
-        backdropFilter: "blur(20px)",
-        borderTop: "1px solid var(--color-border)",
-        boxShadow: "0 -2px 8px rgba(0,0,0,0.08)",
-      }}
-    >
-      <div className="container mx-auto grid h-14 grid-cols-3 items-center px-6">
-        {/* Previous — 왼쪽 컬럼 */}
-        <div>
-          {prevProject && (
-            <Link
-              href={`/projects/${prevProject.slug}`}
-              className="text-subtle hover:text-foreground duration-fast inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
-            >
-              <svg
-                className="h-4 w-4 shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-              <span className="hidden sm:inline">이전</span>
-            </Link>
-          )}
-        </div>
+    <Tooltip.Provider delayDuration={500}>
+      <nav
+        data-header-chrome
+        className={`fixed right-0 bottom-0 left-0 z-50 transition-all duration-300 ${
+          isVisible ? "translate-y-0" : "translate-y-full"
+        }`}
+        aria-label="프로젝트 네비게이션"
+        style={{
+          backgroundColor: "rgb(var(--color-background-rgb) / 0.85)",
+          backdropFilter: "blur(20px)",
+          borderTop: "1px solid var(--color-border)",
+          boxShadow: "0 -2px 8px rgba(0,0,0,0.08)",
+        }}
+      >
+        <div className="container mx-auto grid h-14 grid-cols-3 items-center px-6">
+          {/* Previous — 왼쪽 컬럼 */}
+          <div>
+            {prevProject && (
+              <Tooltip.Root>
+                <Tooltip.Trigger asChild>
+                  <Link
+                    href={`/projects/${prevProject.slug}`}
+                    aria-label={`이전 프로젝트: ${prevProject.title}`}
+                    className="text-subtle hover:text-foreground duration-fast inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
+                  >
+                    <svg
+                      className="h-4 w-4 shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 19l-7-7 7-7"
+                      />
+                    </svg>
+                    <span className="hidden sm:inline">이전</span>
+                  </Link>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    side="top"
+                    sideOffset={6}
+                    className="bg-foreground text-background z-50 rounded px-2 py-1 text-xs shadow-md"
+                  >
+                    {prevProject.title}
+                    <Tooltip.Arrow className="fill-foreground" />
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+            )}
+          </div>
 
-        {/* Project list selector — 가운데 컬럼 */}
-        <div ref={containerRef} className="relative flex justify-center">
-          <button
-            onClick={() => setIsOpen((v) => !v)}
-            aria-expanded={isOpen}
-            aria-haspopup="listbox"
-            className="text-subtle hover:text-foreground border-border hover:bg-surface-elevated duration-fast inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors"
-          >
-            <svg
-              className="h-4 w-4 shrink-0"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 10h16M4 14h16"
-              />
-            </svg>
-            <span className="hidden sm:inline">목록</span>
-          </button>
-
-          {isOpen && (
-            <div
-              role="listbox"
-              aria-label="프로젝트 목록"
-              className="border-border bg-background absolute bottom-full left-1/2 mb-2 w-72 -translate-x-1/2 overflow-hidden rounded-xl border shadow-2xl"
-              style={{ backdropFilter: "blur(16px)" }}
-            >
-              {/* Back to all projects */}
-              <Link
-                href="/#projects"
-                onClick={() => setIsOpen(false)}
-                className="text-subtle hover:text-foreground hover:bg-surface-elevated border-border flex items-center gap-2 border-b px-4 py-3 text-sm transition-colors"
+          {/* Project list selector — 가운데 컬럼 */}
+          <div className="flex justify-center">
+            <Popover.Root open={isOpen} onOpenChange={setIsOpen}>
+              <Popover.Trigger
+                className="text-subtle hover:text-foreground border-border hover:bg-surface-elevated duration-fast inline-flex items-center gap-2 rounded-full border px-4 py-1.5 text-sm font-medium transition-colors"
               >
                 <svg
                   className="h-4 w-4 shrink-0"
@@ -126,64 +97,116 @@ export function ProjectDetailNavBar() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M3 12h18M3 12l6-6M3 12l6 6"
+                    d="M4 6h16M4 10h16M4 14h16"
                   />
                 </svg>
-                전체 목록
-              </Link>
+                <span className="hidden sm:inline">목록</span>
+              </Popover.Trigger>
 
-              {/* Project list */}
-              <div className="max-h-72 overflow-y-auto py-1">
-                {projects.map((project, idx) => (
+              <Popover.Portal>
+                <Popover.Content
+                  data-header-chrome
+                  side="top"
+                  align="center"
+                  sideOffset={8}
+                  className="border-border bg-background z-50 w-72 overflow-hidden rounded-xl border shadow-2xl"
+                  style={{ backdropFilter: "blur(16px)" }}
+                >
+                  {/* Back to all projects */}
                   <Link
-                    key={project.slug}
-                    href={`/projects/${project.slug}`}
-                    role="option"
-                    aria-selected={project.slug === params?.slug}
+                    href="/#projects"
                     onClick={() => setIsOpen(false)}
-                    className={`hover:bg-surface-elevated flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
-                      project.slug === params?.slug
-                        ? "text-primary font-semibold"
-                        : "text-foreground"
-                    }`}
+                    className="text-subtle hover:text-foreground hover:bg-surface-elevated flex items-center gap-2 px-4 py-3 text-sm transition-colors"
                   >
-                    <span className="text-subtle w-5 shrink-0 text-right text-xs tabular-nums">
-                      {String(idx + 1).padStart(2, "0")}
-                    </span>
-                    <span className="min-w-0 truncate">{project.title}</span>
+                    <svg
+                      className="h-4 w-4 shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 12h18M3 12l6-6M3 12l6 6"
+                      />
+                    </svg>
+                    전체 목록
                   </Link>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
 
-        {/* Next — 오른쪽 컬럼 */}
-        <div className="flex justify-end">
-          {nextProject && (
-            <Link
-              href={`/projects/${nextProject.slug}`}
-              className="text-subtle hover:text-foreground duration-fast inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
-            >
-              <span className="hidden sm:inline">다음</span>
-              <svg
-                className="h-4 w-4 shrink-0"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                aria-hidden="true"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </Link>
-          )}
+                  <Separator.Root className="bg-border h-px" />
+
+                  {/* Project list */}
+                  <div className="max-h-72 overflow-y-auto py-1">
+                    {projects.map((project, idx) => (
+                      <Link
+                        key={project.slug}
+                        href={`/projects/${project.slug}`}
+                        onClick={() => setIsOpen(false)}
+                        aria-current={
+                          project.slug === params?.slug ? "page" : undefined
+                        }
+                        className={`hover:bg-surface-elevated flex items-center gap-3 px-4 py-2.5 text-sm transition-colors ${
+                          project.slug === params?.slug
+                            ? "text-primary font-semibold"
+                            : "text-foreground"
+                        }`}
+                      >
+                        <span className="text-subtle w-5 shrink-0 text-right text-xs tabular-nums">
+                          {String(idx + 1).padStart(2, "0")}
+                        </span>
+                        <span className="min-w-0 truncate">{project.title}</span>
+                      </Link>
+                    ))}
+                  </div>
+                </Popover.Content>
+              </Popover.Portal>
+            </Popover.Root>
+          </div>
+
+          {/* Next — 오른쪽 컬럼 */}
+          <div className="flex justify-end">
+            {nextProject && (
+              <Tooltip.Root>
+                <Tooltip.Trigger asChild>
+                  <Link
+                    href={`/projects/${nextProject.slug}`}
+                    aria-label={`다음 프로젝트: ${nextProject.title}`}
+                    className="text-subtle hover:text-foreground duration-fast inline-flex items-center gap-1.5 text-sm font-medium transition-colors"
+                  >
+                    <span className="hidden sm:inline">다음</span>
+                    <svg
+                      className="h-4 w-4 shrink-0"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 5l7 7-7 7"
+                      />
+                    </svg>
+                  </Link>
+                </Tooltip.Trigger>
+                <Tooltip.Portal>
+                  <Tooltip.Content
+                    side="top"
+                    sideOffset={6}
+                    className="bg-foreground text-background z-50 rounded px-2 py-1 text-xs shadow-md"
+                  >
+                    {nextProject.title}
+                    <Tooltip.Arrow className="fill-foreground" />
+                  </Tooltip.Content>
+                </Tooltip.Portal>
+              </Tooltip.Root>
+            )}
+          </div>
         </div>
-      </div>
-    </nav>
+      </nav>
+    </Tooltip.Provider>
   );
 }

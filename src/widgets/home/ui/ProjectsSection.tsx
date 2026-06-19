@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
+import * as Tabs from "@radix-ui/react-tabs";
 import { SectionTitle } from "@/shared/ui";
 import { ProjectCard, projects } from "@/features/project-card";
 import type { ProjectCategory } from "@/features/project-card";
@@ -56,21 +57,22 @@ export function ProjectsSection() {
         subtitle="직접 참여하고 개발한 프로젝트들입니다."
       />
 
-      <div className="mb-8 flex gap-2">
-        {tabs.map((tab) => (
-          <button
-            key={tab.id}
-            onClick={() => setActiveTab(tab.id)}
-            className={`rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 ${
-              activeTab === tab.id
-                ? "bg-foreground text-background"
-                : "bg-foreground/5 text-subtle hover:bg-foreground/10"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
-      </div>
+      <Tabs.Root
+        value={activeTab}
+        onValueChange={(v) => setActiveTab(v as Tab)}
+      >
+        <Tabs.List className="mb-8 flex gap-2" aria-label="프로젝트 필터">
+          {tabs.map((tab) => (
+            <Tabs.Trigger
+              key={tab.id}
+              value={tab.id}
+              className="rounded-full px-5 py-2 text-sm font-medium transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary data-[state=active]:bg-foreground data-[state=active]:text-background data-[state=inactive]:bg-foreground/5 data-[state=inactive]:text-subtle data-[state=inactive]:hover:bg-foreground/10"
+            >
+              {tab.label}
+            </Tabs.Trigger>
+          ))}
+        </Tabs.List>
+      </Tabs.Root>
 
       <div
         ref={gridRef}
